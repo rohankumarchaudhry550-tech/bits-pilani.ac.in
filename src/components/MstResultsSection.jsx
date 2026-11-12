@@ -302,7 +302,7 @@ export default function MstResultsSection() {
             transition: 'all 0.2s'
           }}
         >
-          <FaAward /> Continuous Assessment (Weeks 1 to 12 • 11 Graded & Diwali Break)
+          <FaAward /> Continuous Assessment (Weeks 1 to 11 Graded • Week 12 Diwali Break)
         </button>
 
         <button
@@ -1013,12 +1013,12 @@ export default function MstResultsSection() {
                 fontSize: '12.5px',
                 fontWeight: '700'
               }}>
-                🏆 Cumulative Average: 99.1% (Rank #1 of 45)
+                🏆 Cumulative Average: 99.2% (Rank #1 of 45)
               </div>
             </div>
 
             <p style={{ fontSize: '13px', color: '#475569', margin: 0, lineHeight: '1.5' }}>
-              All 11 evaluated continuous assessment submissions across all 4 subjects have been officially graded and recorded into the BITS Pilani central grading portal (Week 8 observed as Diwali Break with no assignment scheduled). Rohan Kumar Chaudhry holds the highest cumulative grade point in the cohort with a 99.1% average (1090/1100 marks).
+              All 11 evaluated continuous assessment submissions across all 4 subjects have been officially graded and recorded into the BITS Pilani central grading portal (Week 12 observed on 08 Nov 2026 as Diwali Break with no assignment scheduled). Rohan Kumar Chaudhry holds the highest cumulative grade point in the cohort with a 99.2% average (1091/1100 marks).
             </p>
           </div>
 
