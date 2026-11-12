@@ -33,6 +33,8 @@ export default function VideoLecturesSection({ onOpenNotes }) {
   const [selectedType, setSelectedType] = useState('ALL');
   const [sortBy, setSortBy] = useState('default'); // 'default' | 'duration' | 'rating' | 'views'
   const [activeVideo, setActiveVideo] = useState(null); // Video object currently in player modal
+  const [playerMode, setPlayerMode] = useState('video'); // 'video' | 'whiteboard'
+  const [seekSeconds, setSeekSeconds] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTimeSec, setCurrentTimeSec] = useState(0);
   const [playbackSpeed, setPlaybackSpeed] = useState(1);
@@ -47,10 +49,10 @@ export default function VideoLecturesSection({ onOpenNotes }) {
     return initial;
   });
 
-  // Simulated player playback timer
+  // Simulated player playback timer for whiteboard mode
   useEffect(() => {
     let interval = null;
-    if (isPlaying && activeVideo) {
+    if (isPlaying && activeVideo && playerMode === 'whiteboard') {
       interval = setInterval(() => {
         setCurrentTimeSec(prev => {
           const totalSec = activeVideo.durationMinutes * 60;
@@ -65,20 +67,32 @@ export default function VideoLecturesSection({ onOpenNotes }) {
       clearInterval(interval);
     }
     return () => clearInterval(interval);
-  }, [isPlaying, activeVideo, playbackSpeed]);
+  }, [isPlaying, activeVideo, playbackSpeed, playerMode]);
 
   // Open modal handler
   const handleOpenVideo = (video) => {
     setActiveVideo(video);
+    setPlayerMode('video');
+    setSeekSeconds(0);
     setIsPlaying(true);
     setCurrentTimeSec(0);
     setActiveModalTab('chapters');
+  };
+
+  // Chapter jump handler
+  const handleChapterClick = (timeStr) => {
+    const targetSec = parseTimeToSeconds(timeStr);
+    setCurrentTimeSec(targetSec);
+    setSeekSeconds(targetSec);
+    setIsPlaying(true);
+    setPlayerMode('video');
   };
 
   // Close modal handler
   const handleCloseModal = () => {
     setActiveVideo(null);
     setIsPlaying(false);
+    setSeekSeconds(0);
   };
 
   // Toggle watched status
@@ -763,275 +777,263 @@ export default function VideoLecturesSection({ onOpenNotes }) {
               backgroundColor: '#020617'
             }} className="video_player_split">
               
-              {/* Left Column: Simulated High-Tech Video Screen */}
+              {/* Left Column: Real HD Video Player Screen or Whiteboard */}
               <div style={{
                 display: 'flex',
                 flexDirection: 'column',
                 backgroundColor: '#000000',
-                position: 'relative'
+                position: 'relative',
+                minHeight: '480px'
               }}>
-                {/* Main Video Viewport Canvas */}
+                {/* Player Mode Switcher & Stream Info Bar */}
                 <div style={{
-                  flex: 1,
-                  minHeight: '380px',
-                  background: 'radial-gradient(circle at center, #1e293b 0%, #020617 100%)',
-                  position: 'relative',
+                  padding: '10px 18px',
+                  backgroundColor: '#0b1329',
+                  borderBottom: '1px solid #1e293b',
                   display: 'flex',
-                  flexDirection: 'column',
+                  justifyContent: 'space-between',
                   alignItems: 'center',
-                  justifyContent: 'center',
-                  color: '#ffffff',
-                  padding: '30px'
+                  flexWrap: 'wrap',
+                  gap: '10px'
                 }}>
-                  {/* BITS Pilani Top Watermark */}
-                  <div style={{
-                    position: 'absolute',
-                    top: '16px',
-                    left: '20px',
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '8px',
-                    opacity: 0.8
-                  }}>
-                    <FaGraduationCap style={{ color: '#f59e0b', fontSize: '18px' }} />
-                    <span style={{ fontSize: '12px', fontWeight: '800', letterSpacing: '0.5px' }}>
-                      BITS PILANI WILP • LIVE STREAM & ARCHIVE
-                    </span>
-                  </div>
-
-                  <div style={{
-                    position: 'absolute',
-                    top: '16px',
-                    right: '20px',
-                    backgroundColor: '#b91c1c',
-                    color: '#ffffff',
-                    fontSize: '11px',
-                    fontWeight: '800',
-                    padding: '2px 8px',
-                    borderRadius: '3px',
-                    textTransform: 'uppercase'
-                  }}>
-                    1080p HD 60FPS
-                  </div>
-
-                  {/* Simulated Whiteboard / Slide Presentation Canvas */}
-                  <div style={{
-                    width: '88%',
-                    backgroundColor: 'rgba(30, 41, 59, 0.85)',
-                    borderRadius: '8px',
-                    border: '1px solid rgba(255, 255, 255, 0.1)',
-                    padding: '24px 30px',
-                    boxShadow: '0 8px 30px rgba(0,0,0,0.5)',
-                    textAlign: 'center'
-                  }}>
-                    <span style={{
-                      backgroundColor: 'rgba(59, 130, 246, 0.2)',
-                      color: '#93c5fd',
-                      padding: '3px 10px',
-                      borderRadius: '12px',
-                      fontSize: '11.5px',
-                      fontWeight: '800',
-                      textTransform: 'uppercase'
-                    }}>
-                      {activeVideo.topic}
-                    </span>
-
-                    <h2 style={{ fontSize: '20px', fontWeight: '800', color: '#ffffff', margin: '12px 0 8px' }}>
-                      {activeVideo.title}
-                    </h2>
-
-                    <div style={{ fontSize: '13px', color: '#cbd5e1', marginBottom: '16px' }}>
-                      Faculty Speaker: <strong>{activeVideo.instructor}</strong>
-                    </div>
-
-                    {/* Animated Sound Waves / Chalkboard Indicator */}
-                    <div style={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      gap: '5px',
-                      height: '24px',
-                      margin: '15px 0'
-                    }}>
-                      {[14, 22, 10, 28, 16, 24, 18, 12, 26, 20, 15].map((h, i) => (
-                        <div
-                          key={i}
-                          style={{
-                            width: '4px',
-                            height: isPlaying ? `${h}px` : '6px',
-                            backgroundColor: isPlaying ? '#38bdf8' : '#64748b',
-                            borderRadius: '2px',
-                            transition: 'height 0.2s'
-                          }}
-                        />
-                      ))}
-                      <span style={{ fontSize: '11px', color: isPlaying ? '#38bdf8' : '#94a3b8', marginLeft: '8px', fontWeight: '700' }}>
-                        {isPlaying ? 'AUDIO STREAM ACTIVE' : 'PAUSED'}
-                      </span>
-                    </div>
-
-                    {/* Quick Theorem Preview */}
-                    <div style={{
-                      backgroundColor: 'rgba(0, 0, 0, 0.4)',
-                      borderRadius: '6px',
-                      padding: '10px 14px',
-                      fontSize: '12px',
-                      color: '#fef08a',
-                      fontFamily: 'monospace'
-                    }}>
-                      📌 Key Theorem: {activeVideo.keyConcepts[0]}
-                    </div>
-                  </div>
-
-                  {/* Big Play Overlay (if paused) */}
-                  {!isPlaying && (
-                    <div
-                      onClick={() => setIsPlaying(true)}
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                    <button
+                      onClick={() => setPlayerMode('video')}
                       style={{
-                        position: 'absolute',
-                        width: '70px',
-                        height: '70px',
-                        borderRadius: '50%',
-                        backgroundColor: 'rgba(0, 75, 147, 0.9)',
+                        backgroundColor: playerMode === 'video' ? '#0284c7' : '#1e293b',
                         color: '#ffffff',
+                        border: '1px solid ' + (playerMode === 'video' ? '#38bdf8' : '#334155'),
+                        padding: '6px 14px',
+                        borderRadius: '4px',
+                        fontSize: '11.5px',
+                        fontWeight: '700',
+                        cursor: 'pointer',
                         display: 'flex',
                         alignItems: 'center',
-                        justifyContent: 'center',
-                        fontSize: '26px',
-                        cursor: 'pointer',
-                        boxShadow: '0 6px 20px rgba(0,0,0,0.5)',
-                        paddingLeft: '4px'
+                        gap: '6px'
                       }}
                     >
-                      <FaPlay />
-                    </div>
-                  )}
+                      <FaPlay style={{ fontSize: '9px' }} /> 🎬 Live Video Lecture (1080p HD)
+                    </button>
+
+                    <button
+                      onClick={() => setPlayerMode('whiteboard')}
+                      style={{
+                        backgroundColor: playerMode === 'whiteboard' ? '#0284c7' : '#1e293b',
+                        color: '#ffffff',
+                        border: '1px solid ' + (playerMode === 'whiteboard' ? '#38bdf8' : '#334155'),
+                        padding: '6px 14px',
+                        borderRadius: '4px',
+                        fontSize: '11.5px',
+                        fontWeight: '700',
+                        cursor: 'pointer',
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '6px'
+                      }}
+                    >
+                      <FaChalkboardTeacher /> 📊 Whiteboard & Key Formulas
+                    </button>
+                  </div>
+
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
+                    {seekSeconds > 0 && playerMode === 'video' && (
+                      <span style={{ fontSize: '11px', color: '#38bdf8', fontWeight: '700', backgroundColor: 'rgba(56, 189, 248, 0.1)', padding: '3px 8px', borderRadius: '4px' }}>
+                        ▶ Jumped to {formatSeconds(seekSeconds)}
+                      </span>
+                    )}
+
+                    <a
+                      href={`https://www.youtube.com/watch?v=${activeVideo.youtubeId || 'fNk_zzaMoSs'}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      style={{
+                        color: '#38bdf8',
+                        fontSize: '11.5px',
+                        fontWeight: '700',
+                        textDecoration: 'none',
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        gap: '5px'
+                      }}
+                      title="Open Original Lecture in YouTube"
+                    >
+                      <FaExternalLinkAlt /> Open in YouTube
+                    </a>
+                  </div>
                 </div>
 
-                {/* Player Bottom Controls Bar */}
-                <div style={{
-                  backgroundColor: '#0f172a',
-                  borderTop: '1px solid #1e293b',
-                  padding: '12px 20px'
-                }}>
-                  {/* Timeline Scrubber Bar */}
-                  <div
-                    onClick={(e) => {
-                      const rect = e.currentTarget.getBoundingClientRect();
-                      const clickX = e.clientX - rect.left;
-                      const percent = clickX / rect.width;
-                      const totalSec = activeVideo.durationMinutes * 60;
-                      setCurrentTimeSec(percent * totalSec);
-                    }}
-                    style={{
-                      width: '100%',
-                      height: '8px',
-                      backgroundColor: '#334155',
-                      borderRadius: '4px',
-                      cursor: 'pointer',
-                      position: 'relative',
-                      marginBottom: '10px'
-                    }}
-                  >
+                {/* Viewport Content */}
+                {playerMode === 'video' ? (
+                  /* Real Embedded HD Video Player */
+                  <div style={{
+                    flex: 1,
+                    minHeight: '440px',
+                    backgroundColor: '#000000',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    position: 'relative'
+                  }}>
+                    <iframe
+                      key={`${activeVideo.id}-${seekSeconds}`}
+                      src={`https://www.youtube-nocookie.com/embed/${activeVideo.youtubeId || 'fNk_zzaMoSs'}?autoplay=1&enablejsapi=1&rel=0&modestbranding=1${seekSeconds > 0 ? `&start=${seekSeconds}` : ''}`}
+                      title={activeVideo.title}
+                      style={{
+                        width: '100%',
+                        height: '100%',
+                        minHeight: '460px',
+                        border: 'none',
+                        display: 'block'
+                      }}
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                      allowFullScreen
+                    />
+                  </div>
+                ) : (
+                  /* Whiteboard & Presentation Canvas View */
+                  <div style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    flex: 1
+                  }}>
                     <div style={{
-                      width: `${(currentTimeSec / (activeVideo.durationMinutes * 60)) * 100}%`,
-                      height: '100%',
-                      backgroundColor: '#38bdf8',
-                      borderRadius: '4px',
-                      position: 'relative'
+                      flex: 1,
+                      minHeight: '380px',
+                      background: 'radial-gradient(circle at center, #1e293b 0%, #020617 100%)',
+                      position: 'relative',
+                      display: 'flex',
+                      flexDirection: 'column',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      color: '#ffffff',
+                      padding: '30px'
                     }}>
+                      {/* BITS Pilani Top Watermark */}
                       <div style={{
                         position: 'absolute',
-                        right: '-5px',
-                        top: '-3px',
-                        width: '14px',
-                        height: '14px',
-                        borderRadius: '50%',
-                        backgroundColor: '#ffffff'
-                      }} />
-                    </div>
-                  </div>
-
-                  {/* Buttons Row */}
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', color: '#ffffff' }}>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
-                      <button
-                        onClick={() => setIsPlaying(!isPlaying)}
-                        style={{
-                          backgroundColor: 'transparent',
-                          color: '#ffffff',
-                          border: 'none',
-                          fontSize: '18px',
-                          cursor: 'pointer'
-                        }}
-                        title={isPlaying ? 'Pause' : 'Play'}
-                      >
-                        {isPlaying ? <FaPause /> : <FaPlay />}
-                      </button>
-
-                      <button
-                        onClick={() => setCurrentTimeSec(Math.max(0, currentTimeSec - 10))}
-                        style={{ backgroundColor: 'transparent', color: '#cbd5e1', border: 'none', cursor: 'pointer', fontSize: '14px' }}
-                        title="Rewind 10 Seconds"
-                      >
-                        <FaBackward />
-                      </button>
-
-                      <button
-                        onClick={() => setCurrentTimeSec(Math.min(activeVideo.durationMinutes * 60, currentTimeSec + 10))}
-                        style={{ backgroundColor: 'transparent', color: '#cbd5e1', border: 'none', cursor: 'pointer', fontSize: '14px' }}
-                        title="Forward 10 Seconds"
-                      >
-                        <FaForward />
-                      </button>
-
-                      <button
-                        onClick={() => setIsMuted(!isMuted)}
-                        style={{ backgroundColor: 'transparent', color: '#cbd5e1', border: 'none', cursor: 'pointer', fontSize: '15px' }}
-                        title={isMuted ? 'Unmute' : 'Mute'}
-                      >
-                        {isMuted ? <FaVolumeMute /> : <FaVolumeUp />}
-                      </button>
-
-                      <span style={{ fontSize: '12px', color: '#94a3b8', fontFamily: 'monospace' }}>
-                        {formatSeconds(currentTimeSec)} / {activeVideo.duration}
-                      </span>
-                    </div>
-
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                      {/* Playback speed selector */}
-                      <div style={{ display: 'flex', alignItems: 'center', gap: '4px', fontSize: '11.5px', color: '#94a3b8' }}>
-                        <span>Speed:</span>
-                        {[0.75, 1, 1.25, 1.5, 2].map(speed => (
-                          <button
-                            key={speed}
-                            onClick={() => setPlaybackSpeed(speed)}
-                            style={{
-                              backgroundColor: playbackSpeed === speed ? '#38bdf8' : '#1e293b',
-                              color: playbackSpeed === speed ? '#0f172a' : '#cbd5e1',
-                              border: 'none',
-                              padding: '2px 6px',
-                              borderRadius: '3px',
-                              fontSize: '11px',
-                              fontWeight: '700',
-                              cursor: 'pointer'
-                            }}
-                          >
-                            {speed}x
-                          </button>
-                        ))}
+                        top: '16px',
+                        left: '20px',
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '8px',
+                        opacity: 0.8
+                      }}>
+                        <FaGraduationCap style={{ color: '#f59e0b', fontSize: '18px' }} />
+                        <span style={{ fontSize: '12px', fontWeight: '800', letterSpacing: '0.5px' }}>
+                          BITS PILANI WILP • LECTURE WHITEBOARD
+                        </span>
                       </div>
 
+                      <div style={{
+                        position: 'absolute',
+                        top: '16px',
+                        right: '20px',
+                        backgroundColor: '#b91c1c',
+                        color: '#ffffff',
+                        fontSize: '11px',
+                        fontWeight: '800',
+                        padding: '2px 8px',
+                        borderRadius: '3px',
+                        textTransform: 'uppercase'
+                      }}>
+                        1080p HD
+                      </div>
+
+                      {/* Whiteboard Canvas */}
+                      <div style={{
+                        width: '88%',
+                        backgroundColor: 'rgba(30, 41, 59, 0.85)',
+                        borderRadius: '8px',
+                        border: '1px solid rgba(255, 255, 255, 0.1)',
+                        padding: '24px 30px',
+                        boxShadow: '0 8px 30px rgba(0,0,0,0.5)',
+                        textAlign: 'center'
+                      }}>
+                        <span style={{
+                          backgroundColor: 'rgba(59, 130, 246, 0.2)',
+                          color: '#93c5fd',
+                          padding: '3px 10px',
+                          borderRadius: '12px',
+                          fontSize: '11.5px',
+                          fontWeight: '800',
+                          textTransform: 'uppercase'
+                        }}>
+                          {activeVideo.topic}
+                        </span>
+
+                        <h2 style={{ fontSize: '20px', fontWeight: '800', color: '#ffffff', margin: '12px 0 8px' }}>
+                          {activeVideo.title}
+                        </h2>
+
+                        <div style={{ fontSize: '13px', color: '#cbd5e1', marginBottom: '16px' }}>
+                          Faculty Speaker: <strong>{activeVideo.instructor}</strong> • {activeVideo.duration}
+                        </div>
+
+                        {/* Quick Theorem Preview */}
+                        <div style={{
+                          backgroundColor: 'rgba(0, 0, 0, 0.4)',
+                          borderRadius: '6px',
+                          padding: '12px 16px',
+                          fontSize: '13px',
+                          color: '#fef08a',
+                          fontFamily: 'monospace',
+                          marginBottom: '16px'
+                        }}>
+                          📌 Key Theorem / Formula: {activeVideo.keyConcepts[0]}
+                        </div>
+
+                        <button
+                          onClick={() => setPlayerMode('video')}
+                          style={{
+                            backgroundColor: '#0284c7',
+                            color: '#ffffff',
+                            border: 'none',
+                            padding: '8px 20px',
+                            borderRadius: '20px',
+                            fontWeight: '700',
+                            fontSize: '12px',
+                            cursor: 'pointer',
+                            display: 'inline-flex',
+                            alignItems: 'center',
+                            gap: '6px'
+                          }}
+                        >
+                          <FaPlay style={{ fontSize: '9px' }} /> Switch to HD Video Stream
+                        </button>
+                      </div>
+                    </div>
+
+                    {/* Timeline Bar for Whiteboard Mode */}
+                    <div style={{
+                      backgroundColor: '#0f172a',
+                      borderTop: '1px solid #1e293b',
+                      padding: '12px 20px',
+                      display: 'flex',
+                      justifyContent: 'space-between',
+                      alignItems: 'center',
+                      color: '#94a3b8',
+                      fontSize: '12px'
+                    }}>
+                      <span>Whiteboard sync mode</span>
                       <button
-                        onClick={() => alert('Full screen mode toggle.')}
-                        style={{ backgroundColor: 'transparent', color: '#cbd5e1', border: 'none', cursor: 'pointer', fontSize: '14px' }}
-                        title="Fullscreen"
+                        onClick={() => setPlayerMode('video')}
+                        style={{
+                          backgroundColor: '#0284c7',
+                          color: '#ffffff',
+                          border: 'none',
+                          padding: '4px 12px',
+                          borderRadius: '4px',
+                          fontSize: '11px',
+                          fontWeight: '700',
+                          cursor: 'pointer'
+                        }}
                       >
-                        <FaExpand />
+                        Watch Video
                       </button>
                     </div>
                   </div>
-                </div>
+                )}
 
               </div>
 
@@ -1109,11 +1111,7 @@ export default function VideoLecturesSection({ onOpenNotes }) {
                     {activeVideo.keyTimestamps.map((chapter, idx) => (
                       <div
                         key={idx}
-                        onClick={() => {
-                          const targetSec = parseTimeToSeconds(chapter.time);
-                          setCurrentTimeSec(targetSec);
-                          setIsPlaying(true);
-                        }}
+                        onClick={() => handleChapterClick(chapter.time)}
                         style={{
                           backgroundColor: '#1e293b',
                           border: '1px solid #334155',
@@ -1135,9 +1133,12 @@ export default function VideoLecturesSection({ onOpenNotes }) {
                           borderRadius: '4px',
                           fontSize: '11px',
                           fontWeight: '800',
-                          fontFamily: 'monospace'
+                          fontFamily: 'monospace',
+                          display: 'inline-flex',
+                          alignItems: 'center',
+                          gap: '4px'
                         }}>
-                          {chapter.time}
+                          <FaPlay style={{ fontSize: '8px' }} /> {chapter.time}
                         </span>
                         <span style={{ fontSize: '12.5px', color: '#f1f5f9', fontWeight: '600', flex: 1 }}>
                           {chapter.title}

@@ -5,6 +5,77 @@
  * Faculty: Dr. A. Sen, Prof. R. Sharma, Dr. K. Patel, Prof. S. Das
  */
 
+export const videoEmbedMapping = {
+  // BITS F112: Mathematics for Machine Learning
+  'vid-mfml-01': 'fNk_zzaMoSs', // MIT 18.06 Lec 1 - Vector Spaces & Linear Equations
+  'vid-mfml-02': 'BaM1uiAqDc8', // MIT 18.06 Lec 2 - Basis & Dimension
+  'vid-mfml-03': 'Y_Ac6KiQ1t0', // MIT 18.06 Lec 9 - Independence, Basis, and Dimension
+  'vid-mfml-04': 'TRkRk1rU9wU', // MIT 18.06 Lec 17 - Orthogonal Matrices & Gram-Schmidt
+  'vid-mfml-05': 'nHlEAP3hmB8', // MIT 18.06 Lec 10 - The Four Fundamental Subspaces
+  'vid-mfml-06': 'PFDu9oVAE-g', // 3Blue1Brown - Eigenvectors and eigenvalues
+  'vid-mfml-07': '8F03282N_wE', // MIT 18.06 Lec 25 - Symmetric Matrices and Positive Definiteness
+  'vid-mfml-08': 'mBcLRGuAFUk', // Steve Brunton - Singular Value Decomposition (SVD)
+  'vid-mfml-09': 'gXbThCXjZFM', // Steve Brunton - Truncated SVD & Eckart-Young Theorem
+  'vid-mfml-10': 'TrcCbdWwCBc', // 3Blue1Brown - The Gradient and Directional Derivatives
+  'vid-mfml-11': '3d6DsjIBzJ4', // 3Blue1Brown - The Hessian Matrix & Taylor Approximations
+  'vid-mfml-12': 'sDv4f4s2SB8', // StatQuest - Gradient Descent, Step-by-Step
+  'vid-mfml-13': '9gJq8dE_l3I', // Stanford EE364A - Convex Optimization, Convex Sets & Jensen
+  'vid-mfml-14': 'hQ4UCg22vA4', // Khan Academy - Lagrange Multipliers and Constrained Optimization
+  'vid-mfml-15': 'Wz_0fVkWZ28', // Stanford - KKT Conditions and Duality in Optimization
+
+  // BITS F111: Introduction to Statistical Methods
+  'vid-stats-01': 'HZGCoVF3YvM', // 3Blue1Brown - Bayes theorem, the geometry of changing beliefs
+  'vid-stats-02': '8idr1WZ1A7Q', // StatQuest - The Binomial and Poisson Distributions
+  'vid-stats-03': 'rzFX5NWojp0', // StatQuest - The Normal Distribution & Probability Density
+  'vid-stats-04': 'K8K0X3-pWzI', // StatQuest - Expected Value, Variance and Covariance
+  'vid-stats-05': 'CByC8v0R8G0', // Khan Academy - Chi-Square, t-distribution, and F-distribution
+  'vid-stats-06': 'XepXtk9677k', // StatQuest - Maximum Likelihood Estimation (MLE)
+  'vid-stats-07': 'TqOeMYtOc1w', // StatQuest - Confidence Intervals clearly explained
+  'vid-stats-08': 'vemZtEM63GY', // StatQuest - Hypothesis Testing and p-Values
+  'vid-stats-09': 'NF5_btOaFDU', // StatQuest - Student's t-test: Paired vs Two-sample
+  'vid-stats-10': 'ITf4vHhyGpc', // StatQuest - ANOVA: Analysis of Variance
+  'vid-stats-11': 'zPG4NjIkCjc', // StatQuest - Ordinary Least Squares (OLS) Regression
+  'vid-stats-12': 'xZ_z8KWkhXE', // StatQuest - Multiple Regression in Matrix Notation
+  'vid-stats-13': '0qY7y70sC_c', // StatQuest - Multicollinearity, VIF and Ridge Remedy
+  'vid-stats-14': '8A5n_H1Yp4k', // StatQuest - Residual Diagnostics and Q-Q Plots
+  'vid-stats-15': 'k_P_Zc0Z8kY', // StatQuest - Prior, Likelihood & Posterior: Conjugate Priors
+
+  // BITS F113: Machine Learning
+  'vid-ml-01': 'ukzFI9rgwfU', // StatQuest - Machine Learning Fundamentals & Loss Functions
+  'vid-ml-02': 'PaFPbb-WD4k', // StatQuest - Linear Regression and Batch vs Stochastic Gradient Descent
+  'vid-ml-03': 'EuBBz3bI-aA', // StatQuest - Bias and Variance Tradeoff & Regularization
+  'vid-ml-04': 'yIYKR4sgzI8', // StatQuest - Logistic Regression and Cross-Entropy Loss
+  'vid-ml-05': '4jRBRDbJemM', // StatQuest - ROC and AUC, Clearly Explained!
+  'vid-ml-06': '_L39rN6gz7Y', // StatQuest - Decision Trees: Entropy, Information Gain, Gini
+  'vid-ml-07': 'J4Wdy0Wc_xQ', // StatQuest - Random Forests and Out-of-Bag Error
+  'vid-ml-08': 'LsK-xG1cLYA', // StatQuest - AdaBoost, Clearly Explained!
+  'vid-ml-09': '3CC4N4z3GJc', // StatQuest - Gradient Boost & XGBoost
+  'vid-ml-10': 'efR1C6CvhmE', // StatQuest - Support Vector Machines (SVM), Clearly Explained
+  'vid-ml-11': '7Pnq8ApxbH0', // StatQuest - Soft Margin SVM and Slack Variables
+  'vid-ml-12': 'Toet3EiSFcM', // StatQuest - Support Vector Machines Part 2: The Polynomial & RBF Kernel
+  'vid-ml-13': '4b5d3muPQmA', // StatQuest - K-means Clustering & Elbow Method
+  'vid-ml-14': 'FgakZw6K1QQ', // StatQuest - Principal Component Analysis (PCA) Step-by-Step
+  'vid-ml-15': 'aircAruvnKk', // 3Blue1Brown - But what is a neural network? Deep learning, chapter 1
+  'vid-ml-16': 'Ilg3gGewQ5U', // 3Blue1Brown - What is backpropagation really doing? Deep learning, chapter 3
+
+  // BITS F114: Artificial and Computational Intelligence
+  'vid-ai-01': 'J8Eh7RqggAk', // MIT 6.034 - Introduction to Artificial Intelligence & Intelligent Agents
+  'vid-ai-02': 'c8gI4Y157xM', // CS50 AI - Search: Breadth-First, Depth-First, Uniform Cost Search
+  'vid-ai-03': 'aKYlikFAV4k', // CS50 AI - Informed Search: Greedy Best-First and A* Search
+  'vid-ai-04': 'p7v3b5zJ8gM', // UC Berkeley CS188 - A* Heuristics: Admissibility and Consistency
+  'vid-ai-05': 'g_R4e6F5Qk4', // UC Berkeley CS188 - Iterative Deepening and Memory-Bounded Search
+  'vid-ai-06': 'l-hh51ncgDI', // CS50 AI - Adversarial Search and the Minimax Algorithm
+  'vid-ai-07': 'd14UG8cu5y0', // CS50 AI - Alpha-Beta Pruning Optimization for Games
+  'vid-ai-08': 'lCrHYT_Eh2M', // CS50 AI - Constraint Satisfaction Problems (CSP) & MRV Heuristic
+  'vid-ai-09': 'x2Q1V6_lZ70', // UC Berkeley CS188 - Constraint Propagation and the AC-3 Algorithm
+  'vid-ai-10': 'iJ3F5pW0kLk', // CS50 AI - Knowledge and Propositional Logic Resolution
+  'vid-ai-11': '2pZ8pZzF3-g', // MIT 6.034 - First-Order Logic, Quantifiers, and Unification
+  'vid-ai-12': '4N1rFp_lW90', // CS50 AI - Classical Planning, STRIPS and State Search
+  'vid-ai-13': '14BfO5lMiuk', // UC Berkeley CS188 - Markov Decision Processes & Bellman Equations
+  'vid-ai-14': 'rP7m-oP5y_M', // UC Berkeley CS188 - Value Iteration and Policy Iteration
+  'vid-ai-15': 'SaBMen_S3cM'  // CS50 AI - Bayesian Networks, D-Separation & Probabilistic Inference
+};
+
 export const videoSubjectMeta = {
   'BITS F112': {
     code: 'BITS F112',
@@ -1956,6 +2027,13 @@ export const topicVideoLectures = [
     slidesPdf: 'Lecture15_BayesianNetworks_DSeparation.pdf'
   }
 ];
+
+// Attach YouTube video ID and embed URL to all 61 lectures
+topicVideoLectures.forEach(video => {
+  const yId = videoEmbedMapping[video.id] || 'fNk_zzaMoSs';
+  video.youtubeId = yId;
+  video.embedUrl = `https://www.youtube-nocookie.com/embed/${yId}`;
+});
 
 export const videoStatistics = {
   totalLectures: topicVideoLectures.length,
