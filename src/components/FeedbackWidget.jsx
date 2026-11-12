@@ -1,23 +1,11 @@
-import React, { useState, useEffect } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import React, { useState } from 'react';
 import { FaTimes } from 'react-icons/fa';
 
 export default function FeedbackWidget() {
-  const location = useLocation();
   const [isOpen, setIsOpen] = useState(false);
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [message, setMessage] = useState('');
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-
-  useEffect(() => {
-    const checkAuth = () => {
-      setIsLoggedIn(localStorage.getItem('studentLoggedIn') === 'true');
-    };
-    checkAuth();
-    window.addEventListener('storage', checkAuth);
-    return () => window.removeEventListener('storage', checkAuth);
-  }, []);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -32,30 +20,15 @@ export default function FeedbackWidget() {
     setIsOpen(false);
   };
 
-  // Hide floating badge if already on the dashboard or login page to avoid clutter
-  const isOnPortalPage = location.pathname === '/studentlogin' || location.pathname === '/login' || location.pathname === '/dashboard';
-
   return (
     <>
-      {/* Floating Feedback Button */}
+      {/* Floating Button */}
       <button 
         className="feedback_floating_btn"
         onClick={() => setIsOpen(true)}
       >
         FEEDBACK
       </button>
-
-      {/* Floating Student Portal Pill (Always visible across public pages) */}
-      {!isOnPortalPage && (
-        <Link 
-          to={isLoggedIn ? "/dashboard" : "/studentlogin"} 
-          className="portal_floating_badge"
-          title="Access BITS WILP Student Portal"
-        >
-          <span style={{ fontSize: '16px' }}>🎓</span>
-          <span>{isLoggedIn ? 'PORTAL DASHBOARD' : 'STUDENT PORTAL'}</span>
-        </Link>
-      )}
 
       {/* Modal Dialog */}
       {isOpen && (
