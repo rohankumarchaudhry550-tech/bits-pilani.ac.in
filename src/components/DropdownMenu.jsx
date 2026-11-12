@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 export default function DropdownMenu({ menuId }) {
   
@@ -116,6 +117,7 @@ export default function DropdownMenu({ menuId }) {
       {
         campus: 'Pilani',
         links: [
+          { label: '🎓 WILP Student Portal Login', path: '/studentlogin', isInternal: true },
           { label: 'Duplicate Transcript Request', path: 'https://www.bits-pilani.ac.in/wp-content/uploads/DuplicateAcademicTranscriptRequestFormForOnRoll.pdf' },
           { label: 'Prevention of Sexual Harassment', path: 'https://www.bits-pilani.ac.in/prevention-of-sexual-harassment/' },
           { label: 'BITScan', path: 'https://www.bits-pilani.ac.in/pilani/bitscan/' }
@@ -124,6 +126,7 @@ export default function DropdownMenu({ menuId }) {
       {
         campus: 'Dubai',
         links: [
+          { label: '🎓 Student Portal Login', path: '/studentlogin', isInternal: true },
           { label: 'Student Facilities', path: 'https://www.bits-pilani.ac.in/dubai/student-facilities/' },
           { label: 'Photographic Views', path: 'https://www.bits-pilani.ac.in/dubai/photographic-views/' },
           { label: 'Picture Gallery', path: 'https://www.bits-pilani.ac.in/picture-gallery/' }
@@ -132,6 +135,7 @@ export default function DropdownMenu({ menuId }) {
       {
         campus: 'K K Birla Goa',
         links: [
+          { label: '🎓 Student Portal Login', path: '/studentlogin', isInternal: true },
           { label: 'Anti Ragging', path: 'https://www.bits-pilani.ac.in/goa/anti-ragging/' },
           { label: 'RE-OPENING OF CAMPUS - SOP', path: 'https://www.bits-pilani.ac.in/goa/re-opening-of-campus-sop/' },
           { label: 'National Service Scheme (NSS)', path: 'https://www.bits-pilani.ac.in/goa/nss/' }
@@ -140,6 +144,7 @@ export default function DropdownMenu({ menuId }) {
       {
         campus: 'Hyderabad',
         links: [
+          { label: '🎓 Student Portal Login', path: '/studentlogin', isInternal: true },
           { label: 'Student Welfare', path: 'https://swd.bits-pilani.ac.in/index.aspx' },
           { label: 'Events & Festivals', path: 'https://www.bits-pilani.ac.in/hyderabad/events-festivals/' },
           { label: 'My BITS My Voice', path: 'https://www.bits-pilani.ac.in/hyderabad/my-bits-my-voice/' }
@@ -264,15 +269,26 @@ export default function DropdownMenu({ menuId }) {
             {/* Divider lines listed list */}
             <div className="campus_col_links_list">
               {col.links.map((link, lIdx) => (
-                <a 
-                  key={lIdx} 
-                  href={link.path} 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="campus_col_link_item"
-                >
-                  {link.label}
-                </a>
+                link.isInternal ? (
+                  <Link
+                    key={lIdx}
+                    to={link.path}
+                    className="campus_col_link_item"
+                    style={{ color: '#e31e24', fontWeight: '700' }}
+                  >
+                    {link.label}
+                  </Link>
+                ) : (
+                  <a 
+                    key={lIdx} 
+                    href={link.path} 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="campus_col_link_item"
+                  >
+                    {link.label}
+                  </a>
+                )
               ))}
             </div>
           </div>

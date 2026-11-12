@@ -27,7 +27,11 @@ function App() {
         <Route path="/research" element={<Research />} />
         <Route path="/studentlogin" element={<Login />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/student-login" element={<Login />} />
+        <Route path="/portal" element={<Login />} />
+        <Route path="/student" element={<Login />} />
         <Route path="/dashboard" element={<StudentDashboard />} />
+        <Route path="/studentdashboard" element={<StudentDashboard />} />
         <Route path="*" element={<PageNotFound />} />
       </Routes>
 

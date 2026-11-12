@@ -47,6 +47,7 @@ export default function Header() {
     { label: 'DEPARTMENT', id: 'department' },
     { label: 'FACULTY', id: 'faculty' },
     { label: 'STUDENTS', id: 'students' },
+    { label: '🎓 STUDENT PORTAL', path: '/studentlogin', isPortal: true },
     { label: 'ALUMNI', path: '/alumni', ext: 'https://www.bits-pilani.ac.in/alumni/' }
   ];
 
@@ -67,7 +68,7 @@ export default function Header() {
           </div>
           
           <div className="top_nav_right">
-            {isLoggedIn && (
+            {isLoggedIn ? (
               <div className="top_student_auth">
                 <span className="student_name_label">
                   Welcome, {studentName}
@@ -75,6 +76,10 @@ export default function Header() {
                 <Link to="/dashboard" className="student_dash_link">PORTAL DASHBOARD</Link>
                 <button onClick={handleLogout} className="student_logout_btn">LOGOUT</button>
               </div>
+            ) : (
+              <Link to="/studentlogin" className="student_login_link" style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', background: '#e31e24', color: '#ffffff', border: '1px solid #e31e24', padding: '4px 12px', borderRadius: '4px', fontWeight: 'bold', textDecoration: 'none', fontSize: '11px', letterSpacing: '0.5px' }}>
+                <FaUser /> STUDENT LOGIN
+              </Link>
             )}
           </div>
         </div>
@@ -118,6 +123,16 @@ export default function Header() {
 
           {/* Search bar & Explore on the right */}
           <div className="header_right_wrapper">
+            {/* Direct Student Login Quick Pill */}
+            <Link 
+              to="/studentlogin" 
+              className="header_student_login_pill"
+              title="Access BITS Student Portal Login"
+            >
+              <FaUser style={{ marginRight: '6px', fontSize: '11px' }} />
+              <span>STUDENT LOGIN</span>
+            </Link>
+
             {/* Search Pill Input */}
             <div className="search_pill_container">
               <input 
@@ -214,6 +229,11 @@ export default function Header() {
                 {/* Links For Column */}
                 <div className="innav_col">
                   <div className="innav_hd">Links For</div>
+                  <div className="innav_l">
+                    <Link to="/studentlogin" onClick={() => setExploreOpen(false)} style={{ color: '#e31e24', fontWeight: 'bold' }}>
+                      🎓 Student Portal Login
+                    </Link>
+                  </div>
                   <div className="innav_l"><a href="https://www.bits-pilani.ac.in/bits-library/" target="_blank" rel="noopener noreferrer">BITS Library</a></div>
                   <div className="innav_l"><a href="https://www.bits-pilani.ac.in/admissions/" target="_blank" rel="noopener noreferrer">Admissions</a></div>
                   <div className="innav_l"><a href="https://www.bits-pilani.ac.in/faculty/" target="_blank" rel="noopener noreferrer">Faculty</a></div>
