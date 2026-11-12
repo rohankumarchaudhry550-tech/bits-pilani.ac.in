@@ -21,11 +21,12 @@ import {
   FaBolt,
   FaListUl,
   FaLayerGroup,
-  FaFileAlt
+  FaFileAlt,
+  FaVideo
 } from 'react-icons/fa';
 import { courseSyllabus, dailyNotes } from '../data/notesData';
 
-export default function NotesSection() {
+export default function NotesSection({ onOpenVideoLectures }) {
   const [viewMode, setViewMode] = useState('reader'); // 'reader' | 'syllabus' | 'cheatsheet'
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedSubject, setSelectedSubject] = useState('ALL');
@@ -250,6 +251,28 @@ export default function NotesSection() {
           >
             <FaBolt /> MST Quick Revision Cheat Sheet
           </button>
+
+          {onOpenVideoLectures && (
+            <button
+              onClick={onOpenVideoLectures}
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: '8px',
+                padding: '10px 18px',
+                borderRadius: '6px',
+                border: '1.5px solid #004b93',
+                backgroundColor: '#ffffff',
+                color: '#004b93',
+                fontWeight: '700',
+                fontSize: '13px',
+                cursor: 'pointer',
+                transition: 'all 0.2s'
+              }}
+            >
+              <FaVideo style={{ color: '#004b93' }} /> Topic Video Lectures (61) →
+            </button>
+          )}
         </div>
       </div>
 
@@ -542,6 +565,27 @@ export default function NotesSection() {
                 >
                   <FaPrint /> Print
                 </button>
+
+                {onOpenVideoLectures && (
+                  <button
+                    onClick={onOpenVideoLectures}
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '6px',
+                      padding: '6px 14px',
+                      borderRadius: '4px',
+                      backgroundColor: '#004b93',
+                      color: '#ffffff',
+                      border: 'none',
+                      fontSize: '12px',
+                      fontWeight: '700',
+                      cursor: 'pointer'
+                    }}
+                  >
+                    <FaVideo /> Watch Video Lecture
+                  </button>
+                )}
               </div>
             </div>
 

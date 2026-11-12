@@ -302,7 +302,7 @@ export default function MstResultsSection() {
             transition: 'all 0.2s'
           }}
         >
-          <FaAward /> Continuous Assessment (Weeks 1 to 10 Graded)
+          <FaAward /> Continuous Assessment (Weeks 1 to 12 Graded)
         </button>
 
         <button
@@ -1013,12 +1013,12 @@ export default function MstResultsSection() {
                 fontSize: '12.5px',
                 fontWeight: '700'
               }}>
-                🏆 Cumulative Average: 99.1% (Rank #1 of 45)
+                🏆 Cumulative Average: 99.2% (Rank #1 of 45)
               </div>
             </div>
 
             <p style={{ fontSize: '13px', color: '#475569', margin: 0, lineHeight: '1.5' }}>
-              All 10 evaluated continuous assessment submissions across all 4 subjects have been officially graded and recorded into the BITS Pilani central grading portal. Rohan Kumar Chaudhry holds the highest cumulative grade point in the cohort with a 99.1% average.
+              All 12 evaluated continuous assessment submissions across all 4 subjects have been officially graded and recorded into the BITS Pilani central grading portal. Rohan Kumar Chaudhry holds the highest cumulative grade point in the cohort with a 99.2% average.
             </p>
           </div>
 
@@ -1033,7 +1033,7 @@ export default function MstResultsSection() {
                   padding: '20px',
                   backgroundColor: '#ffffff',
                   boxShadow: '0 1px 3px rgba(0,0,0,0.03)',
-                  borderLeft: assign.status === 'Graded' ? '4px solid #16a34a' : '4px solid #f59e0b',
+                  borderLeft: assign.status === 'Graded' ? '4px solid #16a34a' : assign.status === 'In Progress' ? '4px solid #f59e0b' : '4px solid #94a3b8',
                   display: 'flex',
                   flexDirection: 'column',
                   justifyContent: 'space-between'
@@ -1058,14 +1058,14 @@ export default function MstResultsSection() {
                     </div>
 
                     <span style={{
-                      backgroundColor: assign.status === 'Graded' ? '#dcfce7' : '#fef3c7',
-                      color: assign.status === 'Graded' ? '#15803d' : '#b45309',
+                      backgroundColor: assign.status === 'Graded' ? '#dcfce7' : assign.status === 'In Progress' ? '#fef3c7' : '#f1f5f9',
+                      color: assign.status === 'Graded' ? '#15803d' : assign.status === 'In Progress' ? '#b45309' : '#64748b',
                       padding: '2px 8px',
                       borderRadius: '12px',
                       fontSize: '11px',
                       fontWeight: '700'
                     }}>
-                      {assign.status === 'Graded' ? `Graded • Rank #${assign.rankInClass}` : 'Active • Submission Open'}
+                      {assign.status === 'Graded' ? `Graded • Rank #${assign.rankInClass}` : assign.status === 'In Progress' ? 'Active • Open' : 'Upcoming'}
                     </span>
                   </div>
 
@@ -1110,8 +1110,8 @@ export default function MstResultsSection() {
                         {assign.score} <span style={{ fontSize: '12px', color: '#64748b', fontWeight: '500' }}>/ {assign.maxScore}</span>
                       </strong>
                     ) : (
-                      <strong style={{ fontSize: '14px', color: '#b45309', fontWeight: '800' }}>
-                        In Progress
+                      <strong style={{ fontSize: '13.5px', color: assign.status === 'In Progress' ? '#b45309' : '#64748b', fontWeight: '800' }}>
+                        {assign.status}
                       </strong>
                     )}
                   </div>

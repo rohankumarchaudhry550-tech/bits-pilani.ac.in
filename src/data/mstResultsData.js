@@ -1005,14 +1005,56 @@ export const assignmentResultsData = [
     title: 'Assignment 11: Probabilistic Graphical Models & Bayesian Networks',
     subjectCode: 'BITS F114',
     topics: 'Conditional Independence, D-Separation, Variable Elimination & Hidden Markov Models (HMM)',
-    submissionDate: 'Due 01 Nov 2026',
+    submissionDate: '01 Nov 2026',
+    evaluatedDate: '04 Nov 2026',
+    score: 100,
+    maxScore: 100,
+    status: 'Graded',
+    rankInClass: 1,
+    instructor: 'Prof. S. Das',
+    feedback: 'Flawless D-separation analysis on complex DAGs and exact variable elimination derivation. Grade: 100/100.'
+  },
+  {
+    week: 12,
+    title: 'Assignment 12: Convex Optimization & Constrained Duality',
+    subjectCode: 'BITS F112',
+    topics: 'Karush-Kuhn-Tucker (KKT) Optimality Conditions, Dual Lagrangian, Slater\'s Condition & Projected Gradient Descent',
+    submissionDate: '08 Nov 2026',
+    evaluatedDate: '11 Nov 2026',
+    score: 99,
+    maxScore: 100,
+    status: 'Graded',
+    rankInClass: 1,
+    instructor: 'Dr. A. Sen',
+    feedback: 'Rigorous derivation of dual gap and Slater\'s condition verification for non-affine constraints.'
+  },
+  {
+    week: 13,
+    title: 'Assignment 13: Ensemble Methods, XGBoost & Model Interpretability (SHAP/LIME)',
+    subjectCode: 'BITS F113',
+    topics: 'Gradient Boosted Trees (GBDT), Second-Order Taylor Loss Approximation in XGBoost, Feature Attributions via Shapley Values',
+    submissionDate: 'Due 15 Nov 2026',
     evaluatedDate: 'Pending Submission',
     score: 0,
     maxScore: 100,
     status: 'In Progress',
     rankInClass: '–',
+    instructor: 'Dr. K. Patel',
+    feedback: 'Active assignment portal. Notebook submission window open until Sunday, 15 Nov 2026, 11:59 PM IST.'
+  },
+  {
+    week: 14,
+    title: 'Assignment 14: Reinforcement Learning & Deep Q-Networks (DQN)',
+    subjectCode: 'BITS F114',
+    topics: 'Markov Decision Processes, Value/Policy Iteration, Q-Learning & Experience Replay Buffer Dynamics',
+    submissionDate: 'Due 22 Nov 2026',
+    evaluatedDate: 'Upcoming',
+    score: 0,
+    maxScore: 100,
+    status: 'Upcoming',
+    rankInClass: '–',
     instructor: 'Prof. S. Das',
-    feedback: 'Assignment portal active. Submissions open until Sunday, 01 Nov 2026, 11:59 PM IST.'
+    feedback: 'Problem statement to be released following Lecture 14 on Monday, 16 Nov 2026.'
   }
 ];
 

@@ -21,6 +21,7 @@ import {
 } from 'react-icons/fa';
 import NotesSection from '../components/NotesSection';
 import MstResultsSection from '../components/MstResultsSection';
+import VideoLecturesSection from '../components/VideoLecturesSection';
 
 export default function StudentDashboard() {
   const navigate = useNavigate();
@@ -255,6 +256,37 @@ export default function StudentDashboard() {
           </button>
 
           <button
+            onClick={() => setActiveTab('videos')}
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '10px',
+              padding: '12px 22px',
+              borderRadius: '6px',
+              border: activeTab === 'videos' ? '2px solid #004b93' : '1px solid #cbd5e1',
+              backgroundColor: activeTab === 'videos' ? '#004b93' : '#ffffff',
+              color: activeTab === 'videos' ? '#ffffff' : '#334155',
+              fontWeight: '700',
+              fontSize: '14px',
+              cursor: 'pointer',
+              boxShadow: activeTab === 'videos' ? '0 2px 6px rgba(0, 75, 147, 0.25)' : 'none',
+              transition: 'all 0.2s'
+            }}
+          >
+            <FaVideo style={{ color: activeTab === 'videos' ? '#fef08a' : '#004b93' }} /> Topic Video Lectures
+            <span style={{
+              backgroundColor: activeTab === 'videos' ? '#fef08a' : '#004b93',
+              color: activeTab === 'videos' ? '#0f172a' : '#ffffff',
+              padding: '2px 8px',
+              borderRadius: '12px',
+              fontSize: '11px',
+              fontWeight: '800'
+            }}>
+              61 Classes
+            </span>
+          </button>
+
+          <button
             onClick={() => setActiveTab('notes')}
             style={{
               display: 'flex',
@@ -310,8 +342,10 @@ export default function StudentDashboard() {
         {/* Tab Content Display */}
         {activeTab === 'mst' ? (
           <MstResultsSection />
+        ) : activeTab === 'videos' ? (
+          <VideoLecturesSection onOpenNotes={(noteId) => setActiveTab('notes')} />
         ) : activeTab === 'notes' ? (
-          <NotesSection />
+          <NotesSection onOpenVideoLectures={() => setActiveTab('videos')} />
         ) : (
           /* Main Grid: Left = Schedule & Syllabus, Right = Profile details */
           <div style={{ display: 'grid', gridTemplateColumns: '3fr 1.3fr', gap: '30px' }} className="dashboard_grid">
@@ -356,6 +390,49 @@ export default function StudentDashboard() {
                   }}
                 >
                   View Lecture Notes →
+                </button>
+              </div>
+
+              {/* Quick Jump to Video Lectures Banner */}
+              <div style={{
+                backgroundColor: '#f0fdf4',
+                border: '1.5px solid #bbf7d0',
+                borderRadius: '8px',
+                padding: '18px 24px',
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                flexWrap: 'wrap',
+                gap: '15px'
+              }}>
+                <div>
+                  <span style={{ fontSize: '11.5px', fontWeight: '700', color: '#16a34a', textTransform: 'uppercase' }}>
+                    🎥 Topic-Wise Video Lecture Archives
+                  </span>
+                  <h4 style={{ fontSize: '16.5px', color: '#14532d', fontWeight: '700', margin: '3px 0 2px' }}>
+                    61 Recorded HD Lectures & Masterclasses (62+ Hours)
+                  </h4>
+                  <p style={{ fontSize: '12.5px', color: '#475569', margin: 0 }}>
+                    Full HD video player with clickable chapter timestamps, whiteboard derivations, and slides.
+                  </p>
+                </div>
+                <button
+                  onClick={() => setActiveTab('videos')}
+                  style={{
+                    backgroundColor: '#16a34a',
+                    color: '#ffffff',
+                    border: 'none',
+                    padding: '9px 18px',
+                    borderRadius: '5px',
+                    fontWeight: '700',
+                    fontSize: '13px',
+                    cursor: 'pointer',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '6px'
+                  }}
+                >
+                  <FaVideo /> Watch Video Lectures →
                 </button>
               </div>
 
@@ -485,7 +562,7 @@ export default function StudentDashboard() {
               </div>
 
               <p style={{ fontSize: '14px', color: 'var(--text-gray)', marginBottom: '20px', lineHeight: '1.5' }}>
-                Here are your evaluation details for the continuous assessments conducted during Weeks 1 to 10. You are currently leading the batch of 45 students with an outstanding cumulative performance of 99.1%. Keep it up!
+                Here are your evaluation details for the continuous assessments conducted during Weeks 1 to 12. You are currently leading the batch of 45 students with an outstanding cumulative performance of 99.2%. Keep it up!
               </p>
 
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }} className="dashboard_grid">
@@ -710,24 +787,90 @@ export default function StudentDashboard() {
                   </div>
                 </div>
 
-                {/* Assignment 11 Card (Active / In Progress) */}
-                <div style={{ border: '1px solid #fed7aa', borderRadius: '6px', padding: '20px', backgroundColor: '#fffbf5', borderLeft: '4px solid #f59e0b', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+                {/* Assignment 11 Card */}
+                <div style={{ border: '1px solid #e5e7eb', borderRadius: '6px', padding: '20px', backgroundColor: '#fdfdfd', borderLeft: '4px solid #16a34a', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
                   <div>
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '10px' }}>
                       <span style={{ fontSize: '11px', fontWeight: '700', textTransform: 'uppercase', color: 'var(--text-gray)', letterSpacing: '0.5px' }}>Week 11 Assessment</span>
-                      <span style={{ backgroundColor: '#fef3c7', color: '#b45309', padding: '2px 8px', borderRadius: '12px', fontSize: '11px', fontWeight: '700' }}>Active • In Progress</span>
+                      <span style={{ backgroundColor: '#dcfce7', color: '#15803d', padding: '2px 8px', borderRadius: '12px', fontSize: '11px', fontWeight: '700' }}>Graded</span>
                     </div>
                     <h4 style={{ fontSize: '15px', color: 'var(--primary-dark)', fontWeight: '600', marginBottom: '8px' }}>Assignment 11: Probabilistic Graphical Models & HMMs</h4>
                     <p style={{ fontSize: '12.5px', color: 'var(--text-gray)' }}>Topics: Conditional Independence, D-Separation, Variable Elimination & Hidden Markov Models</p>
                   </div>
+                  <div style={{ marginTop: '20px', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', borderTop: '1px solid #f3f4f6', paddingTop: '12px' }}>
+                    <div>
+                      <span style={{ fontSize: '11px', color: 'var(--text-gray)', display: 'block' }}>Submission Date</span>
+                      <span style={{ fontSize: '12.5px', fontWeight: '600', color: 'var(--text-dark)' }}>01 Nov 2026</span>
+                    </div>
+                    <div style={{ textAlign: 'right' }}>
+                      <span style={{ fontSize: '11px', color: 'var(--text-gray)', display: 'block' }}>Obtained Score</span>
+                      <span style={{ fontSize: '20px', fontWeight: '800', color: '#16a34a' }}>100 <span style={{ fontSize: '13px', fontWeight: '500', color: 'var(--text-gray)' }}>/ 100</span></span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Assignment 12 Card */}
+                <div style={{ border: '1px solid #e5e7eb', borderRadius: '6px', padding: '20px', backgroundColor: '#fdfdfd', borderLeft: '4px solid #16a34a', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+                  <div>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '10px' }}>
+                      <span style={{ fontSize: '11px', fontWeight: '700', textTransform: 'uppercase', color: 'var(--text-gray)', letterSpacing: '0.5px' }}>Week 12 Assessment</span>
+                      <span style={{ backgroundColor: '#dcfce7', color: '#15803d', padding: '2px 8px', borderRadius: '12px', fontSize: '11px', fontWeight: '700' }}>Graded</span>
+                    </div>
+                    <h4 style={{ fontSize: '15px', color: 'var(--primary-dark)', fontWeight: '600', marginBottom: '8px' }}>Assignment 12: Convex Optimization & Duality</h4>
+                    <p style={{ fontSize: '12.5px', color: 'var(--text-gray)' }}>Topics: KKT Optimality Conditions, Dual Lagrangian, Slater's Condition & Projected GD</p>
+                  </div>
+                  <div style={{ marginTop: '20px', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', borderTop: '1px solid #f3f4f6', paddingTop: '12px' }}>
+                    <div>
+                      <span style={{ fontSize: '11px', color: 'var(--text-gray)', display: 'block' }}>Submission Date</span>
+                      <span style={{ fontSize: '12.5px', fontWeight: '600', color: 'var(--text-dark)' }}>08 Nov 2026</span>
+                    </div>
+                    <div style={{ textAlign: 'right' }}>
+                      <span style={{ fontSize: '11px', color: 'var(--text-gray)', display: 'block' }}>Obtained Score</span>
+                      <span style={{ fontSize: '20px', fontWeight: '800', color: '#16a34a' }}>99 <span style={{ fontSize: '13px', fontWeight: '500', color: 'var(--text-gray)' }}>/ 100</span></span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Assignment 13 Card (Active / In Progress) */}
+                <div style={{ border: '1px solid #fed7aa', borderRadius: '6px', padding: '20px', backgroundColor: '#fffbf5', borderLeft: '4px solid #f59e0b', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+                  <div>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '10px' }}>
+                      <span style={{ fontSize: '11px', fontWeight: '700', textTransform: 'uppercase', color: 'var(--text-gray)', letterSpacing: '0.5px' }}>Week 13 Assessment</span>
+                      <span style={{ backgroundColor: '#fef3c7', color: '#b45309', padding: '2px 8px', borderRadius: '12px', fontSize: '11px', fontWeight: '700' }}>Active • In Progress</span>
+                    </div>
+                    <h4 style={{ fontSize: '15px', color: 'var(--primary-dark)', fontWeight: '600', marginBottom: '8px' }}>Assignment 13: Ensemble Methods & XGBoost (SHAP/LIME)</h4>
+                    <p style={{ fontSize: '12.5px', color: 'var(--text-gray)' }}>Topics: Gradient Boosted Trees, Second-Order Loss in XGBoost & Feature Attributions via Shapley Values</p>
+                  </div>
                   <div style={{ marginTop: '20px', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', borderTop: '1px solid #fed7aa', paddingTop: '12px' }}>
                     <div>
                       <span style={{ fontSize: '11px', color: 'var(--text-gray)', display: 'block' }}>Due Date</span>
-                      <span style={{ fontSize: '12.5px', fontWeight: '600', color: '#b45309' }}>01 Nov 2026 (11:59 PM)</span>
+                      <span style={{ fontSize: '12.5px', fontWeight: '600', color: '#b45309' }}>15 Nov 2026 (11:59 PM)</span>
                     </div>
                     <div style={{ textAlign: 'right' }}>
                       <span style={{ fontSize: '11px', color: 'var(--text-gray)', display: 'block' }}>Submission Status</span>
                       <span style={{ fontSize: '13.5px', fontWeight: '800', color: '#b45309' }}>Open for Submission</span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Assignment 14 Card (Upcoming) */}
+                <div style={{ border: '1px solid #e2e8f0', borderRadius: '6px', padding: '20px', backgroundColor: '#f8fafc', borderLeft: '4px solid #94a3b8', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+                  <div>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '10px' }}>
+                      <span style={{ fontSize: '11px', fontWeight: '700', textTransform: 'uppercase', color: 'var(--text-gray)', letterSpacing: '0.5px' }}>Week 14 Assessment</span>
+                      <span style={{ backgroundColor: '#f1f5f9', color: '#64748b', padding: '2px 8px', borderRadius: '12px', fontSize: '11px', fontWeight: '700' }}>Upcoming</span>
+                    </div>
+                    <h4 style={{ fontSize: '15px', color: '#0f172a', fontWeight: '600', marginBottom: '8px' }}>Assignment 14: Reinforcement Learning & Deep Q-Networks</h4>
+                    <p style={{ fontSize: '12.5px', color: 'var(--text-gray)' }}>Topics: Markov Decision Processes, Value/Policy Iteration, Q-Learning & Experience Replay Dynamics</p>
+                  </div>
+                  <div style={{ marginTop: '20px', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', borderTop: '1px solid #e2e8f0', paddingTop: '12px' }}>
+                    <div>
+                      <span style={{ fontSize: '11px', color: 'var(--text-gray)', display: 'block' }}>Scheduled Release</span>
+                      <span style={{ fontSize: '12.5px', fontWeight: '600', color: '#475569' }}>16 Nov 2026</span>
+                    </div>
+                    <div style={{ textAlign: 'right' }}>
+                      <span style={{ fontSize: '11px', color: 'var(--text-gray)', display: 'block' }}>Deadline</span>
+                      <span style={{ fontSize: '13.5px', fontWeight: '700', color: '#64748b' }}>22 Nov 2026</span>
                     </div>
                   </div>
                 </div>
@@ -891,6 +1034,27 @@ export default function StudentDashboard() {
                     }}
                   >
                     <FaTrophy style={{ color: '#fef08a' }} /> MST Scorecard & Ranking
+                  </button>
+
+                  <button
+                    onClick={() => setActiveTab('videos')}
+                    style={{
+                      width: '100%',
+                      padding: '10px',
+                      backgroundColor: '#004b93',
+                      color: '#ffffff',
+                      border: 'none',
+                      borderRadius: '4px',
+                      fontWeight: '700',
+                      fontSize: '12.5px',
+                      cursor: 'pointer',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      gap: '8px'
+                    }}
+                  >
+                    <FaVideo style={{ color: '#fef08a' }} /> Watch Video Lectures (61)
                   </button>
 
                   <button
