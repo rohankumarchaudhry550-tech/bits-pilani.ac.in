@@ -960,17 +960,17 @@ export const assignmentResultsData = [
   },
   {
     week: 8,
-    title: 'Assignment 8: Dimensionality Reduction, SVD & Spectral Clustering',
-    subjectCode: 'BITS F112',
-    topics: 'Principal Component Analysis (PCA), Truncated SVD, Kernel Methods & Graph Laplacians',
+    title: 'Diwali Recess • Academic Holiday (No Assignment Scheduled)',
+    subjectCode: 'DIWALI BREAK',
+    topics: 'Mid-Semester Diwali Festival Break observed across BITS Pilani campuses and WILP programs',
     submissionDate: '11 Oct 2026',
-    evaluatedDate: '13 Oct 2026',
-    score: 100,
-    maxScore: 100,
-    status: 'Graded',
-    rankInClass: 1,
-    instructor: 'Dr. A. Sen',
-    feedback: 'Outstanding 100/100. Flawless mathematical proof of variance maximization via Rayleigh quotient.'
+    evaluatedDate: 'Exempt (Holiday)',
+    score: null,
+    maxScore: null,
+    status: 'Diwali Break',
+    rankInClass: null,
+    instructor: 'Academic Administration',
+    feedback: 'No assignment scheduled on account of Diwali festival break. Academic schedule resumed in Week 9.'
   },
   {
     week: 9,

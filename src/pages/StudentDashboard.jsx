@@ -562,7 +562,7 @@ export default function StudentDashboard() {
               </div>
 
               <p style={{ fontSize: '14px', color: 'var(--text-gray)', marginBottom: '20px', lineHeight: '1.5' }}>
-                Here are your evaluation details for the continuous assessments conducted during Weeks 1 to 12. You are currently leading the batch of 45 students with an outstanding cumulative performance of 99.2%. Keep it up!
+                Here are your evaluation details for the continuous assessments conducted during Weeks 1 to 12 (11 graded assignments, Week 8 observed as Diwali Break with no assignment scheduled). You are currently leading the batch of 45 students with an outstanding cumulative performance of 99.1%. Keep it up!
               </p>
 
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }} className="dashboard_grid">
@@ -721,24 +721,24 @@ export default function StudentDashboard() {
                   </div>
                 </div>
 
-                {/* Assignment 8 Card */}
-                <div style={{ border: '1px solid #e5e7eb', borderRadius: '6px', padding: '20px', backgroundColor: '#fdfdfd', borderLeft: '4px solid #16a34a', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+                {/* Assignment 8 Card: Diwali Break */}
+                <div style={{ border: '1px solid #fed7aa', borderRadius: '6px', padding: '20px', backgroundColor: '#fffbeb', borderLeft: '4px solid #f59e0b', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
                   <div>
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '10px' }}>
-                      <span style={{ fontSize: '11px', fontWeight: '700', textTransform: 'uppercase', color: 'var(--text-gray)', letterSpacing: '0.5px' }}>Week 8 Assessment</span>
-                      <span style={{ backgroundColor: '#dcfce7', color: '#15803d', padding: '2px 8px', borderRadius: '12px', fontSize: '11px', fontWeight: '700' }}>Graded</span>
+                      <span style={{ fontSize: '11px', fontWeight: '700', textTransform: 'uppercase', color: '#b45309', letterSpacing: '0.5px' }}>Week 8 • Academic Recess</span>
+                      <span style={{ backgroundColor: '#fef3c7', color: '#b45309', padding: '2px 8px', borderRadius: '12px', fontSize: '11px', fontWeight: '700' }}>🪔 Diwali Break</span>
                     </div>
-                    <h4 style={{ fontSize: '15px', color: 'var(--primary-dark)', fontWeight: '600', marginBottom: '8px' }}>Assignment 8: Dimensionality Reduction & Spectral Clustering</h4>
-                    <p style={{ fontSize: '12.5px', color: 'var(--text-gray)' }}>Topics: Principal Component Analysis (PCA), Truncated SVD, Kernel Methods</p>
+                    <h4 style={{ fontSize: '15px', color: 'var(--primary-dark)', fontWeight: '600', marginBottom: '8px' }}>Week 8: Diwali Vacation (No Assignment Scheduled)</h4>
+                    <p style={{ fontSize: '12.5px', color: 'var(--text-gray)' }}>Mid-Semester Diwali Festival Break observed across BITS Pilani campuses and WILP programs.</p>
                   </div>
-                  <div style={{ marginTop: '20px', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', borderTop: '1px solid #f3f4f6', paddingTop: '12px' }}>
+                  <div style={{ marginTop: '20px', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', borderTop: '1px solid #fde68a', paddingTop: '12px' }}>
                     <div>
-                      <span style={{ fontSize: '11px', color: 'var(--text-gray)', display: 'block' }}>Submission Date</span>
-                      <span style={{ fontSize: '12.5px', fontWeight: '600', color: 'var(--text-dark)' }}>11 Oct 2026</span>
+                      <span style={{ fontSize: '11px', color: 'var(--text-gray)', display: 'block' }}>Academic Calendar</span>
+                      <span style={{ fontSize: '12.5px', fontWeight: '600', color: 'var(--text-dark)' }}>11 Oct 2026 (Holiday)</span>
                     </div>
                     <div style={{ textAlign: 'right' }}>
-                      <span style={{ fontSize: '11px', color: 'var(--text-gray)', display: 'block' }}>Obtained Score</span>
-                      <span style={{ fontSize: '20px', fontWeight: '800', color: '#16a34a' }}>100 <span style={{ fontSize: '13px', fontWeight: '500', color: 'var(--text-gray)' }}>/ 100</span></span>
+                      <span style={{ fontSize: '11px', color: 'var(--text-gray)', display: 'block' }}>Assessment Status</span>
+                      <span style={{ fontSize: '16px', fontWeight: '800', color: '#b45309' }}>Exempt / Recess</span>
                     </div>
                   </div>
                 </div>

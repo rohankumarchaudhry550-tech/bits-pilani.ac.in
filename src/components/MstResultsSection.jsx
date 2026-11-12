@@ -302,7 +302,7 @@ export default function MstResultsSection() {
             transition: 'all 0.2s'
           }}
         >
-          <FaAward /> Continuous Assessment (Weeks 1 to 12 Graded)
+          <FaAward /> Continuous Assessment (Weeks 1 to 12 • 11 Graded & Diwali Break)
         </button>
 
         <button
@@ -1013,111 +1013,121 @@ export default function MstResultsSection() {
                 fontSize: '12.5px',
                 fontWeight: '700'
               }}>
-                🏆 Cumulative Average: 99.2% (Rank #1 of 45)
+                🏆 Cumulative Average: 99.1% (Rank #1 of 45)
               </div>
             </div>
 
             <p style={{ fontSize: '13px', color: '#475569', margin: 0, lineHeight: '1.5' }}>
-              All 12 evaluated continuous assessment submissions across all 4 subjects have been officially graded and recorded into the BITS Pilani central grading portal. Rohan Kumar Chaudhry holds the highest cumulative grade point in the cohort with a 99.2% average.
+              All 11 evaluated continuous assessment submissions across all 4 subjects have been officially graded and recorded into the BITS Pilani central grading portal (Week 8 observed as Diwali Break with no assignment scheduled). Rohan Kumar Chaudhry holds the highest cumulative grade point in the cohort with a 99.1% average (1090/1100 marks).
             </p>
           </div>
 
           {/* Grid of Weekly Assignments */}
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(400px, 1fr))', gap: '18px' }}>
-            {assignmentResultsData.map((assign, idx) => (
-              <div
-                key={idx}
-                style={{
-                  border: '1px solid #e2e8f0',
-                  borderRadius: '8px',
-                  padding: '20px',
-                  backgroundColor: '#ffffff',
-                  boxShadow: '0 1px 3px rgba(0,0,0,0.03)',
-                  borderLeft: assign.status === 'Graded' ? '4px solid #16a34a' : assign.status === 'In Progress' ? '4px solid #f59e0b' : '4px solid #94a3b8',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  justifyContent: 'space-between'
-                }}
-              >
-                <div>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '10px' }}>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+            {assignmentResultsData.map((assign, idx) => {
+              const isDiwali = assign.status === 'Diwali Break';
+              const isGraded = assign.status === 'Graded';
+              const isInProgress = assign.status === 'In Progress';
+
+              return (
+                <div
+                  key={idx}
+                  style={{
+                    border: isDiwali ? '1px solid #fed7aa' : '1px solid #e2e8f0',
+                    borderRadius: '8px',
+                    padding: '20px',
+                    backgroundColor: isDiwali ? '#fffbeb' : '#ffffff',
+                    boxShadow: '0 1px 3px rgba(0,0,0,0.03)',
+                    borderLeft: isGraded ? '4px solid #16a34a' : isDiwali ? '4px solid #f59e0b' : isInProgress ? '4px solid #0284c7' : '4px solid #94a3b8',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    justifyContent: 'space-between'
+                  }}
+                >
+                  <div>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '10px' }}>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                        <span style={{
+                          backgroundColor: isDiwali ? '#fef3c7' : '#eff6ff',
+                          color: isDiwali ? '#b45309' : '#1d4ed8',
+                          padding: '2px 8px',
+                          borderRadius: '4px',
+                          fontSize: '11px',
+                          fontWeight: '800'
+                        }}>
+                          {assign.subjectCode}
+                        </span>
+                        <span style={{ fontSize: '11px', fontWeight: '700', textTransform: 'uppercase', color: isDiwali ? '#b45309' : '#64748b' }}>
+                          Week {assign.week} {isDiwali ? '• Recess' : 'Assessment'}
+                        </span>
+                      </div>
+
                       <span style={{
-                        backgroundColor: '#eff6ff',
-                        color: '#1d4ed8',
+                        backgroundColor: isGraded ? '#dcfce7' : isDiwali ? '#fef3c7' : isInProgress ? '#e0f2fe' : '#f1f5f9',
+                        color: isGraded ? '#15803d' : isDiwali ? '#b45309' : isInProgress ? '#0284c7' : '#64748b',
                         padding: '2px 8px',
-                        borderRadius: '4px',
+                        borderRadius: '12px',
                         fontSize: '11px',
-                        fontWeight: '800'
+                        fontWeight: '700'
                       }}>
-                        {assign.subjectCode}
-                      </span>
-                      <span style={{ fontSize: '11px', fontWeight: '700', textTransform: 'uppercase', color: '#64748b' }}>
-                        Week {assign.week} Assessment
+                        {isGraded ? `Graded • Rank #${assign.rankInClass}` : isDiwali ? '🪔 Diwali Recess • Exempt' : isInProgress ? 'Active • Open' : 'Upcoming'}
                       </span>
                     </div>
 
-                    <span style={{
-                      backgroundColor: assign.status === 'Graded' ? '#dcfce7' : assign.status === 'In Progress' ? '#fef3c7' : '#f1f5f9',
-                      color: assign.status === 'Graded' ? '#15803d' : assign.status === 'In Progress' ? '#b45309' : '#64748b',
-                      padding: '2px 8px',
-                      borderRadius: '12px',
-                      fontSize: '11px',
-                      fontWeight: '700'
-                    }}>
-                      {assign.status === 'Graded' ? `Graded • Rank #${assign.rankInClass}` : assign.status === 'In Progress' ? 'Active • Open' : 'Upcoming'}
-                    </span>
-                  </div>
+                    <h4 style={{ fontSize: '15px', color: '#0f172a', fontWeight: '700', margin: '4px 0 6px' }}>
+                      {assign.title}
+                    </h4>
+                    <p style={{ fontSize: '12px', color: '#475569', margin: '0 0 10px', lineHeight: '1.4' }}>
+                      <strong>Topics:</strong> {assign.topics}
+                    </p>
 
-                  <h4 style={{ fontSize: '15px', color: '#0f172a', fontWeight: '700', margin: '4px 0 6px' }}>
-                    {assign.title}
-                  </h4>
-                  <p style={{ fontSize: '12px', color: '#475569', margin: '0 0 10px', lineHeight: '1.4' }}>
-                    <strong>Topics:</strong> {assign.topics}
-                  </p>
+                    <div style={{
+                      backgroundColor: isDiwali ? '#fef3c7' : '#f8fafc',
+                      border: isDiwali ? '1px solid #fde68a' : '1px solid #f1f5f9',
+                      borderRadius: '4px',
+                      padding: '8px 10px',
+                      fontSize: '11.5px',
+                      color: isDiwali ? '#92400e' : '#334155',
+                      fontStyle: 'italic',
+                      marginBottom: '14px'
+                    }}>
+                      💬 "{assign.feedback}"
+                    </div>
+                  </div>
 
                   <div style={{
-                    backgroundColor: '#f8fafc',
-                    border: '1px solid #f1f5f9',
-                    borderRadius: '4px',
-                    padding: '8px 10px',
-                    fontSize: '11.5px',
-                    color: '#334155',
-                    fontStyle: 'italic',
-                    marginBottom: '14px'
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    alignItems: 'flex-end',
+                    borderTop: isDiwali ? '1px solid #fde68a' : '1px solid #f1f5f9',
+                    paddingTop: '10px',
+                    fontSize: '12px'
                   }}>
-                    💬 "{assign.feedback}"
+                    <div>
+                      <span style={{ color: '#94a3b8', display: 'block', fontSize: '10.5px' }}>
+                        {isGraded ? 'Submitted on' : isDiwali ? 'Calendar' : 'Deadline'}
+                      </span>
+                      <strong style={{ color: '#334155' }}>{assign.submissionDate}</strong>
+                    </div>
+
+                    <div style={{ textAlign: 'right' }}>
+                      <span style={{ color: '#94a3b8', display: 'block', fontSize: '10.5px' }}>
+                        {isGraded ? 'Score Obtained' : 'Status'}
+                      </span>
+                      {isGraded ? (
+                        <strong style={{ fontSize: '20px', color: '#16a34a', fontWeight: '900' }}>
+                          {assign.score} <span style={{ fontSize: '12px', color: '#64748b', fontWeight: '500' }}>/ {assign.maxScore}</span>
+                        </strong>
+                      ) : (
+                        <strong style={{ fontSize: '13.5px', color: isDiwali ? '#b45309' : isInProgress ? '#0284c7' : '#64748b', fontWeight: '800' }}>
+                          {isDiwali ? 'Exempt / Break' : assign.status}
+                        </strong>
+                      )}
+                    </div>
                   </div>
                 </div>
-
-                <div style={{
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                  alignItems: 'flex-end',
-                  borderTop: '1px solid #f1f5f9',
-                  paddingTop: '10px',
-                  fontSize: '12px'
-                }}>
-                  <div>
-                    <span style={{ color: '#94a3b8', display: 'block', fontSize: '10.5px' }}>{assign.status === 'Graded' ? 'Submitted on' : 'Deadline'}</span>
-                    <strong style={{ color: '#334155' }}>{assign.submissionDate}</strong>
-                  </div>
-
-                  <div style={{ textAlign: 'right' }}>
-                    <span style={{ color: '#94a3b8', display: 'block', fontSize: '10.5px' }}>{assign.status === 'Graded' ? 'Score Obtained' : 'Status'}</span>
-                    {assign.status === 'Graded' ? (
-                      <strong style={{ fontSize: '20px', color: '#16a34a', fontWeight: '900' }}>
-                        {assign.score} <span style={{ fontSize: '12px', color: '#64748b', fontWeight: '500' }}>/ {assign.maxScore}</span>
-                      </strong>
-                    ) : (
-                      <strong style={{ fontSize: '13.5px', color: assign.status === 'In Progress' ? '#b45309' : '#64748b', fontWeight: '800' }}>
-                        {assign.status}
-                      </strong>
-                    )}
-                  </div>
-                </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
 
         </div>
