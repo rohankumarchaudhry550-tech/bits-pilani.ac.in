@@ -11,7 +11,11 @@ export const mstSubjectMeta = {
     code: 'BITS F112',
     name: 'Mathematical Foundations for Machine Learning',
     instructor: 'Dr. A. Sen',
-    examDate: '03 Oct 2026 (Morning 11:00 AM – 01:00 PM)',
+    dayBadge: 'Day 1: 17 Nov 2026 (Tuesday)',
+    examDate: '17 Nov 2026 (06:30 PM – 09:00 PM)',
+    timeSlot: '06:30 PM – 09:00 PM',
+    duration: '2.5 Hours (150 Mins)',
+    venue: 'Online Exam Hall 1 (WILP Proctored Portal)',
     maxMarks: 40,
     weightage: '30%',
     classAvg: 29.8,
@@ -23,7 +27,11 @@ export const mstSubjectMeta = {
     code: 'BITS F111',
     name: 'Introduction to Statistical Methods',
     instructor: 'Prof. R. Sharma',
-    examDate: '03 Oct 2026 (Evening 03:00 PM – 05:00 PM)',
+    dayBadge: 'Day 2: 18 Nov 2026 (Wednesday)',
+    examDate: '18 Nov 2026 (06:30 PM – 09:00 PM)',
+    timeSlot: '06:30 PM – 09:00 PM',
+    duration: '2.5 Hours (150 Mins)',
+    venue: 'Online Exam Hall 2 (WILP Proctored Portal)',
     maxMarks: 40,
     weightage: '30%',
     classAvg: 29.1,
@@ -35,7 +43,11 @@ export const mstSubjectMeta = {
     code: 'BITS F113',
     name: 'Machine Learning',
     instructor: 'Dr. K. Patel',
-    examDate: '04 Oct 2026 (Morning 11:00 AM – 01:00 PM)',
+    dayBadge: 'Day 3: 19 Nov 2026 (Thursday)',
+    examDate: '19 Nov 2026 (06:30 PM – 09:00 PM)',
+    timeSlot: '06:30 PM – 09:00 PM',
+    duration: '2.5 Hours (150 Mins)',
+    venue: 'Online Exam Hall 1 (WILP Proctored Portal)',
     maxMarks: 40,
     weightage: '30%',
     classAvg: 30.6,
@@ -47,7 +59,11 @@ export const mstSubjectMeta = {
     code: 'BITS F114',
     name: 'Artificial and Computational Intelligence',
     instructor: 'Prof. S. Das',
-    examDate: '05 Oct 2026 (Evening 06:00 PM – 08:00 PM)',
+    dayBadge: 'Day 4: 20 Nov 2026 (Friday)',
+    examDate: '20 Nov 2026 (06:30 PM – 09:00 PM)',
+    timeSlot: '06:30 PM – 09:00 PM',
+    duration: '2.5 Hours (150 Mins)',
+    venue: 'Online Exam Hall 3 (WILP Proctored Portal)',
     maxMarks: 40,
     weightage: '30%',
     classAvg: 30.9,
@@ -56,6 +72,74 @@ export const mstSubjectMeta = {
     syllabusCovered: 'Heuristic Search (A*), Adversarial Search, Knowledge Representation & First-Order Logic'
   }
 };
+
+// Consolidated 4-Day Official MST Exam Schedule (17 Nov - 20 Nov 2026, 06:30 PM to 09:00 PM Daily)
+export const mstScheduleData = [
+  {
+    dayNumber: 'Day 1 of 4',
+    dayBadge: '17 Nov 2026 - Tuesday',
+    date: '17 November 2026',
+    timeSlot: '06:30 PM – 09:00 PM',
+    duration: '2.5 Hours (150 Mins)',
+    code: 'BITS F112',
+    subject: 'Mathematical Foundations for Machine Learning',
+    instructor: 'Dr. A. Sen',
+    room: 'Online Exam Hall 1 (WILP Proctored Portal)',
+    badgeColor: '#b91c1c',
+    status: 'Admit Card Ready • Hall Ticket Verified',
+    topics: 'Linear Algebra, Vector Spaces, Eigenvalues & SVD, Vector Calculus, Optimization & Gradient Descent',
+    maxMarks: 40,
+    weightage: '30%'
+  },
+  {
+    dayNumber: 'Day 2 of 4',
+    dayBadge: '18 Nov 2026 - Wednesday',
+    date: '18 November 2026',
+    timeSlot: '06:30 PM – 09:00 PM',
+    duration: '2.5 Hours (150 Mins)',
+    code: 'BITS F111',
+    subject: 'Introduction to Statistical Methods',
+    instructor: 'Prof. R. Sharma',
+    room: 'Online Exam Hall 2 (WILP Proctored Portal)',
+    badgeColor: '#b91c1c',
+    status: 'Admit Card Ready • Hall Ticket Verified',
+    topics: 'Probability Distributions, Sampling Distributions, Hypothesis Testing, ANOVA & Multiple Regression Analysis',
+    maxMarks: 40,
+    weightage: '30%'
+  },
+  {
+    dayNumber: 'Day 3 of 4',
+    dayBadge: '19 Nov 2026 - Thursday',
+    date: '19 November 2026',
+    timeSlot: '06:30 PM – 09:00 PM',
+    duration: '2.5 Hours (150 Mins)',
+    code: 'BITS F113',
+    subject: 'Machine Learning',
+    instructor: 'Dr. K. Patel',
+    room: 'Online Exam Hall 1 (WILP Proctored Portal)',
+    badgeColor: '#b91c1c',
+    status: 'Admit Card Ready • Hall Ticket Verified',
+    topics: 'Supervised Learning, Loss Functions, Decision Trees, Ensembles, SVMs & Regularization',
+    maxMarks: 40,
+    weightage: '30%'
+  },
+  {
+    dayNumber: 'Day 4 of 4',
+    dayBadge: '20 Nov 2026 - Friday',
+    date: '20 November 2026',
+    timeSlot: '06:30 PM – 09:00 PM',
+    duration: '2.5 Hours (150 Mins)',
+    code: 'BITS F114',
+    subject: 'Artificial and Computational Intelligence',
+    instructor: 'Prof. S. Das',
+    room: 'Online Exam Hall 3 (WILP Proctored Portal)',
+    badgeColor: '#b91c1c',
+    status: 'Admit Card Ready • Hall Ticket Verified',
+    topics: 'Heuristic Search (A*, IDA*), Adversarial Search, Knowledge Representation, First-Order Logic & HMM',
+    maxMarks: 40,
+    weightage: '30%'
+  }
+];
 
 // Rohan Kumar Chaudhry's Verified Performance
 export const rohanMstScorecard = {
@@ -131,7 +215,252 @@ export const rohanMstScorecard = {
       percentile: '100th',
       remarks: 'Excellent heuristic consistency proof and Alpha-Beta pruning execution.'
     }
-  ]
+  ],
+  practicalProjectScore: {
+    code: 'BITS F113-PR',
+    name: 'Advanced Machine Learning Practical Capstone Project',
+    title: 'Enterprise Predictive Maintenance & Industrial Asset Prognostics using Physics-Informed Neural Networks (PINNs) and Temporal Graph Transformers',
+    maxMarks: 100,
+    obtained: 99.0,
+    grade: 'A+ (Exemplary Distinction)',
+    gradePoint: 10,
+    cohortRank: 'Rank #1 of 45 Students',
+    evaluator: 'Dr. K. Patel (Associate Professor & Head, Machine Learning Lab, CSIS)',
+    dateEvaluated: '15 Nov 2026',
+    remarks: 'Mastery of continuum mechanics and geometric deep learning applied to industrial turbomachinery. Fully containerized edge deployment with 12.4ms inference.'
+  }
+};
+
+// ============================================================================
+// Advanced Machine Learning Practical Capstone Project Data (BITS F113)
+// Evaluated for Rohan Kumar Chaudhry (L&T Executive Scholar) - Grade A+ (99/100)
+// ============================================================================
+export const advancedMlProjectData = {
+  courseCode: 'BITS F113-PR',
+  courseName: 'Machine Learning (Advanced Lab Practical & Capstone Component)',
+  projectTitle: 'Enterprise Predictive Maintenance & Industrial Asset Prognostics using Physics-Informed Neural Networks (PINNs) and Temporal Graph Transformers',
+  studentName: 'Rohan Kumar Chaudhry',
+  rollNumber: '2026ML005831',
+  corporatePartner: 'L&T (Larsen & Toubro) Executive Program',
+  program: 'M.Tech in Artificial Intelligence & Machine Learning',
+  semester: 'First Semester 2026-27',
+  evaluator: 'Dr. K. Patel',
+  evaluatorDesignation: 'Associate Professor & Head of Machine Learning Lab, Department of CSIS, BITS Pilani',
+  evaluationDate: '15 Nov 2026',
+  totalMarks: 99.0,
+  maxMarks: 100.0,
+  grade: 'A+ (Exemplary Distinction)',
+  cohortRank: 'Rank #1 of 45 Students (Cohort Topper)',
+  percentile: '100th Percentile',
+  status: 'Evaluated & Certified',
+  repositoryLink: 'github.com/rohan-chaudhry/lnt-pinn-turbomachinery-phm',
+  deploymentStatus: 'Containerized Edge Service Active (ONNX FP16 • TensorRT)',
+
+  // Executive Abstract
+  abstract: `An end-to-end industrial digital twin framework for prognostics and health management (PHM) of critical rotary machinery. The system integrates Physics-Informed Neural Networks (PINNs) governed by Navier-Cauchy elastodynamic partial differential equations with spatio-temporal Multi-Head Graph Attention Transformers. Trained on multimodal telemetry (128-channel vibration spectrum, thermal imaging, and acoustic emission from NASA C-MAPSS FD002/FD004 and L&T Heavy Engineering turbomachinery benchmarks), the model predicts Remaining Useful Life (RUL) with an RMSE of 6.84 cycles and classifies incipient failure modes with 99.2% accuracy, outperforming classical baseline models by 34.6%. The deployment pipeline compiles the model into optimized ONNX FP16 binaries with 12.4ms edge latency inside a hardened Docker microservice.`,
+
+  // 5-Part Detailed Rubric Breakdown (Sum: 99 / 100)
+  rubric: [
+    {
+      criterion: '1. Industrial Problem Formulation & Mathematical Rigor',
+      maxScore: 25,
+      score: 25,
+      weightage: '25%',
+      feedback: 'Outstanding mathematical derivation of physics-informed loss functions. Coupling Navier-Cauchy elastodynamics with thermodynamic degradation constraints into PyTorch autograd loss guarantees physically consistent predictions without gradient vanishing.',
+      highlights: [
+        'Governing differential equations formulated: div(σ) + ρb = ρ(∂²u/∂t²)',
+        'Dual Lagrangian constraint formulation ensuring thermodynamic monotonicity',
+        'Rigorous boundary condition definitions matching L&T industrial bearing rigs'
+      ]
+    },
+    {
+      criterion: '2. Multi-Channel Sensor Pipeline & Feature Engineering',
+      maxScore: 20,
+      score: 20,
+      weightage: '20%',
+      feedback: 'Exemplary signal processing pipeline. Fast Fourier Transform (FFT), Continuous Wavelet Transform (CWT) scalograms, and dynamic sensor correlation graph generation handled noisy real-world turbomachinery telemetry seamlessly.',
+      highlights: [
+        '128-channel sensor ingestion & denoising with Savitzky-Golay filters',
+        'Wavelet packet decomposition (Morlet wavelets) across high-frequency vibration bands',
+        'Dynamic graph adjacency matrix computation based on Pearson mutual information'
+      ]
+    },
+    {
+      criterion: '3. Novel Architecture: PINN + Temporal Graph Transformer',
+      maxScore: 25,
+      score: 25,
+      weightage: '25%',
+      feedback: 'Publication-grade neural architecture. The combination of spatio-temporal Graph Attention Networks (GATv2) to capture inter-sensor physical topologies with multi-head temporal self-attention captures long-term degradation trajectories flawlessly.',
+      highlights: [
+        'Dual-stage GATv2 spatial message passing across 128 telemetry nodes',
+        '8-head temporal self-attention blocks with rotary position embeddings',
+        'Multi-task heads: Remaining Useful Life (RUL) regression + 5-class fault diagnosis'
+      ]
+    },
+    {
+      criterion: '4. Empirical Benchmarking & Ablation Study',
+      maxScore: 15,
+      score: 15,
+      weightage: '15%',
+      feedback: 'Exhaustive experimental validation across 5-fold cross-validation. Superb ablation studies demonstrating exact quantitative contributions of the physics regularizer and graph attention layers.',
+      highlights: [
+        'Evaluated against LSTM, Random Forest, GBDT, and Vanilla Transformer baselines',
+        'Ablation study proving 28% variance reduction specifically from PINN loss',
+        'Empirical metrics: 99.2% Accuracy, 0.994 ROC-AUC, 0.988 F1-Score'
+      ]
+    },
+    {
+      criterion: '5. Production Edge Deployment, Docker & ONNX Pipeline',
+      maxScore: 15,
+      score: 14,
+      weightage: '15%',
+      feedback: 'Near-perfect enterprise MLOps implementation. Docker multi-stage build, ONNX Runtime FP16 quantization with 12.4ms inference latency on NVIDIA TensorRT, and asynchronous FastAPI endpoints. 1 mark deducted only for minor Prometheus metrics scrape interval documentation.',
+      highlights: [
+        'Docker containerized microservice with multi-stage non-root container image',
+        'ONNX Runtime TensorRT FP16 quantization (12.4ms edge latency)',
+        'FastAPI async streaming REST API with Pydantic payload validation'
+      ]
+    }
+  ],
+
+  // Key Quantitative Performance Metrics
+  metrics: {
+    accuracy: '99.2%',
+    rocAuc: '0.994',
+    f1Score: '0.988',
+    precision: '99.1%',
+    recall: '98.6%',
+    rulRmse: '6.84 Cycles',
+    baselineRmse: '14.20 Cycles (LSTM baseline)',
+    inferenceLatency: '12.4 ms',
+    throughput: '320 req/sec',
+    compressionRatio: '4.2x (via ONNX FP16)',
+    validationLoss: '0.0084'
+  },
+
+  // Baseline Comparison
+  baselines: [
+    { model: 'Random Forest Baseline', rmse: '18.40', accuracy: '84.2%', latency: '8.2 ms', params: '3.4M' },
+    { model: 'Bi-directional LSTM', rmse: '14.20', accuracy: '89.6%', latency: '24.6 ms', params: '12.1M' },
+    { model: 'Temporal CNN + GBDT', rmse: '11.85', accuracy: '92.4%', latency: '19.8 ms', params: '18.5M' },
+    { model: 'Standard Transformer', rmse: '9.42', accuracy: '95.1%', latency: '31.2 ms', params: '28.4M' },
+    { model: 'Proposed PINN-Graph-Transformer (Rohan)', rmse: '6.84', accuracy: '99.2%', latency: '12.4 ms', params: '14.8M', highlight: true }
+  ],
+
+  // Tech Stack & Tooling
+  techStack: [
+    'PyTorch 2.4',
+    'PyTorch Geometric (PyG)',
+    'NVIDIA CUDA 12.2',
+    'ONNX Runtime / TensorRT',
+    'FastAPI',
+    'Docker & Docker Compose',
+    'NumPy & SciPy Signal',
+    'Scikit-Learn',
+    'MLflow Experiment Tracking'
+  ],
+
+  // Faculty Reviewer Remarks
+  evaluatorRemarks: `Mr. Rohan Kumar Chaudhry has demonstrated mastery of advanced machine learning engineering that exceeds ordinary post-graduate standards. His project bridges foundational continuum mechanics with modern deep geometric learning, applied directly to industrial turbomachinery prognostics relevant to L&T's engineering domain. The code is modular, fully reproducible, thoroughly documented, and edge-deployable via Docker and ONNX. Awarded 99/100 (Grade A+ with Distinction), representing the highest benchmark score across the cohort.`,
+
+  codeSnippets: {
+    pinnLoss: `import torch
+import torch.nn as nn
+
+class PhysicsInformedLoss(nn.Module):
+    """
+    Combines empirical supervised Huber loss with Navier-Cauchy 
+    elastodynamic differential constraints for industrial bearing degradation.
+    """
+    def __init__(self, lambda_physics=0.25, gamma_spectral=0.10):
+        super().__init__()
+        self.supervised_loss = nn.SmoothL1Loss()
+        self.lambda_physics = lambda_physics
+        self.gamma_spectral = gamma_spectral
+
+    def forward(self, y_pred, y_true, sensor_coords, stress_tensor):
+        # 1. Supervised prediction error on Remaining Useful Life (RUL)
+        l_data = self.supervised_loss(y_pred, y_true)
+        
+        # 2. Physics PDE residual: div(sigma) + rho * b = rho * (d^2 u / dt^2)
+        div_stress = torch.autograd.grad(
+            outputs=stress_tensor,
+            inputs=sensor_coords,
+            grad_outputs=torch.ones_like(stress_tensor),
+            create_graph=True,
+            retain_graph=True
+        )[0]
+        l_physics = torch.mean(torch.square(div_stress))
+        
+        # 3. Spectral degradation conservation loss
+        total_loss = l_data + (self.lambda_physics * l_physics)
+        return total_loss, l_data, l_physics`,
+        
+    architecture: `import torch
+import torch.nn as nn
+from torch_geometric.nn import GATv2Conv
+
+class TemporalGraphTransformer(nn.Module):
+    """
+    Spatial Graph Attention across 128 telemetry nodes 
+    coupled with 8-head Temporal Transformer for Prognostics.
+    """
+    def __init__(self, in_features=16, hidden_dim=128, num_heads=8, seq_len=60):
+        super().__init__()
+        # Spatial Graph Attention
+        self.spatial_gat1 = GATv2Conv(in_features, hidden_dim, heads=4, concat=True)
+        self.spatial_gat2 = GATv2Conv(hidden_dim * 4, hidden_dim, heads=1, concat=False)
+        
+        # Temporal Multi-Head Transformer Encoder
+        encoder_layer = nn.TransformerEncoderLayer(
+            d_model=hidden_dim, 
+            nhead=num_heads, 
+            dim_feedforward=512, 
+            dropout=0.1,
+            batch_first=True
+        )
+        self.temporal_transformer = nn.TransformerEncoder(encoder_layer, num_layers=4)
+        
+        # Dual Prognostic Heads
+        self.rul_regressor = nn.Sequential(
+            nn.Linear(hidden_dim, 64),
+            nn.GELU(),
+            nn.Dropout(0.2),
+            nn.Linear(64, 1)
+        )
+        self.fault_classifier = nn.Sequential(
+            nn.Linear(hidden_dim, 64),
+            nn.GELU(),
+            nn.Linear(64, 5) # 5 Incipient Mechanical Fault Classes
+        )
+
+    def forward(self, x, edge_index):
+        # 1. Spatial Message Passing across Sensor Graph
+        h_spatial = torch.relu(self.spatial_gat1(x, edge_index))
+        h_spatial = self.spatial_gat2(h_spatial, edge_index)
+        
+        # 2. Temporal Sequence Modeling
+        h_temporal = self.temporal_transformer(h_spatial)
+        h_summary = h_temporal[:, -1, :] # Pool last temporal token
+        
+        # 3. Multi-Task Outputs
+        predicted_rul = self.rul_regressor(h_summary)
+        fault_logits = self.fault_classifier(h_summary)
+        return predicted_rul, fault_logits`,
+
+    dockerfile: `FROM nvidia/cuda:12.2.0-runtime-ubuntu22.04 AS base
+WORKDIR /app
+RUN apt-get update && apt-get install -y --no-install-recommends python3-pip libgomp1 && rm -rf /var/lib/apt/lists/*
+COPY requirements.txt .
+RUN pip3 install --no-cache-dir -r requirements.txt
+
+FROM base AS runner
+COPY ./model /app/model
+COPY ./api /app/api
+USER 1001
+EXPOSE 8000
+CMD ["uvicorn", "api.main:app", "--host", "0.0.0.0", "--port", "8000", "--workers", "4"]`
+  }
 };
 
 // Complete Cohort of 45 Students - Official WILP Ranking Sheet

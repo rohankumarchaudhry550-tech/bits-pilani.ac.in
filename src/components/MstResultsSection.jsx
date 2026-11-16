@@ -16,18 +16,33 @@ import {
   FaBookOpen,
   FaChevronDown,
   FaChevronUp,
-  FaFileAlt
+  FaFileAlt,
+  FaCalendarAlt,
+  FaClock,
+  FaLaptopCode,
+  FaCode,
+  FaServer,
+  FaBrain,
+  FaCopy,
+  FaCheckDouble,
+  FaExternalLinkAlt,
+  FaFlask,
+  FaRocket,
+  FaCube,
+  FaLayerGroup
 } from 'react-icons/fa';
 import {
   mstSubjectMeta,
+  mstScheduleData,
   rohanMstScorecard,
+  advancedMlProjectData,
   cohortMstRankings,
   assignmentResultsData,
   cohortStatistics
 } from '../data/mstResultsData';
 
 export default function MstResultsSection() {
-  const [activeSubTab, setActiveSubTab] = useState('scorecard'); // 'scorecard' | 'ranking' | 'assignments' | 'analytics'
+  const [activeSubTab, setActiveSubTab] = useState('schedule'); // 'schedule' | 'practical' | 'scorecard' | 'ranking' | 'assignments' | 'analytics'
   const [searchQuery, setSearchQuery] = useState('');
   const [filterCompany, setFilterCompany] = useState('ALL');
   const [filterGrade, setFilterGrade] = useState('ALL');
@@ -35,6 +50,9 @@ export default function MstResultsSection() {
   const [sortOrder, setSortOrder] = useState('asc'); // 'asc' | 'desc'
   const [expandedSubject, setExpandedSubject] = useState(null);
   const [copiedLink, setCopiedLink] = useState(false);
+  const [copiedSnippet, setCopiedSnippet] = useState(null);
+  const [projectCodeTab, setProjectCodeTab] = useState('pinn'); // 'pinn' | 'architecture' | 'dockerfile'
+  const [projectViewTab, setProjectViewTab] = useState('rubric'); // 'rubric' | 'architecture' | 'benchmarks' | 'code' | 'evaluator'
 
   // Extract unique companies for filtering
   const companies = useMemo(() => {
@@ -86,6 +104,12 @@ export default function MstResultsSection() {
     );
     setCopiedLink(true);
     setTimeout(() => setCopiedLink(false), 2500);
+  };
+
+  const handleCopySnippet = (key, text) => {
+    navigator.clipboard.writeText(text);
+    setCopiedSnippet(key);
+    setTimeout(() => setCopiedSnippet(null), 2500);
   };
 
   return (
@@ -246,6 +270,68 @@ export default function MstResultsSection() {
         flexWrap: 'wrap'
       }}>
         <button
+          onClick={() => setActiveSubTab('schedule')}
+          style={{
+            padding: '10px 18px',
+            borderRadius: '6px',
+            border: activeSubTab === 'schedule' ? '2px solid #b91c1c' : '1px solid #cbd5e1',
+            backgroundColor: activeSubTab === 'schedule' ? '#b91c1c' : '#ffffff',
+            color: activeSubTab === 'schedule' ? '#ffffff' : '#334155',
+            fontWeight: '700',
+            fontSize: '13.5px',
+            cursor: 'pointer',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '8px',
+            boxShadow: activeSubTab === 'schedule' ? '0 2px 6px rgba(185, 28, 28, 0.25)' : 'none',
+            transition: 'all 0.2s'
+          }}
+        >
+          <FaCalendarAlt style={{ color: activeSubTab === 'schedule' ? '#ffffff' : '#b91c1c' }} /> MST Exam Schedule (17–20 Nov • 06:30–09:00 PM)
+          <span style={{
+            backgroundColor: activeSubTab === 'schedule' ? '#ffffff' : '#fee2e2',
+            color: activeSubTab === 'schedule' ? '#b91c1c' : '#991b1b',
+            padding: '2px 7px',
+            borderRadius: '10px',
+            fontSize: '11px',
+            fontWeight: '800'
+          }}>
+            4 Days / 4 Exams
+          </span>
+        </button>
+
+        <button
+          onClick={() => setActiveSubTab('practical')}
+          style={{
+            padding: '10px 18px',
+            borderRadius: '6px',
+            border: activeSubTab === 'practical' ? '2px solid #059669' : '1px solid #cbd5e1',
+            backgroundColor: activeSubTab === 'practical' ? '#059669' : '#ffffff',
+            color: activeSubTab === 'practical' ? '#ffffff' : '#334155',
+            fontWeight: '700',
+            fontSize: '13.5px',
+            cursor: 'pointer',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '8px',
+            boxShadow: activeSubTab === 'practical' ? '0 2px 6px rgba(5, 150, 105, 0.25)' : 'none',
+            transition: 'all 0.2s'
+          }}
+        >
+          <FaBrain style={{ color: activeSubTab === 'practical' ? '#ffffff' : '#059669' }} /> Advanced ML Practical Project (100 Marks)
+          <span style={{
+            backgroundColor: activeSubTab === 'practical' ? '#ffffff' : '#dcfce7',
+            color: activeSubTab === 'practical' ? '#059669' : '#15803d',
+            padding: '2px 7px',
+            borderRadius: '10px',
+            fontSize: '11px',
+            fontWeight: '800'
+          }}>
+            99/100 • Grade A+
+          </span>
+        </button>
+
+        <button
           onClick={() => setActiveSubTab('scorecard')}
           style={{
             padding: '10px 18px',
@@ -262,7 +348,7 @@ export default function MstResultsSection() {
             transition: 'all 0.2s'
           }}
         >
-          <FaGraduationCap /> My Official MST Scorecard (Out of 40)
+          <FaGraduationCap /> Official MST Scorecard (Out of 40)
         </button>
 
         <button
@@ -282,7 +368,7 @@ export default function MstResultsSection() {
             transition: 'all 0.2s'
           }}
         >
-          <FaMedal style={{ color: activeSubTab === 'ranking' ? '#ffffff' : '#fcb900' }} /> Cohort Leaderboard & Rank List (All 45 Students)
+          <FaMedal style={{ color: activeSubTab === 'ranking' ? '#ffffff' : '#fcb900' }} /> Cohort Leaderboard (45 Students)
         </button>
 
         <button
@@ -302,7 +388,7 @@ export default function MstResultsSection() {
             transition: 'all 0.2s'
           }}
         >
-          <FaAward /> Continuous Assessment (Weeks 1 to 11 Graded • Week 12 Diwali Break)
+          <FaAward /> Continuous Assessment (Weeks 1 to 12)
         </button>
 
         <button
@@ -325,6 +411,898 @@ export default function MstResultsSection() {
           <FaChartBar /> Batch Analytics & Bell Curve
         </button>
       </div>
+
+      {/* 3. SUB-TAB CONTENT: (0) Official MST Exam Schedule (17–20 Nov 2026, 06:30 PM to 09:00 PM Daily) */}
+      {activeSubTab === 'schedule' && (
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '25px' }}>
+          
+          {/* Schedule Notice Header Card */}
+          <div style={{
+            backgroundColor: '#ffffff',
+            borderRadius: '8px',
+            boxShadow: '0 2px 10px rgba(0,0,0,0.06)',
+            border: '2px solid #e2e8f0',
+            borderTop: '5px solid #b91c1c',
+            padding: '30px'
+          }}>
+            <div style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              borderBottom: '2px solid #b91c1c',
+              paddingBottom: '20px',
+              marginBottom: '25px',
+              flexWrap: 'wrap',
+              gap: '15px'
+            }}>
+              <div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: '#004b93', fontWeight: '800', fontSize: '18px' }}>
+                  <FaUniversity /> BIRLA INSTITUTE OF TECHNOLOGY AND SCIENCE, PILANI
+                </div>
+                <div style={{ fontSize: '13px', color: '#475569', fontWeight: '600', marginTop: '2px' }}>
+                  Work Integrated Learning Programmes (WILP) • Division of Examination and Evaluation
+                </div>
+                <div style={{ fontSize: '12.5px', color: '#64748b' }}>
+                  Official Mid-Semester Tests (MST) Examination Schedule • First Semester 2026-27
+                </div>
+              </div>
+
+              <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
+                <span style={{
+                  backgroundColor: '#fee2e2',
+                  border: '1px solid #fecaca',
+                  color: '#991b1b',
+                  padding: '6px 14px',
+                  borderRadius: '20px',
+                  fontSize: '12.5px',
+                  fontWeight: '800',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '6px'
+                }}>
+                  <FaClock /> 06:30 PM – 09:00 PM Daily (4 Days)
+                </span>
+                <span style={{
+                  backgroundColor: '#dcfce7',
+                  border: '1px solid #bbf7d0',
+                  color: '#15803d',
+                  padding: '6px 14px',
+                  borderRadius: '20px',
+                  fontSize: '12.5px',
+                  fontWeight: '800',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '6px'
+                }}>
+                  <FaCheckCircle /> Admit Card Ready
+                </span>
+              </div>
+            </div>
+
+            {/* Timetable Highlights Strip */}
+            <div style={{
+              backgroundColor: '#fff1f2',
+              border: '1px solid #fecdd3',
+              borderRadius: '8px',
+              padding: '16px 20px',
+              marginBottom: '25px',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              flexWrap: 'wrap',
+              gap: '12px'
+            }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                <FaCalendarAlt style={{ color: '#be123c', fontSize: '24px' }} />
+                <div>
+                  <div style={{ fontSize: '14.5px', fontWeight: '800', color: '#9f1239' }}>
+                    Mid-Semester Tests (MST) Start Tomorrow: 17 Nov to 20 Nov 2026
+                  </div>
+                  <div style={{ fontSize: '12.5px', color: '#4c0519' }}>
+                    All 4 Core Subjects • 4 Consecutive Evenings • Daily Slot: <strong>06:30 PM to 09:00 PM IST (150 Minutes / 2.5 Hours)</strong>
+                  </div>
+                </div>
+              </div>
+              <button
+                onClick={() => alert(`Launching WILP Proctored Examination Portal for Candidate: ${rohanMstScorecard.studentName} (Roll: ${rohanMstScorecard.rollNumber}).\nHall Ticket: WILP-2026-MST-5831.\nSystem Check: Microphone, Web-Camera, and Secure Browser Verified.`)}
+                style={{
+                  backgroundColor: '#b91c1c',
+                  color: '#ffffff',
+                  border: 'none',
+                  padding: '9px 18px',
+                  borderRadius: '6px',
+                  fontWeight: '700',
+                  fontSize: '12.5px',
+                  cursor: 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '7px',
+                  boxShadow: '0 2px 5px rgba(185, 28, 28, 0.3)'
+                }}
+              >
+                <FaLaptopCode /> Enter Proctored Exam Portal
+              </button>
+            </div>
+
+            {/* Consolidated 4-Day Timetable - All Data Together ("data ek sath") */}
+            <h4 style={{ fontSize: '16px', fontWeight: '800', color: '#0f172a', marginBottom: '15px', display: 'flex', alignItems: 'center', gap: '8px' }}>
+              <FaCalendarAlt style={{ color: '#b91c1c' }} /> Consolidated 4-Day Examination Schedule (All Data in One View)
+            </h4>
+
+            <div style={{ overflowX: 'auto', marginBottom: '30px' }}>
+              <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '13px', textAlign: 'left' }}>
+                <thead>
+                  <tr style={{ backgroundColor: '#0f172a', color: '#ffffff' }}>
+                    <th style={{ padding: '12px 14px', borderRadius: '6px 0 0 0' }}>Day & Date</th>
+                    <th style={{ padding: '12px 14px' }}>Time Slot (Daily)</th>
+                    <th style={{ padding: '12px 14px' }}>Course Code</th>
+                    <th style={{ padding: '12px 14px' }}>Subject Title</th>
+                    <th style={{ padding: '12px 14px' }}>Course Instructor</th>
+                    <th style={{ padding: '12px 14px' }}>Duration</th>
+                    <th style={{ padding: '12px 14px' }}>Max Marks</th>
+                    <th style={{ padding: '12px 14px', borderRadius: '0 6px 0 0' }}>Portal Hall</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {mstScheduleData.map((item, index) => (
+                    <tr
+                      key={index}
+                      style={{
+                        backgroundColor: index % 2 === 0 ? '#ffffff' : '#f8fafc',
+                        borderBottom: '1px solid #e2e8f0',
+                        transition: 'background-color 0.15s'
+                      }}
+                    >
+                      <td style={{ padding: '14px', fontWeight: '800', color: '#b91c1c', whiteSpace: 'nowrap' }}>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                          <span style={{ backgroundColor: '#fee2e2', color: '#991b1b', padding: '2px 8px', borderRadius: '4px', fontSize: '11px', fontWeight: '800' }}>
+                            {item.dayNumber}
+                          </span>
+                          <span>{item.date}</span>
+                        </div>
+                        <span style={{ fontSize: '11px', color: '#64748b', fontWeight: '600' }}>{item.dayBadge.split(' - ')[1]}</span>
+                      </td>
+                      <td style={{ padding: '14px', fontWeight: '800', color: '#0f172a', whiteSpace: 'nowrap' }}>
+                        <span style={{ backgroundColor: '#f1f5f9', padding: '4px 8px', borderRadius: '4px', border: '1px solid #cbd5e1' }}>
+                          ⏰ {item.timeSlot}
+                        </span>
+                      </td>
+                      <td style={{ padding: '14px', fontWeight: '700', color: '#004b93' }}>
+                        {item.code}
+                      </td>
+                      <td style={{ padding: '14px', fontWeight: '700', color: '#1e293b' }}>
+                        {item.subject}
+                      </td>
+                      <td style={{ padding: '14px', color: '#475569', fontWeight: '600' }}>
+                        {item.instructor}
+                      </td>
+                      <td style={{ padding: '14px', color: '#334155' }}>
+                        {item.duration}
+                      </td>
+                      <td style={{ padding: '14px', fontWeight: '700', color: '#16a34a' }}>
+                        {item.maxMarks} Marks ({item.weightage})
+                      </td>
+                      <td style={{ padding: '14px', color: '#475569' }}>
+                        <span style={{ backgroundColor: '#eff6ff', color: '#1e40af', padding: '3px 8px', borderRadius: '4px', fontSize: '11.5px', fontWeight: '600', border: '1px solid #bfdbfe' }}>
+                          {item.room.split(' ')[0]} {item.room.split(' ')[1]} {item.room.split(' ')[2]} {item.room.split(' ')[3]}
+                        </span>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+
+            {/* Individual Detailed Subject Cards with Syllabus & Portal Access */}
+            <h4 style={{ fontSize: '16px', fontWeight: '800', color: '#0f172a', marginBottom: '15px' }}>
+              Detailed Subject Syllabus Coverage & Hall Verification
+            </h4>
+
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '20px' }}>
+              {mstScheduleData.map((item, index) => (
+                <div
+                  key={index}
+                  style={{
+                    border: '1px solid #e2e8f0',
+                    borderRadius: '8px',
+                    padding: '20px',
+                    backgroundColor: '#ffffff',
+                    borderLeft: '5px solid #b91c1c',
+                    boxShadow: '0 1px 4px rgba(0,0,0,0.04)',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    justifyContent: 'space-between',
+                    gap: '15px'
+                  }}
+                >
+                  <div>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
+                      <span style={{ backgroundColor: '#b91c1c', color: '#ffffff', padding: '3px 10px', borderRadius: '4px', fontSize: '11px', fontWeight: '800', textTransform: 'uppercase' }}>
+                        {item.dayNumber} • {item.dayBadge.split(' - ')[1]}
+                      </span>
+                      <span style={{ backgroundColor: '#f0fdf4', color: '#166534', border: '1px solid #bbf7d0', padding: '2px 8px', borderRadius: '12px', fontSize: '11px', fontWeight: '700' }}>
+                        Admit Card Verified
+                      </span>
+                    </div>
+
+                    <div style={{ fontSize: '13px', fontWeight: '800', color: '#0f172a', marginBottom: '4px' }}>
+                      📅 {item.date}
+                    </div>
+
+                    <h4 style={{ fontSize: '16px', fontWeight: '700', color: '#004b93', margin: '4px 0 8px' }}>
+                      {item.code}: {item.subject}
+                    </h4>
+
+                    <div style={{ backgroundColor: '#f8fafc', padding: '10px 12px', borderRadius: '6px', border: '1px solid #e2e8f0', marginBottom: '12px' }}>
+                      <div style={{ fontSize: '11px', fontWeight: '700', color: '#64748b', textTransform: 'uppercase', marginBottom: '3px' }}>
+                        Syllabus Scope for Examination:
+                      </div>
+                      <div style={{ fontSize: '12px', color: '#334155', lineHeight: '1.45' }}>
+                        {item.topics}
+                      </div>
+                    </div>
+
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '5px', fontSize: '12px', color: '#475569' }}>
+                      <div>👤 <strong>Instructor:</strong> {item.instructor}</div>
+                      <div>⏳ <strong>Exam Duration:</strong> {item.duration} (06:30 PM to 09:00 PM)</div>
+                      <div>📊 <strong>Maximum Marks:</strong> {item.maxMarks} Marks (Weightage: {item.weightage})</div>
+                      <div>🏛️ <strong>Exam Room:</strong> {item.room}</div>
+                    </div>
+                  </div>
+
+                  <div style={{ borderTop: '1px solid #f1f5f9', paddingTop: '12px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <span style={{ fontSize: '13px', fontWeight: '800', color: '#b91c1c' }}>
+                      ⏰ {item.timeSlot}
+                    </span>
+                    <button
+                      onClick={() => alert(`Launching Proctored Exam Portal for ${item.code}: ${item.subject}.\nDate: ${item.date}\nTime: ${item.timeSlot}\nDuration: ${item.duration}.\nProctor Session: Ready.`)}
+                      style={{
+                        backgroundColor: '#0f172a',
+                        color: '#ffffff',
+                        border: 'none',
+                        padding: '7px 14px',
+                        borderRadius: '4px',
+                        fontSize: '11.5px',
+                        fontWeight: '700',
+                        cursor: 'pointer',
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '6px'
+                      }}
+                    >
+                      <FaLaptopCode /> Launch Portal
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* Candidate Verification Card */}
+            <div style={{
+              marginTop: '25px',
+              backgroundColor: '#f8fafc',
+              border: '1.5px dashed #cbd5e1',
+              borderRadius: '8px',
+              padding: '20px',
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              flexWrap: 'wrap',
+              gap: '15px'
+            }}>
+              <div>
+                <span style={{ fontSize: '11px', fontWeight: '800', color: '#004b93', textTransform: 'uppercase' }}>
+                  Candidate Hall Ticket & Admit Card Verification
+                </span>
+                <div style={{ fontSize: '16px', fontWeight: '800', color: '#0f172a', marginTop: '2px' }}>
+                  {rohanMstScorecard.studentName} • Roll No: {rohanMstScorecard.rollNumber}
+                </div>
+                <div style={{ fontSize: '12px', color: '#475569', marginTop: '2px' }}>
+                  Program: {rohanMstScorecard.program} • Sponsor: {rohanMstScorecard.sponsor}
+                </div>
+                <div style={{ fontSize: '11.5px', color: '#16a34a', fontWeight: '700', marginTop: '4px', display: 'flex', alignItems: 'center', gap: '6px' }}>
+                  <FaCheckCircle /> Biometric & Camera Compatibility: PASS • AI Dual Proctoring: VERIFIED • Hall Ticket #WILP-2026-MST-5831
+                </div>
+              </div>
+
+              <button
+                onClick={handlePrint}
+                style={{
+                  backgroundColor: '#ffffff',
+                  border: '1.5px solid #004b93',
+                  color: '#004b93',
+                  padding: '9px 18px',
+                  borderRadius: '6px',
+                  fontWeight: '700',
+                  fontSize: '12.5px',
+                  cursor: 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '7px'
+                }}
+              >
+                <FaPrint /> Print Admit Card / Hall Ticket
+              </button>
+            </div>
+
+          </div>
+
+        </div>
+      )}
+
+      {/* 3. SUB-TAB CONTENT: (1) Advanced ML Lab Practical Project (100 Marks • Grade A+) */}
+      {activeSubTab === 'practical' && (
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '25px' }}>
+          
+          {/* Practical Project Official Certificate / Grade Report */}
+          <div style={{
+            backgroundColor: '#ffffff',
+            borderRadius: '8px',
+            boxShadow: '0 2px 10px rgba(0,0,0,0.06)',
+            border: '2px solid #e2e8f0',
+            borderTop: '5px solid #059669',
+            padding: '30px'
+          }}>
+            {/* Header */}
+            <div style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              borderBottom: '2px solid #059669',
+              paddingBottom: '20px',
+              marginBottom: '25px',
+              flexWrap: 'wrap',
+              gap: '15px'
+            }}>
+              <div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: '#004b93', fontWeight: '800', fontSize: '18px' }}>
+                  <FaUniversity /> BIRLA INSTITUTE OF TECHNOLOGY AND SCIENCE, PILANI
+                </div>
+                <div style={{ fontSize: '13px', color: '#475569', fontWeight: '600', marginTop: '2px' }}>
+                  Work Integrated Learning Programmes (WILP) • Department of Computer Science & Information Systems
+                </div>
+                <div style={{ fontSize: '12.5px', color: '#64748b' }}>
+                  Advanced Machine Learning Lab Practical Capstone Project Evaluation Report • Semester I 2026-27
+                </div>
+              </div>
+
+              <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
+                <span style={{
+                  backgroundColor: '#dcfce7',
+                  border: '1px solid #bbf7d0',
+                  color: '#15803d',
+                  padding: '6px 14px',
+                  borderRadius: '20px',
+                  fontSize: '12.5px',
+                  fontWeight: '800',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '6px'
+                }}>
+                  <FaTrophy style={{ color: '#15803d' }} /> Grade A+ (Distinction)
+                </span>
+                <span style={{
+                  backgroundColor: '#eff6ff',
+                  border: '1px solid #bfdbfe',
+                  color: '#1e40af',
+                  padding: '6px 14px',
+                  borderRadius: '20px',
+                  fontSize: '12.5px',
+                  fontWeight: '800',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '6px'
+                }}>
+                  <FaMedal /> Rank #1 of 45 Students
+                </span>
+              </div>
+            </div>
+
+            {/* Project Title Banner & Score Award Card */}
+            <div style={{
+              background: 'linear-gradient(135deg, #064e3b 0%, #047857 100%)',
+              borderRadius: '8px',
+              padding: '24px 28px',
+              color: '#ffffff',
+              marginBottom: '25px',
+              boxShadow: '0 3px 12px rgba(6, 78, 59, 0.25)',
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              flexWrap: 'wrap',
+              gap: '20px'
+            }}>
+              <div style={{ flex: '1 1 500px' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
+                  <span style={{ backgroundColor: 'rgba(255,255,255,0.2)', padding: '3px 10px', borderRadius: '4px', fontSize: '11px', fontWeight: '800', letterSpacing: '0.5px' }}>
+                    {advancedMlProjectData.courseCode}
+                  </span>
+                  <span style={{ fontSize: '12px', color: '#a7f3d0', fontWeight: '600' }}>
+                    {advancedMlProjectData.courseName}
+                  </span>
+                </div>
+                <h3 style={{ fontSize: '20px', fontWeight: '800', margin: '4px 0 10px', lineHeight: '1.4' }}>
+                  {advancedMlProjectData.projectTitle}
+                </h3>
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '15px', fontSize: '12px', color: '#d1fae5' }}>
+                  <span>👨‍🎓 Candidate: <strong>{advancedMlProjectData.studentName}</strong> ({advancedMlProjectData.rollNumber})</span>
+                  <span>🏢 Sponsor: <strong>{advancedMlProjectData.corporatePartner}</strong></span>
+                  <span>👨‍🏫 Evaluator: <strong>{advancedMlProjectData.evaluator}</strong></span>
+                  <span>📅 Evaluated: <strong>{advancedMlProjectData.evaluationDate}</strong></span>
+                </div>
+              </div>
+
+              <div style={{
+                backgroundColor: 'rgba(255, 255, 255, 0.15)',
+                border: '2px solid rgba(255, 255, 255, 0.3)',
+                borderRadius: '8px',
+                padding: '16px 24px',
+                textAlign: 'center',
+                minWidth: '170px'
+              }}>
+                <span style={{ fontSize: '11px', textTransform: 'uppercase', letterSpacing: '0.8px', color: '#a7f3d0', fontWeight: '700' }}>
+                  Assigned Score
+                </span>
+                <div style={{ fontSize: '38px', fontWeight: '900', color: '#ffffff', lineHeight: '1.1', margin: '4px 0' }}>
+                  99.0 <span style={{ fontSize: '18px', fontWeight: '500', color: '#d1fae5' }}>/ 100</span>
+                </div>
+                <div style={{ fontSize: '12px', color: '#fef08a', fontWeight: '800', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '5px' }}>
+                  <FaStar /> Grade: A+ Exemplary
+                </div>
+              </div>
+            </div>
+
+            {/* High Level Metrics Grid */}
+            <div style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(170px, 1fr))',
+              gap: '15px',
+              marginBottom: '25px'
+            }}>
+              <div style={{ backgroundColor: '#f0fdf4', border: '1px solid #bbf7d0', borderRadius: '6px', padding: '14px' }}>
+                <span style={{ fontSize: '11px', color: '#166534', fontWeight: '700', textTransform: 'uppercase' }}>Classification Accuracy</span>
+                <div style={{ fontSize: '22px', fontWeight: '800', color: '#15803d', marginTop: '2px' }}>
+                  {advancedMlProjectData.metrics.accuracy}
+                </div>
+                <span style={{ fontSize: '11px', color: '#166534' }}>Incidence Fault Diagnosis</span>
+              </div>
+
+              <div style={{ backgroundColor: '#f0fdf4', border: '1px solid #bbf7d0', borderRadius: '6px', padding: '14px' }}>
+                <span style={{ fontSize: '11px', color: '#166534', fontWeight: '700', textTransform: 'uppercase' }}>ROC-AUC Metric</span>
+                <div style={{ fontSize: '22px', fontWeight: '800', color: '#15803d', marginTop: '2px' }}>
+                  {advancedMlProjectData.metrics.rocAuc}
+                </div>
+                <span style={{ fontSize: '11px', color: '#166534' }}>F1-Score: {advancedMlProjectData.metrics.f1Score}</span>
+              </div>
+
+              <div style={{ backgroundColor: '#f0fdf4', border: '1px solid #bbf7d0', borderRadius: '6px', padding: '14px' }}>
+                <span style={{ fontSize: '11px', color: '#166534', fontWeight: '700', textTransform: 'uppercase' }}>RUL Prognostic RMSE</span>
+                <div style={{ fontSize: '22px', fontWeight: '800', color: '#047857', marginTop: '2px' }}>
+                  {advancedMlProjectData.metrics.rulRmse}
+                </div>
+                <span style={{ fontSize: '11px', color: '#166534' }}>Baseline: 14.20 (52% gain)</span>
+              </div>
+
+              <div style={{ backgroundColor: '#f0fdf4', border: '1px solid #bbf7d0', borderRadius: '6px', padding: '14px' }}>
+                <span style={{ fontSize: '11px', color: '#166534', fontWeight: '700', textTransform: 'uppercase' }}>ONNX Edge Latency</span>
+                <div style={{ fontSize: '22px', fontWeight: '800', color: '#047857', marginTop: '2px' }}>
+                  {advancedMlProjectData.metrics.inferenceLatency}
+                </div>
+                <span style={{ fontSize: '11px', color: '#166534' }}>FP16 on TensorRT</span>
+              </div>
+
+              <div style={{ backgroundColor: '#f0fdf4', border: '1px solid #bbf7d0', borderRadius: '6px', padding: '14px' }}>
+                <span style={{ fontSize: '11px', color: '#166534', fontWeight: '700', textTransform: 'uppercase' }}>Edge Throughput</span>
+                <div style={{ fontSize: '22px', fontWeight: '800', color: '#047857', marginTop: '2px' }}>
+                  {advancedMlProjectData.metrics.throughput}
+                </div>
+                <span style={{ fontSize: '11px', color: '#166534' }}>FastAPI Containerized</span>
+              </div>
+            </div>
+
+            {/* Navigation Tabs within Project */}
+            <div style={{
+              display: 'flex',
+              gap: '8px',
+              borderBottom: '2px solid #e2e8f0',
+              paddingBottom: '6px',
+              marginBottom: '20px',
+              flexWrap: 'wrap'
+            }}>
+              <button
+                onClick={() => setProjectViewTab('rubric')}
+                style={{
+                  padding: '8px 14px',
+                  borderRadius: '5px',
+                  border: projectViewTab === 'rubric' ? '2px solid #059669' : '1px solid #cbd5e1',
+                  backgroundColor: projectViewTab === 'rubric' ? '#059669' : '#ffffff',
+                  color: projectViewTab === 'rubric' ? '#ffffff' : '#334155',
+                  fontWeight: '700',
+                  fontSize: '12.5px',
+                  cursor: 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '6px'
+                }}
+              >
+                <FaAward /> 1. Evaluation Rubric & Marks (99/100)
+              </button>
+
+              <button
+                onClick={() => setProjectViewTab('architecture')}
+                style={{
+                  padding: '8px 14px',
+                  borderRadius: '5px',
+                  border: projectViewTab === 'architecture' ? '2px solid #059669' : '1px solid #cbd5e1',
+                  backgroundColor: projectViewTab === 'architecture' ? '#059669' : '#ffffff',
+                  color: projectViewTab === 'architecture' ? '#ffffff' : '#334155',
+                  fontWeight: '700',
+                  fontSize: '12.5px',
+                  cursor: 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '6px'
+                }}
+              >
+                <FaLayerGroup /> 2. Architecture & Physics PDEs
+              </button>
+
+              <button
+                onClick={() => setProjectViewTab('benchmarks')}
+                style={{
+                  padding: '8px 14px',
+                  borderRadius: '5px',
+                  border: projectViewTab === 'benchmarks' ? '2px solid #059669' : '1px solid #cbd5e1',
+                  backgroundColor: projectViewTab === 'benchmarks' ? '#059669' : '#ffffff',
+                  color: projectViewTab === 'benchmarks' ? '#ffffff' : '#334155',
+                  fontWeight: '700',
+                  fontSize: '12.5px',
+                  cursor: 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '6px'
+                }}
+              >
+                <FaChartBar /> 3. Empirical Benchmarks & Ablations
+              </button>
+
+              <button
+                onClick={() => setProjectViewTab('code')}
+                style={{
+                  padding: '8px 14px',
+                  borderRadius: '5px',
+                  border: projectViewTab === 'code' ? '2px solid #059669' : '1px solid #cbd5e1',
+                  backgroundColor: projectViewTab === 'code' ? '#059669' : '#ffffff',
+                  color: projectViewTab === 'code' ? '#ffffff' : '#334155',
+                  fontWeight: '700',
+                  fontSize: '12.5px',
+                  cursor: 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '6px'
+                }}
+              >
+                <FaCode /> 4. PyTorch Code & Docker
+              </button>
+
+              <button
+                onClick={() => setProjectViewTab('evaluator')}
+                style={{
+                  padding: '8px 14px',
+                  borderRadius: '5px',
+                  border: projectViewTab === 'evaluator' ? '2px solid #059669' : '1px solid #cbd5e1',
+                  backgroundColor: projectViewTab === 'evaluator' ? '#059669' : '#ffffff',
+                  color: projectViewTab === 'evaluator' ? '#ffffff' : '#334155',
+                  fontWeight: '700',
+                  fontSize: '12.5px',
+                  cursor: 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '6px'
+                }}
+              >
+                <FaCheckCircle /> 5. Evaluator Remarks & Sign-off
+              </button>
+            </div>
+
+            {/* Sub-view: (1) Rubric Breakdown */}
+            {projectViewTab === 'rubric' && (
+              <div>
+                <h4 style={{ fontSize: '15px', fontWeight: '800', color: '#0f172a', marginBottom: '12px' }}>
+                  Official 5-Criteria Evaluation Rubric & Assigned Marks (Total: 99 / 100)
+                </h4>
+
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '14px', marginBottom: '25px' }}>
+                  {advancedMlProjectData.rubric.map((r, i) => (
+                    <div
+                      key={i}
+                      style={{
+                        border: '1px solid #e2e8f0',
+                        borderRadius: '6px',
+                        padding: '16px 18px',
+                        backgroundColor: '#ffffff',
+                        borderLeft: '4px solid #059669'
+                      }}
+                    >
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '10px', marginBottom: '6px' }}>
+                        <span style={{ fontSize: '14.5px', fontWeight: '800', color: '#0f172a' }}>
+                          {r.criterion}
+                        </span>
+                        <span style={{ backgroundColor: '#dcfce7', color: '#15803d', padding: '3px 10px', borderRadius: '4px', fontSize: '13px', fontWeight: '800' }}>
+                          Score: {r.score} / {r.maxScore} Marks
+                        </span>
+                      </div>
+                      <p style={{ fontSize: '12.5px', color: '#334155', margin: '0 0 10px', lineHeight: '1.45' }}>
+                        <strong>Evaluator Feedback:</strong> {r.feedback}
+                      </p>
+                      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
+                        {r.highlights.map((h, hi) => (
+                          <span key={hi} style={{ backgroundColor: '#f1f5f9', color: '#475569', padding: '2px 8px', borderRadius: '4px', fontSize: '11px', fontWeight: '600', border: '1px solid #e2e8f0' }}>
+                            ✓ {h}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Sub-view: (2) Architecture & Math Formulation */}
+            {projectViewTab === 'architecture' && (
+              <div>
+                <h4 style={{ fontSize: '15px', fontWeight: '800', color: '#0f172a', marginBottom: '12px' }}>
+                  Physics-Informed Mathematical Formulation & Dual Graph Attention Architecture
+                </h4>
+                
+                <div style={{ backgroundColor: '#f8fafc', border: '1px solid #e2e8f0', borderRadius: '8px', padding: '20px', marginBottom: '20px' }}>
+                  <div style={{ fontSize: '13px', fontWeight: '700', color: '#004b93', marginBottom: '8px' }}>
+                    1. Governing Partial Differential Equation (Navier-Cauchy Elastodynamics):
+                  </div>
+                  <div style={{ fontFamily: 'monospace', backgroundColor: '#0f172a', color: '#86efac', padding: '12px 16px', borderRadius: '6px', fontSize: '13px', marginBottom: '12px', overflowX: 'auto' }}>
+                    ∇ · σ + ρb = ρ(∂²u / ∂t²)   [Continuum Stress Equilibrium]
+                  </div>
+                  <p style={{ fontSize: '12.5px', color: '#475569', lineHeight: '1.5', margin: '0 0 14px' }}>
+                    Where <strong>σ</strong> is the Cauchy stress tensor, <strong>u(x,t)</strong> is the multi-axial displacement field measured at vibration transducer nodes, <strong>ρ</strong> is the steel alloy material density, and <strong>b</strong> is external body force.
+                  </p>
+
+                  <div style={{ fontSize: '13px', fontWeight: '700', color: '#004b93', marginBottom: '8px' }}>
+                    2. Hybrid PINN Optimization Objective:
+                  </div>
+                  <div style={{ fontFamily: 'monospace', backgroundColor: '#0f172a', color: '#fef08a', padding: '12px 16px', borderRadius: '6px', fontSize: '13px', marginBottom: '12px', overflowX: 'auto' }}>
+                    L_total = L_data(y_pred, y_true) + λ_physics ||∇ · σ_pred - ρ(∂²u/∂t²)||² + γ_spectral L_entropy
+                  </div>
+                  <p style={{ fontSize: '12.5px', color: '#475569', lineHeight: '1.5', margin: 0 }}>
+                    The physics residual penalizes non-physical degradation trajectories, guaranteeing that bearing wear rate is strictly monotonic and obeys energy conservation constraints.
+                  </p>
+                </div>
+
+                <div style={{ backgroundColor: '#ffffff', border: '1px solid #e2e8f0', borderRadius: '8px', padding: '20px' }}>
+                  <div style={{ fontSize: '13.5px', fontWeight: '800', color: '#0f172a', marginBottom: '10px' }}>
+                    End-to-End Pipeline Architecture Diagram
+                  </div>
+                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '12px' }}>
+                    <div style={{ border: '1px solid #cbd5e1', borderRadius: '6px', padding: '12px', backgroundColor: '#f8fafc' }}>
+                      <span style={{ fontSize: '11px', fontWeight: '800', color: '#059669' }}>STAGE 1</span>
+                      <div style={{ fontSize: '13px', fontWeight: '700', color: '#0f172a', margin: '2px 0' }}>128-Sensor Ingestion</div>
+                      <div style={{ fontSize: '11.5px', color: '#64748b' }}>Wavelet FFT denoising, dynamic correlation adjacency matrix A(t)</div>
+                    </div>
+                    <div style={{ border: '1px solid #cbd5e1', borderRadius: '6px', padding: '12px', backgroundColor: '#f8fafc' }}>
+                      <span style={{ fontSize: '11px', fontWeight: '800', color: '#059669' }}>STAGE 2</span>
+                      <div style={{ fontSize: '13px', fontWeight: '700', color: '#0f172a', margin: '2px 0' }}>Spatial GATv2 Attention</div>
+                      <div style={{ fontSize: '11.5px', color: '#64748b' }}>Learns physical mechanical stress transmission between bearings</div>
+                    </div>
+                    <div style={{ border: '1px solid #cbd5e1', borderRadius: '6px', padding: '12px', backgroundColor: '#f8fafc' }}>
+                      <span style={{ fontSize: '11px', fontWeight: '800', color: '#059669' }}>STAGE 3</span>
+                      <div style={{ fontSize: '13px', fontWeight: '700', color: '#0f172a', margin: '2px 0' }}>Temporal Transformer</div>
+                      <div style={{ fontSize: '11.5px', color: '#64748b' }}>8-head self-attention models long-range cumulative wear history</div>
+                    </div>
+                    <div style={{ border: '1px solid #cbd5e1', borderRadius: '6px', padding: '12px', backgroundColor: '#f8fafc' }}>
+                      <span style={{ fontSize: '11px', fontWeight: '800', color: '#059669' }}>STAGE 4</span>
+                      <div style={{ fontSize: '13px', fontWeight: '700', color: '#0f172a', margin: '2px 0' }}>ONNX Edge Runtime</div>
+                      <div style={{ fontSize: '11.5px', color: '#64748b' }}>12.4ms TensorRT FP16 compiled binary in Docker container</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* Sub-view: (3) Empirical Benchmarks */}
+            {projectViewTab === 'benchmarks' && (
+              <div>
+                <h4 style={{ fontSize: '15px', fontWeight: '800', color: '#0f172a', marginBottom: '12px' }}>
+                  Empirical Benchmark Comparison across Industrial Turbomachinery Datasets
+                </h4>
+
+                <div style={{ overflowX: 'auto', marginBottom: '20px' }}>
+                  <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '12.5px', textAlign: 'left' }}>
+                    <thead>
+                      <tr style={{ backgroundColor: '#0f172a', color: '#ffffff' }}>
+                        <th style={{ padding: '10px 12px', borderRadius: '6px 0 0 0' }}>Candidate Architecture</th>
+                        <th style={{ padding: '10px 12px' }}>RUL RMSE (Cycles)</th>
+                        <th style={{ padding: '10px 12px' }}>Classification Acc</th>
+                        <th style={{ padding: '10px 12px' }}>Edge Latency</th>
+                        <th style={{ padding: '10px 12px', borderRadius: '0 6px 0 0' }}>Parameters</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {advancedMlProjectData.baselines.map((b, bi) => (
+                        <tr
+                          key={bi}
+                          style={{
+                            backgroundColor: b.highlight ? '#dcfce7' : bi % 2 === 0 ? '#ffffff' : '#f8fafc',
+                            fontWeight: b.highlight ? '700' : 'normal',
+                            borderBottom: '1px solid #e2e8f0'
+                          }}
+                        >
+                          <td style={{ padding: '12px', color: b.highlight ? '#15803d' : '#0f172a' }}>
+                            {b.highlight ? `⭐ ${b.model}` : b.model}
+                          </td>
+                          <td style={{ padding: '12px', color: b.highlight ? '#15803d' : '#334155' }}>
+                            <strong>{b.rmse}</strong>
+                          </td>
+                          <td style={{ padding: '12px', color: b.highlight ? '#15803d' : '#334155' }}>
+                            {b.accuracy}
+                          </td>
+                          <td style={{ padding: '12px', color: b.highlight ? '#15803d' : '#334155' }}>
+                            {b.latency}
+                          </td>
+                          <td style={{ padding: '12px', color: '#64748b' }}>
+                            {b.params}
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+
+                <div style={{ backgroundColor: '#f0fdf4', border: '1px solid #bbf7d0', borderRadius: '6px', padding: '14px', fontSize: '12.5px', color: '#166534', lineHeight: '1.45' }}>
+                  <strong>Ablation Key Takeaway:</strong> Removing the Physics-Informed loss regularizer causes the RMSE to jump from 6.84 to 10.42 cycles, proving that incorporating continuum mechanics into the PyTorch loss provides a 34.3% error reduction on noisy test sets.
+                </div>
+              </div>
+            )}
+
+            {/* Sub-view: (4) Code & Docker */}
+            {projectViewTab === 'code' && (
+              <div>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px', flexWrap: 'wrap', gap: '10px' }}>
+                  <div style={{ display: 'flex', gap: '8px' }}>
+                    <button
+                      onClick={() => setProjectCodeTab('pinn')}
+                      style={{
+                        padding: '6px 12px',
+                        borderRadius: '4px',
+                        border: projectCodeTab === 'pinn' ? '1.5px solid #059669' : '1px solid #cbd5e1',
+                        backgroundColor: projectCodeTab === 'pinn' ? '#059669' : '#ffffff',
+                        color: projectCodeTab === 'pinn' ? '#ffffff' : '#334155',
+                        fontWeight: '700',
+                        fontSize: '12px',
+                        cursor: 'pointer'
+                      }}
+                    >
+                      PhysicsInformedLoss.py
+                    </button>
+                    <button
+                      onClick={() => setProjectCodeTab('architecture')}
+                      style={{
+                        padding: '6px 12px',
+                        borderRadius: '4px',
+                        border: projectCodeTab === 'architecture' ? '1.5px solid #059669' : '1px solid #cbd5e1',
+                        backgroundColor: projectCodeTab === 'architecture' ? '#059669' : '#ffffff',
+                        color: projectCodeTab === 'architecture' ? '#ffffff' : '#334155',
+                        fontWeight: '700',
+                        fontSize: '12px',
+                        cursor: 'pointer'
+                      }}
+                    >
+                      TemporalGraphTransformer.py
+                    </button>
+                    <button
+                      onClick={() => setProjectCodeTab('dockerfile')}
+                      style={{
+                        padding: '6px 12px',
+                        borderRadius: '4px',
+                        border: projectCodeTab === 'dockerfile' ? '1.5px solid #059669' : '1px solid #cbd5e1',
+                        backgroundColor: projectCodeTab === 'dockerfile' ? '#059669' : '#ffffff',
+                        color: projectCodeTab === 'dockerfile' ? '#ffffff' : '#334155',
+                        fontWeight: '700',
+                        fontSize: '12px',
+                        cursor: 'pointer'
+                      }}
+                    >
+                      Dockerfile & ONNX
+                    </button>
+                  </div>
+
+                  <button
+                    onClick={() => handleCopySnippet(projectCodeTab, advancedMlProjectData.codeSnippets[projectCodeTab === 'dockerfile' ? 'dockerfile' : projectCodeTab])}
+                    style={{
+                      backgroundColor: '#0f172a',
+                      color: '#ffffff',
+                      border: 'none',
+                      padding: '6px 12px',
+                      borderRadius: '4px',
+                      fontSize: '12px',
+                      fontWeight: '700',
+                      cursor: 'pointer',
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '6px'
+                    }}
+                  >
+                    {copiedSnippet === projectCodeTab ? <FaCheck style={{ color: '#86efac' }} /> : <FaCopy />}
+                    {copiedSnippet === projectCodeTab ? 'Copied to Clipboard!' : 'Copy Source Code'}
+                  </button>
+                </div>
+
+                <div style={{
+                  backgroundColor: '#0f172a',
+                  color: '#e2e8f0',
+                  borderRadius: '6px',
+                  padding: '16px',
+                  fontFamily: 'Consolas, Monaco, "Courier New", monospace',
+                  fontSize: '12px',
+                  lineHeight: '1.5',
+                  overflowX: 'auto',
+                  maxHeight: '380px'
+                }}>
+                  <pre style={{ margin: 0 }}>
+                    {projectCodeTab === 'pinn' && advancedMlProjectData.codeSnippets.pinnLoss}
+                    {projectCodeTab === 'architecture' && advancedMlProjectData.codeSnippets.architecture}
+                    {projectCodeTab === 'dockerfile' && advancedMlProjectData.codeSnippets.dockerfile}
+                  </pre>
+                </div>
+              </div>
+            )}
+
+            {/* Sub-view: (5) Faculty Evaluator Remarks */}
+            {projectViewTab === 'evaluator' && (
+              <div>
+                <h4 style={{ fontSize: '15px', fontWeight: '800', color: '#0f172a', marginBottom: '12px' }}>
+                  Official Faculty Reviewer Assessment & Certification Remarks
+                </h4>
+
+                <div style={{
+                  backgroundColor: '#f8fafc',
+                  border: '1.5px solid #cbd5e1',
+                  borderRadius: '8px',
+                  padding: '24px',
+                  position: 'relative'
+                }}>
+                  <p style={{ fontSize: '13.5px', color: '#1e293b', lineHeight: '1.6', margin: '0 0 20px', fontStyle: 'italic' }}>
+                    "{advancedMlProjectData.evaluatorRemarks}"
+                  </p>
+
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', flexWrap: 'wrap', gap: '15px', borderTop: '1px solid #e2e8f0', paddingTop: '16px' }}>
+                    <div>
+                      <div style={{ fontSize: '15px', fontWeight: '800', color: '#004b93' }}>
+                        {advancedMlProjectData.evaluator}
+                      </div>
+                      <div style={{ fontSize: '12px', color: '#64748b' }}>
+                        {advancedMlProjectData.evaluatorDesignation}
+                      </div>
+                      <div style={{ fontSize: '11.5px', color: '#475569', marginTop: '2px' }}>
+                        Birla Institute of Technology and Science (BITS), Pilani
+                      </div>
+                    </div>
+
+                    <div style={{ textAlign: 'right' }}>
+                      <span style={{ backgroundColor: '#dcfce7', color: '#15803d', padding: '4px 10px', borderRadius: '4px', fontSize: '12px', fontWeight: '800' }}>
+                        ✓ Evaluation Verified & Signed
+                      </span>
+                      <div style={{ fontSize: '11px', color: '#64748b', marginTop: '4px' }}>
+                        Date of Sign-off: {advancedMlProjectData.evaluationDate}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+
+          </div>
+
+        </div>
+      )}
 
       {/* 3. SUB-TAB CONTENT: (A) My Official MST Scorecard */}
       {activeSubTab === 'scorecard' && (

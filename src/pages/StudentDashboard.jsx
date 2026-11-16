@@ -17,11 +17,16 @@ import {
   FaExclamationCircle,
   FaMedal,
   FaAward,
-  FaGraduationCap
+  FaGraduationCap,
+  FaBrain,
+  FaStar,
+  FaRocket,
+  FaFlask
 } from 'react-icons/fa';
 import NotesSection from '../components/NotesSection';
 import MstResultsSection from '../components/MstResultsSection';
 import VideoLecturesSection from '../components/VideoLecturesSection';
+import { mstScheduleData, advancedMlProjectData } from '../data/mstResultsData';
 
 export default function StudentDashboard() {
   const navigate = useNavigate();
@@ -79,61 +84,8 @@ export default function StudentDashboard() {
     { day: 'Saturday', subject: 'Machine Learning / AI (Lab & Tutorial)', instructor: 'Dr. K. Patel / Prof. S. Das', room: 'Virtual Lab 2' }
   ];
 
-  // 4. Mid-Semester Test (MST) Official Exam Schedule
-  const mstSchedule = [
-    {
-      code: 'BITS F112',
-      subject: 'Mathematical Foundations for Machine Learning',
-      dayBadge: '03 Oct 2026 - Saturday',
-      badgeColor: '#16a34a',
-      date: '03 October 2026',
-      timeSlot: 'Morning 11:00 AM – 01:00 PM',
-      duration: '2 Hours (120 Mins)',
-      instructor: 'Dr. A. Sen',
-      room: 'Online Exam Hall 1 (WILP Proctored Portal)',
-      status: 'Evaluated • 39.5/40',
-      topics: 'Linear Algebra, Eigenvalues & SVD, Vector Calculus, Optimization & Gradient Descent'
-    },
-    {
-      code: 'BITS F111',
-      subject: 'Introduction to Statistical Methods',
-      dayBadge: '03 Oct 2026 - Saturday',
-      badgeColor: '#16a34a',
-      date: '03 October 2026',
-      timeSlot: 'Evening 03:00 PM – 05:00 PM',
-      duration: '2 Hours (120 Mins)',
-      instructor: 'Prof. R. Sharma',
-      room: 'Online Exam Hall 2 (WILP Proctored Portal)',
-      status: 'Evaluated • 39.0/40',
-      topics: 'Probability Distributions, Sampling Distributions, Hypothesis Testing & Regression Analysis'
-    },
-    {
-      code: 'BITS F113',
-      subject: 'Machine Learning',
-      dayBadge: '04 Oct 2026 - Sunday',
-      badgeColor: '#16a34a',
-      date: '04 October 2026',
-      timeSlot: 'Morning 11:00 AM – 01:00 PM',
-      duration: '2 Hours (120 Mins)',
-      instructor: 'Dr. K. Patel',
-      room: 'Online Exam Hall 1 (WILP Proctored Portal)',
-      status: 'Evaluated • 40.0/40',
-      topics: 'Supervised Learning, Cost Functions, Decision Trees, Ensembles & Regularization'
-    },
-    {
-      code: 'BITS F114',
-      subject: 'Artificial and Computational Intelligence',
-      dayBadge: '05 Oct 2026 - Monday',
-      badgeColor: '#16a34a',
-      date: '05 October 2026',
-      timeSlot: 'Evening 06:00 PM – 08:00 PM',
-      duration: '2 Hours (120 Mins)',
-      instructor: 'Prof. S. Das',
-      room: 'Online Exam Hall 3 (WILP Proctored Portal)',
-      status: 'Evaluated • 39.5/40',
-      topics: 'Heuristic Search (A*), Adversarial Search, Knowledge Representation & First-Order Logic'
-    }
-  ];
+  // 4. Mid-Semester Test (MST) Official Exam Schedule (17–20 Nov 2026, 06:30 PM to 09:00 PM Daily)
+  const mstSchedule = mstScheduleData;
 
   const toggleSyllabus = (idx) => {
     if (expandedSyllabus === idx) {
@@ -171,14 +123,14 @@ export default function StudentDashboard() {
           <div style={{ flex: 1 }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '10px', marginBottom: '6px' }}>
               <h4 style={{ fontSize: '16.5px', fontWeight: '700', color: '#1e3a8a', margin: 0 }}>
-                🏆 Official Mid-Semester Test (MST) Results Declared – All 4 Papers Evaluated!
+                📅 Mid-Semester Test (MST) Schedule Announced & Advanced ML Practical Project (99/100 A+) Released!
               </h4>
               <span style={{ backgroundColor: '#16a34a', color: '#ffffff', fontSize: '11px', fontWeight: '800', padding: '3px 10px', borderRadius: '12px', textTransform: 'uppercase' }}>
-                Batch Rank #1 of 45 (158 / 160)
+                Batch Rank #1 of 45 (158/160 MST • 99/100 Practical)
               </span>
             </div>
             <p style={{ fontSize: '13.5px', lineHeight: '1.5', color: '#334155', margin: '0 0 12px' }}>
-              The evaluation for all 4 First Semester core courses (conducted between 03 Oct and 05 Oct 2026) is complete. <strong>Rohan Kumar Chaudhry</strong> has secured the highest marks in the cohort with <strong>158.0 / 160.0 (98.75%)</strong>. All individual subject marks out of 40 and the official 45-student cohort ranking list are published below.
+              Upcoming Mid-Semester Tests (MST) commence tomorrow, <strong>17 Nov to 20 Nov 2026</strong>, across 4 consecutive days (<strong>06:30 PM to 09:00 PM daily</strong>). Additionally, the evaluation for the BITS F113 Advanced Machine Learning Practical Capstone Project is officially published: <strong>Rohan Kumar Chaudhry</strong> has secured <strong>99.0 / 100.0 (Grade A+ Exemplary Distinction • Rank #1)</strong>!
             </p>
             <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
               <button
@@ -194,7 +146,7 @@ export default function StudentDashboard() {
                   cursor: 'pointer'
                 }}
               >
-                View MST Scorecard & Class Rankings →
+                View MST Schedule & Scorecard →
               </button>
               <button
                 onClick={() => setActiveTab('notes')}
@@ -451,20 +403,23 @@ export default function StudentDashboard() {
                   </div>
                 </div>
                 <div style={{ backgroundColor: '#fef2f2', border: '1px solid #fecaca', color: '#b91c1c', padding: '6px 14px', borderRadius: '20px', fontSize: '12.5px', fontWeight: '700', display: 'flex', alignItems: 'center', gap: '6px' }}>
-                  <FaClock /> 03 Oct (Sat) – 05 Oct (Mon) 2026
+                  <FaClock /> 17 Nov (Tue) – 20 Nov (Fri) 2026 • 06:30 PM to 09:00 PM Daily
                 </div>
               </div>
 
               {/* Instructions Pill Strip */}
               <div style={{ backgroundColor: '#f8fafc', border: '1px solid #e2e8f0', borderRadius: '6px', padding: '12px 18px', marginBottom: '22px', display: 'flex', flexWrap: 'wrap', gap: '18px', fontSize: '12.5px', color: '#334155' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                  <FaCheckCircle style={{ color: '#16a34a' }} /> <strong>Paper Duration:</strong> 2 Hours (120 Mins) per subject
+                  <FaCalendarAlt style={{ color: '#b91c1c' }} /> <strong>Schedule:</strong> 4 Consecutive Days (17–20 Nov 2026)
                 </div>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                  <FaLaptopCode style={{ color: '#2563eb' }} /> <strong>Proctoring:</strong> WILP Secure Portal & AI Proctor
+                  <FaClock style={{ color: '#16a34a' }} /> <strong>Daily Slot:</strong> 06:30 PM – 09:00 PM (2.5 Hours / 150 Mins)
                 </div>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                  <FaInfoCircle style={{ color: '#d97706' }} /> <strong>Admit Card:</strong> Verified & Linked
+                  <FaLaptopCode style={{ color: '#2563eb' }} /> <strong>Proctoring:</strong> WILP Secure AI Proctored Portal
+                </div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                  <FaCheckCircle style={{ color: '#15803d' }} /> <strong>Admit Card:</strong> Verified (#WILP-2026-MST-5831)
                 </div>
               </div>
 
@@ -477,8 +432,8 @@ export default function StudentDashboard() {
                       border: '1px solid #e5e7eb',
                       borderRadius: '8px',
                       padding: '18px 20px',
-                      backgroundColor: idx === 0 || idx === 1 ? '#fffbfb' : '#ffffff',
-                      borderLeft: `5px solid ${exam.badgeColor}`,
+                      backgroundColor: '#fffbfb',
+                      borderLeft: `5px solid ${exam.badgeColor || '#b91c1c'}`,
                       display: 'flex',
                       justifyContent: 'space-between',
                       alignItems: 'center',
@@ -490,7 +445,7 @@ export default function StudentDashboard() {
                   >
                     <div style={{ flex: '1 1 360px' }}>
                       <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '8px', flexWrap: 'wrap' }}>
-                        <span style={{ backgroundColor: exam.badgeColor, color: '#ffffff', padding: '3px 10px', borderRadius: '4px', fontSize: '11.5px', fontWeight: '700', letterSpacing: '0.4px' }}>
+                        <span style={{ backgroundColor: exam.badgeColor || '#b91c1c', color: '#ffffff', padding: '3px 10px', borderRadius: '4px', fontSize: '11.5px', fontWeight: '700', letterSpacing: '0.4px' }}>
                           {exam.dayBadge}
                         </span>
                         <span style={{ fontSize: '13px', fontWeight: '700', color: '#1f2937' }}>
@@ -513,20 +468,21 @@ export default function StudentDashboard() {
                         <span>👤 Instructor: <strong>{exam.instructor}</strong></span>
                         <span>🏛️ Venue: <strong>{exam.room}</strong></span>
                         <span>⏳ Duration: <strong>{exam.duration}</strong></span>
+                        <span>📊 Weightage: <strong>{exam.maxMarks} Marks ({exam.weightage})</strong></span>
                       </div>
                     </div>
 
                     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', justifyContent: 'center', gap: '10px' }}>
                       <div style={{ textAlign: 'right' }}>
                         <span style={{ fontSize: '11px', color: 'var(--text-gray)', display: 'block', textTransform: 'uppercase', fontWeight: '600' }}>Slot Timing</span>
-                        <span style={{ fontSize: '14.5px', fontWeight: '800', color: exam.badgeColor }}>
+                        <span style={{ fontSize: '14.5px', fontWeight: '800', color: '#b91c1c' }}>
                           ⏰ {exam.timeSlot}
                         </span>
                       </div>
 
                       <button
                         style={{
-                          backgroundColor: idx === 0 || idx === 1 ? '#b91c1c' : '#1e293b',
+                          backgroundColor: '#b91c1c',
                           color: '#ffffff',
                           border: 'none',
                           padding: '9px 18px',
@@ -537,15 +493,132 @@ export default function StudentDashboard() {
                           display: 'flex',
                           alignItems: 'center',
                           gap: '6px',
+                          boxShadow: '0 2px 4px rgba(185, 28, 28, 0.25)',
                           transition: 'background-color 0.2s'
                         }}
-                        onClick={() => alert(`Launching Examination Portal for ${exam.code}: ${exam.subject}.\nDate: ${exam.date}\nSlot: ${exam.timeSlot}\nProctor: Verified.`)}
+                        onClick={() => alert(`Launching Examination Portal for ${exam.code}: ${exam.subject}.\nDate: ${exam.date}\nSlot: ${exam.timeSlot}\nDuration: ${exam.duration}\nProctor: Verified.`)}
                       >
-                        <FaLaptopCode /> {idx === 0 || idx === 1 ? 'Enter Exam Portal (Ready)' : 'Exam Portal Link'}
+                        <FaLaptopCode /> Enter Exam Portal (Ready)
                       </button>
                     </div>
                   </div>
                 ))}
+              </div>
+            </div>
+
+            {/* Advanced Machine Learning Practical Capstone Project Card */}
+            <div style={{
+              backgroundColor: '#ffffff',
+              borderRadius: '6px',
+              boxShadow: 'var(--shadow-sm)',
+              padding: '30px',
+              borderTop: '4px solid #059669',
+              borderLeft: '5px solid #059669'
+            }}>
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '18px', borderBottom: '2px solid var(--border-light)', paddingBottom: '12px', flexWrap: 'wrap', gap: '10px' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                  <FaBrain style={{ color: '#059669', fontSize: '24px' }} />
+                  <div>
+                    <h3 style={{ fontSize: '20px', color: 'var(--primary-dark)', fontWeight: '600', margin: 0 }}>
+                      Advanced Machine Learning Lab Practical Capstone Project
+                    </h3>
+                    <span style={{ fontSize: '13px', color: 'var(--text-gray)' }}>
+                      BITS F113-PR • Enterprise Industrial AI Component • Graded & Certified
+                    </span>
+                  </div>
+                </div>
+                <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+                  <span style={{ backgroundColor: '#dcfce7', border: '1px solid #bbf7d0', color: '#15803d', padding: '6px 14px', borderRadius: '20px', fontSize: '12.5px', fontWeight: '800', display: 'flex', alignItems: 'center', gap: '6px' }}>
+                    <FaStar /> Score: 99.0 / 100 (Grade A+)
+                  </span>
+                  <span style={{ backgroundColor: '#eff6ff', border: '1px solid #bfdbfe', color: '#1e40af', padding: '6px 14px', borderRadius: '20px', fontSize: '12.5px', fontWeight: '800', display: 'flex', alignItems: 'center', gap: '6px' }}>
+                    <FaMedal /> Rank #1 of 45
+                  </span>
+                </div>
+              </div>
+
+              <div style={{
+                background: 'linear-gradient(135deg, #064e3b 0%, #047857 100%)',
+                borderRadius: '8px',
+                padding: '22px 24px',
+                color: '#ffffff',
+                marginBottom: '20px',
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                flexWrap: 'wrap',
+                gap: '15px'
+              }}>
+                <div style={{ flex: '1 1 500px' }}>
+                  <span style={{ backgroundColor: 'rgba(255,255,255,0.2)', padding: '3px 8px', borderRadius: '4px', fontSize: '11px', fontWeight: '800', textTransform: 'uppercase' }}>
+                    Project Title
+                  </span>
+                  <h4 style={{ fontSize: '17px', fontWeight: '700', margin: '6px 0 8px', color: '#ffffff', lineHeight: '1.4' }}>
+                    Enterprise Predictive Maintenance & Degradation Prognostics using Physics-Informed Neural Networks (PINNs) and Temporal Graph Transformers
+                  </h4>
+                  <p style={{ fontSize: '12.5px', color: '#d1fae5', margin: 0, lineHeight: '1.45' }}>
+                    Multimodal turbomachinery digital twin integrating Navier-Cauchy continuum mechanics with 8-head spatio-temporal graph attention. Edge-compiled via ONNX FP16 inside Docker.
+                  </p>
+                </div>
+
+                <div style={{ textAlign: 'center', minWidth: '150px', backgroundColor: 'rgba(255,255,255,0.12)', border: '1.5px solid rgba(255,255,255,0.3)', padding: '12px 18px', borderRadius: '6px' }}>
+                  <span style={{ fontSize: '11px', textTransform: 'uppercase', color: '#a7f3d0', fontWeight: '700' }}>Marks Awarded</span>
+                  <div style={{ fontSize: '32px', fontWeight: '900', color: '#ffffff' }}>99 / 100</div>
+                  <span style={{ fontSize: '11.5px', color: '#fef08a', fontWeight: '700' }}>Grade A+ Distinction</span>
+                </div>
+              </div>
+
+              {/* Rubric Breakdown Grid */}
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: '12px', marginBottom: '20px' }}>
+                <div style={{ backgroundColor: '#f8fafc', border: '1px solid #e2e8f0', borderRadius: '6px', padding: '12px' }}>
+                  <div style={{ fontSize: '11px', fontWeight: '700', color: '#64748b' }}>1. Problem Formulation</div>
+                  <div style={{ fontSize: '16px', fontWeight: '800', color: '#059669', margin: '2px 0' }}>25 / 25</div>
+                  <div style={{ fontSize: '11px', color: '#475569' }}>Navier-Cauchy PDE derivation</div>
+                </div>
+                <div style={{ backgroundColor: '#f8fafc', border: '1px solid #e2e8f0', borderRadius: '6px', padding: '12px' }}>
+                  <div style={{ fontSize: '11px', fontWeight: '700', color: '#64748b' }}>2. Sensor Pipeline</div>
+                  <div style={{ fontSize: '16px', fontWeight: '800', color: '#059669', margin: '2px 0' }}>20 / 20</div>
+                  <div style={{ fontSize: '11px', color: '#475569' }}>128-channel wavelet FFT</div>
+                </div>
+                <div style={{ backgroundColor: '#f8fafc', border: '1px solid #e2e8f0', borderRadius: '6px', padding: '12px' }}>
+                  <div style={{ fontSize: '11px', fontWeight: '700', color: '#64748b' }}>3. Novel Architecture</div>
+                  <div style={{ fontSize: '16px', fontWeight: '800', color: '#059669', margin: '2px 0' }}>25 / 25</div>
+                  <div style={{ fontSize: '11px', color: '#475569' }}>PINN + Temporal GATv2</div>
+                </div>
+                <div style={{ backgroundColor: '#f8fafc', border: '1px solid #e2e8f0', borderRadius: '6px', padding: '12px' }}>
+                  <div style={{ fontSize: '11px', fontWeight: '700', color: '#64748b' }}>4. Empirical Benchmarks</div>
+                  <div style={{ fontSize: '16px', fontWeight: '800', color: '#059669', margin: '2px 0' }}>15 / 15</div>
+                  <div style={{ fontSize: '11px', color: '#475569' }}>99.2% Acc • 0.994 AUC</div>
+                </div>
+                <div style={{ backgroundColor: '#f8fafc', border: '1px solid #e2e8f0', borderRadius: '6px', padding: '12px' }}>
+                  <div style={{ fontSize: '11px', fontWeight: '700', color: '#64748b' }}>5. Edge Deployment</div>
+                  <div style={{ fontSize: '16px', fontWeight: '800', color: '#059669', margin: '2px 0' }}>14 / 15</div>
+                  <div style={{ fontSize: '11px', color: '#475569' }}>Docker & ONNX (12.4ms)</div>
+                </div>
+              </div>
+
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '12px', borderTop: '1px solid #f1f5f9', paddingTop: '16px' }}>
+                <div style={{ fontSize: '12.5px', color: '#475569' }}>
+                  👤 <strong>Evaluator:</strong> Dr. K. Patel (Associate Professor, CSIS) • 📅 Evaluated: 15 Nov 2026
+                </div>
+                <button
+                  onClick={() => setActiveTab('mst')}
+                  style={{
+                    backgroundColor: '#059669',
+                    color: '#ffffff',
+                    border: 'none',
+                    padding: '9px 18px',
+                    borderRadius: '5px',
+                    fontWeight: '700',
+                    fontSize: '13px',
+                    cursor: 'pointer',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '6px'
+                  }}
+                >
+                  <FaBrain /> View Full Practical Project & Codebase →
+                </button>
               </div>
             </div>
 
