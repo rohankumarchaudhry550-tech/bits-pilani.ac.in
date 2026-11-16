@@ -440,13 +440,13 @@ export default function MstResultsSection() {
             }}>
               <div>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: '#004b93', fontWeight: '800', fontSize: '18px' }}>
-                  <FaUniversity /> BIRLA INSTITUTE OF TECHNOLOGY AND SCIENCE, PILANI
+                  <img src="/bits-logo.webp" alt="BITS Logo" style={{ height: '32px', objectFit: 'contain' }} /> BIRLA INSTITUTE OF TECHNOLOGY & SCIENCE, PILANI — HYDERABAD CAMPUS
                 </div>
-                <div style={{ fontSize: '13px', color: '#475569', fontWeight: '600', marginTop: '2px' }}>
-                  Work Integrated Learning Programmes (WILP) • Division of Examination and Evaluation
+                <div style={{ fontSize: '13px', color: '#b91c1c', fontWeight: '700', marginTop: '2px' }}>
+                  Hyderabad Campus • Work Integrated Learning Programmes (WILP) Division
                 </div>
-                <div style={{ fontSize: '12.5px', color: '#64748b' }}>
-                  Official Mid-Semester Tests (MST) Examination Schedule • First Semester 2026-27
+                <div style={{ fontSize: '12px', color: '#64748b' }}>
+                  Jawahar Nagar, Kapra Mandal, Hyderabad - 500078, Telangana • Mid-Semester Tests (MST) First Semester 2026-27
                 </div>
               </div>
 
@@ -729,7 +729,7 @@ export default function MstResultsSection() {
                   Program: {rohanMstScorecard.program} • Sponsor: {rohanMstScorecard.sponsor}
                 </div>
                 <div style={{ fontSize: '11.5px', color: '#16a34a', fontWeight: '700', marginTop: '4px', display: 'flex', alignItems: 'center', gap: '6px' }}>
-                  <FaCheckCircle /> Biometric & Camera Compatibility: PASS • AI Dual Proctoring: VERIFIED • Hall Ticket #WILP-2026-MST-5831
+                  <FaCheckCircle /> Biometric & Camera Compatibility: PASS • AI Dual Proctoring: VERIFIED • Hall Ticket #WILP-2026-MST-HYD-5831 (Hyderabad Campus)
                 </div>
               </div>
 

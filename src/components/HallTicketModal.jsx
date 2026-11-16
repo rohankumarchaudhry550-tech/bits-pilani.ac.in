@@ -13,7 +13,8 @@ import {
   FaUserCheck,
   FaIdCard,
   FaLaptopCode,
-  FaSpinner
+  FaSpinner,
+  FaMapMarkerAlt
 } from 'react-icons/fa';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
@@ -31,12 +32,16 @@ export default function HallTicketModal({ isOpen, onClose, studentData }) {
     program: 'M.Tech in Artificial Intelligence & Machine Learning',
     semester: 'First Semester 2026-27',
     sponsor: 'Larsen & Toubro Limited (L&T) Executive Program',
-    hallTicketNo: 'WILP-2026-MST-5831',
-    examCenter: 'Online Proctored Mode (WILP AI Secure Portal)',
-    portalId: 'BITS-WILP-EXAM-PROCTOR-ALPHA',
+    campus: 'Hyderabad Campus',
+    campusAddress: 'Jawahar Nagar, Kapra Mandal, Hyderabad - 500078, Telangana',
+    hallTicketNo: 'WILP-2026-MST-HYD-5831',
+    examCenter: 'BITS Pilani, Hyderabad Campus (Online Proctored Division)',
+    portalId: 'BITS-HYD-PROCTOR-ALPHA-5831',
     dateOfIssue: '16 November 2026',
-    barcodeString: '*WILP-2026-MST-5831*',
-    verificationToken: 'BITS-WILP-AUTH-7892-2026ML005831-SECURE'
+    barcodeString: '*WILP-2026-MST-HYD-5831*',
+    verificationToken: 'BITS-HYD-AUTH-7892-2026ML005831-SECURE',
+    photoUrl: '/rohan-candidate-photo.jpg',
+    logoUrl: '/bits-logo.webp'
   };
 
   const schedule = [
@@ -46,7 +51,7 @@ export default function HallTicketModal({ isOpen, onClose, studentData }) {
       code: 'BITS F112',
       name: 'Mathematical Foundations for Machine Learning',
       duration: '150 Mins',
-      hall: 'Online Hall 1',
+      hall: 'Online Hall HYD-1',
       invigilator: 'Dr. A. Sen',
       status: 'Admitted'
     },
@@ -56,7 +61,7 @@ export default function HallTicketModal({ isOpen, onClose, studentData }) {
       code: 'BITS F111',
       name: 'Introduction to Statistical Methods',
       duration: '150 Mins',
-      hall: 'Online Hall 2',
+      hall: 'Online Hall HYD-2',
       invigilator: 'Prof. R. Sharma',
       status: 'Admitted'
     },
@@ -66,7 +71,7 @@ export default function HallTicketModal({ isOpen, onClose, studentData }) {
       code: 'BITS F113',
       name: 'Machine Learning',
       duration: '150 Mins',
-      hall: 'Online Hall 1',
+      hall: 'Online Hall HYD-1',
       invigilator: 'Dr. K. Patel',
       status: 'Admitted'
     },
@@ -76,7 +81,7 @@ export default function HallTicketModal({ isOpen, onClose, studentData }) {
       code: 'BITS F114',
       name: 'Artificial and Computational Intelligence',
       duration: '150 Mins',
-      hall: 'Online Hall 3',
+      hall: 'Online Hall HYD-3',
       invigilator: 'Prof. S. Das',
       status: 'Admitted'
     }
@@ -91,6 +96,7 @@ export default function HallTicketModal({ isOpen, onClose, studentData }) {
       const canvas = await html2canvas(element, {
         scale: 2.5,
         useCORS: true,
+        allowTaint: true,
         logging: false,
         backgroundColor: '#ffffff'
       });
@@ -106,13 +112,12 @@ export default function HallTicketModal({ isOpen, onClose, studentData }) {
       const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
 
       pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
-      pdf.save(`BITS_Pilani_HallTicket_${candidate.roll}_MST.pdf`);
+      pdf.save(`BITS_Hyderabad_HallTicket_${candidate.roll}_MST.pdf`);
 
       setDownloadSuccess(true);
       setTimeout(() => setDownloadSuccess(false), 3500);
     } catch (error) {
       console.error('Error generating PDF:', error);
-      // Fallback to window.print()
       window.print();
     } finally {
       setIsGenerating(false);
@@ -173,13 +178,13 @@ export default function HallTicketModal({ isOpen, onClose, studentData }) {
           }}
         >
           <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-            <FaIdCard style={{ color: '#fcb900', fontSize: '20px' }} />
+            <FaIdCard style={{ color: '#fcb900', fontSize: '22px' }} />
             <div>
-              <h3 style={{ fontSize: '16px', fontWeight: '700', margin: 0 }}>
-                BITS Pilani Official Examination Hall Ticket
+              <h3 style={{ fontSize: '16px', fontWeight: '700', margin: 0, display: 'flex', alignItems: 'center', gap: '8px' }}>
+                BITS Pilani, Hyderabad Campus • Official Hall Ticket
               </h3>
-              <span style={{ fontSize: '11.5px', color: '#94a3b8' }}>
-                Roll: {candidate.roll} • Mid-Semester Tests (17–20 Nov 2026)
+              <span style={{ fontSize: '12px', color: '#94a3b8' }}>
+                Candidate: {candidate.name} ({candidate.roll}) • MST 17–20 Nov 2026
               </span>
             </div>
           </div>
@@ -205,7 +210,7 @@ export default function HallTicketModal({ isOpen, onClose, studentData }) {
               }}
             >
               {isGenerating ? <FaSpinner className="spin" /> : <FaDownload />}
-              {isGenerating ? 'Generating PDF...' : downloadSuccess ? 'Downloaded!' : 'Download Hall Ticket (PDF)'}
+              {isGenerating ? 'Generating High-Res PDF...' : downloadSuccess ? 'Downloaded Successfully!' : 'Download Hall Ticket (PDF)'}
             </button>
 
             <button
@@ -272,23 +277,24 @@ export default function HallTicketModal({ isOpen, onClose, studentData }) {
             <div
               style={{
                 position: 'absolute',
-                top: '50%',
+                top: '52%',
                 left: '50%',
-                transform: 'translate(-50%, -50%) rotate(-30deg)',
-                fontSize: '70px',
+                transform: 'translate(-50%, -50%) rotate(-28deg)',
+                fontSize: '48px',
                 fontWeight: '900',
-                color: 'rgba(0, 75, 147, 0.03)',
-                letterSpacing: '10px',
+                color: 'rgba(0, 75, 147, 0.035)',
+                letterSpacing: '8px',
                 pointerEvents: 'none',
                 whiteSpace: 'nowrap',
                 userSelect: 'none',
-                zIndex: 0
+                zIndex: 0,
+                textAlign: 'center'
               }}
             >
-              BITS PILANI • WILP
+              BITS PILANI • HYDERABAD CAMPUS
             </div>
 
-            {/* Top Official Header with BITS Pilani Crest */}
+            {/* Top Official Header with BITS Pilani Colored Logo */}
             <div
               style={{
                 display: 'flex',
@@ -302,24 +308,38 @@ export default function HallTicketModal({ isOpen, onClose, studentData }) {
               }}
             >
               <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
-                {/* Crest Emulation */}
+                {/* Official BITS Pilani Logo Image */}
                 <div
                   style={{
-                    width: '64px',
-                    height: '64px',
-                    borderRadius: '50%',
-                    backgroundColor: '#004b93',
-                    border: '3px solid #c29b38',
+                    width: '80px',
+                    height: '80px',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    color: '#ffffff',
-                    fontSize: '28px',
-                    boxShadow: '0 2px 6px rgba(0,0,0,0.15)',
                     flexShrink: 0
                   }}
                 >
-                  <FaUniversity />
+                  <img
+                    src={candidate.logoUrl}
+                    alt="BITS Pilani Crest Logo"
+                    crossOrigin="anonymous"
+                    style={{
+                      maxHeight: '76px',
+                      maxWidth: '76px',
+                      objectFit: 'contain'
+                    }}
+                    onError={(e) => {
+                      // Fallback to stylized university crest if image fails
+                      e.target.style.display = 'none';
+                      if (e.target.parentNode) {
+                        e.target.parentNode.innerHTML = `
+                          <div style="width:68px;height:68px;border-radius:50%;background:#004b93;border:3px solid #c29b38;display:flex;align-items:center;justify-content:center;color:#ffffff;font-size:30px;">
+                            🏛️
+                          </div>
+                        `;
+                      }
+                    }}
+                  />
                 </div>
 
                 <div>
@@ -328,7 +348,7 @@ export default function HallTicketModal({ isOpen, onClose, studentData }) {
                       fontSize: '18px',
                       fontWeight: '900',
                       color: '#004b93',
-                      letterSpacing: '0.5px',
+                      letterSpacing: '0.4px',
                       margin: '0 0 2px 0',
                       textTransform: 'uppercase'
                     }}
@@ -337,23 +357,33 @@ export default function HallTicketModal({ isOpen, onClose, studentData }) {
                   </h1>
                   <h2
                     style={{
-                      fontSize: '12.5px',
+                      fontSize: '14.5px',
+                      fontWeight: '800',
+                      color: '#b91c1c',
+                      letterSpacing: '0.5px',
+                      margin: '0 0 2px 0',
+                      textTransform: 'uppercase'
+                    }}
+                  >
+                    HYDERABAD CAMPUS
+                  </h2>
+                  <div
+                    style={{
+                      fontSize: '11.5px',
                       fontWeight: '700',
                       color: '#475569',
                       margin: '0 0 2px 0'
                     }}
                   >
                     WORK INTEGRATED LEARNING PROGRAMMES (WILP) DIVISION
-                  </h2>
+                  </div>
                   <div
                     style={{
-                      fontSize: '11px',
-                      color: '#b58b2a',
-                      fontWeight: '800',
-                      letterSpacing: '1px'
+                      fontSize: '10px',
+                      color: '#64748b'
                     }}
                   >
-                    ज्ञानं परमं बलम् • VIDYA PARAMA BALAM
+                    Jawahar Nagar, Kapra Mandal, Hyderabad - 500078, Telangana • <span style={{ color: '#b58b2a', fontWeight: '700' }}>ज्ञानं परमं बलम्</span>
                   </div>
                 </div>
               </div>
@@ -365,12 +395,13 @@ export default function HallTicketModal({ isOpen, onClose, studentData }) {
                   border: '1.5px solid #cbd5e1',
                   borderRadius: '6px',
                   padding: '6px 10px',
-                  backgroundColor: '#f8fafc'
+                  backgroundColor: '#f8fafc',
+                  flexShrink: 0
                 }}
               >
                 <FaQrcode style={{ fontSize: '42px', color: '#004b93' }} />
-                <div style={{ fontSize: '9px', fontWeight: '800', color: '#15803d', marginTop: '2px' }}>
-                  VERIFIED ADMIT CARD
+                <div style={{ fontSize: '8.5px', fontWeight: '800', color: '#15803d', marginTop: '2px' }}>
+                  HYD VERIFIED
                 </div>
               </div>
             </div>
@@ -385,18 +416,19 @@ export default function HallTicketModal({ isOpen, onClose, studentData }) {
                 borderRadius: '4px',
                 marginBottom: '16px',
                 position: 'relative',
-                zIndex: 1
+                zIndex: 1,
+                borderBottom: '3px solid #b58b2a'
               }}
             >
-              <div style={{ fontSize: '14.5px', fontWeight: '800', letterSpacing: '1.5px', textTransform: 'uppercase' }}>
-                OFFICIAL EXAMINATION ADMIT CARD / HALL TICKET
+              <div style={{ fontSize: '14px', fontWeight: '900', letterSpacing: '1.5px', textTransform: 'uppercase' }}>
+                MID-SEMESTER TEST (MST) ADMIT CARD / HALL TICKET
               </div>
-              <div style={{ fontSize: '11.5px', color: '#e2e8f0', fontWeight: '600' }}>
-                First Semester 2026-27 • Mid-Semester Tests (MST) • Online Proctored Mode
+              <div style={{ fontSize: '11px', color: '#fef08a', fontWeight: '700' }}>
+                First Semester 2026-27 • BITS Pilani, Hyderabad Campus • Online AI-Proctored Mode
               </div>
             </div>
 
-            {/* Hall Ticket Meta & Barcode Strip */}
+            {/* Hall Ticket Meta Strip */}
             <div
               style={{
                 display: 'flex',
@@ -409,7 +441,9 @@ export default function HallTicketModal({ isOpen, onClose, studentData }) {
                 marginBottom: '16px',
                 fontSize: '12px',
                 position: 'relative',
-                zIndex: 1
+                zIndex: 1,
+                flexWrap: 'wrap',
+                gap: '8px'
               }}
             >
               <div>
@@ -419,21 +453,27 @@ export default function HallTicketModal({ isOpen, onClose, studentData }) {
                 </span>
               </div>
               <div>
+                <strong>Campus:</strong>{' '}
+                <span style={{ color: '#004b93', fontWeight: '800' }}>
+                  Hyderabad Campus
+                </span>
+              </div>
+              <div>
                 <strong>Date of Issue:</strong> {candidate.dateOfIssue}
               </div>
               <div>
-                <strong>Security Token:</strong>{' '}
-                <span style={{ fontFamily: 'monospace', color: '#475569' }}>
-                  {candidate.verificationToken.slice(0, 18)}...
+                <strong>Token:</strong>{' '}
+                <span style={{ fontFamily: 'monospace', color: '#475569', fontSize: '11px' }}>
+                  {candidate.verificationToken.slice(0, 16)}...
                 </span>
               </div>
             </div>
 
-            {/* Candidate Identity Details & Photo/Signature Grid */}
+            {/* Candidate Details Table & Real Passport Photo Grid */}
             <div
               style={{
                 display: 'grid',
-                gridTemplateColumns: '1fr 180px',
+                gridTemplateColumns: '1fr 170px',
                 gap: '16px',
                 marginBottom: '18px',
                 position: 'relative',
@@ -455,7 +495,7 @@ export default function HallTicketModal({ isOpen, onClose, studentData }) {
                     <td style={{ padding: '7px 10px', backgroundColor: '#f8fafc', fontWeight: '700', width: '38%', color: '#334155' }}>
                       Candidate Full Name:
                     </td>
-                    <td style={{ padding: '7px 10px', fontWeight: '800', color: '#004b93', fontSize: '13.5px' }}>
+                    <td style={{ padding: '7px 10px', fontWeight: '900', color: '#004b93', fontSize: '13.5px' }}>
                       {candidate.name}
                     </td>
                   </tr>
@@ -473,6 +513,14 @@ export default function HallTicketModal({ isOpen, onClose, studentData }) {
                     </td>
                     <td style={{ padding: '7px 10px', fontWeight: '600', color: '#0f172a' }}>
                       {candidate.program}
+                    </td>
+                  </tr>
+                  <tr style={{ borderBottom: '1px solid #e2e8f0' }}>
+                    <td style={{ padding: '7px 10px', backgroundColor: '#f8fafc', fontWeight: '700', color: '#334155' }}>
+                      Campus Affiliation:
+                    </td>
+                    <td style={{ padding: '7px 10px', fontWeight: '800', color: '#b91c1c' }}>
+                      BITS Pilani, Hyderabad Campus
                     </td>
                   </tr>
                   <tr style={{ borderBottom: '1px solid #e2e8f0' }}>
@@ -502,7 +550,7 @@ export default function HallTicketModal({ isOpen, onClose, studentData }) {
                 </tbody>
               </table>
 
-              {/* Right Column: Photo Frame with Official Stamp & Specimen Signature */}
+              {/* Right Column: Rohan's Actual Photograph & Specimen Signature */}
               <div
                 style={{
                   display: 'flex',
@@ -511,84 +559,59 @@ export default function HallTicketModal({ isOpen, onClose, studentData }) {
                   gap: '8px'
                 }}
               >
-                {/* Photo Box */}
+                {/* Photo Frame */}
                 <div
                   style={{
-                    width: '135px',
-                    height: '155px',
-                    border: '2px solid #004b93',
+                    width: '140px',
+                    height: '165px',
+                    border: '2.5px solid #004b93',
                     borderRadius: '4px',
                     backgroundColor: '#e2e8f0',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'center',
-                    justifyContent: 'center',
                     position: 'relative',
                     overflow: 'hidden',
-                    boxShadow: '0 2px 5px rgba(0,0,0,0.1)'
+                    boxShadow: '0 3px 8px rgba(0,0,0,0.15)'
                   }}
                 >
-                  {/* Photo Avatar Placeholder with High Detail */}
-                  <div
+                  {/* Candidate Real Photo */}
+                  <img
+                    src={candidate.photoUrl}
+                    alt="Rohan Kumar Chaudhry - Candidate Photograph"
+                    crossOrigin="anonymous"
                     style={{
                       width: '100%',
                       height: '100%',
-                      backgroundColor: '#1e293b',
-                      color: '#ffffff',
-                      display: 'flex',
-                      flexDirection: 'column',
-                      alignItems: 'center',
-                      justifyContent: 'center'
+                      objectFit: 'cover',
+                      objectPosition: '45% 15%',
+                      display: 'block'
                     }}
-                  >
-                    <div
-                      style={{
-                        width: '54px',
-                        height: '54px',
-                        borderRadius: '50%',
-                        backgroundColor: '#3b82f6',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        fontSize: '22px',
-                        fontWeight: '800'
-                      }}
-                    >
-                      RK
-                    </div>
-                    <span style={{ fontSize: '10.5px', fontWeight: '700', marginTop: '8px', textAlign: 'center', padding: '0 4px' }}>
-                      Rohan K. Chaudhry
-                    </span>
-                    <span style={{ fontSize: '8.5px', color: '#94a3b8' }}>
-                      2026ML005831
-                    </span>
-                  </div>
+                  />
 
-                  {/* Red Verification Stamp Overlay */}
+                  {/* Red Verification Stamp Overlay across corner */}
                   <div
                     style={{
                       position: 'absolute',
-                      bottom: '4px',
-                      right: '4px',
-                      backgroundColor: 'rgba(220, 38, 38, 0.9)',
+                      bottom: '5px',
+                      right: '5px',
+                      backgroundColor: 'rgba(185, 28, 28, 0.92)',
                       color: '#ffffff',
-                      fontSize: '8px',
-                      fontWeight: '800',
+                      fontSize: '7.5px',
+                      fontWeight: '900',
                       padding: '2px 6px',
                       borderRadius: '3px',
                       textTransform: 'uppercase',
                       letterSpacing: '0.4px',
-                      boxShadow: '0 1px 3px rgba(0,0,0,0.3)'
+                      boxShadow: '0 1px 3px rgba(0,0,0,0.4)',
+                      border: '1px solid rgba(255,255,255,0.6)'
                     }}
                   >
-                    VERIFIED
+                    HYD • VERIFIED
                   </div>
                 </div>
 
                 {/* Candidate Signature Box */}
                 <div
                   style={{
-                    width: '135px',
+                    width: '140px',
                     border: '1px solid #cbd5e1',
                     borderRadius: '3px',
                     padding: '4px 6px',
@@ -608,7 +631,7 @@ export default function HallTicketModal({ isOpen, onClose, studentData }) {
                   >
                     Rohan K. Chaudhry
                   </div>
-                  <div style={{ fontSize: '8.5px', color: '#64748b', borderTop: '1px dashed #cbd5e1', paddingTop: '2px', marginTop: '2px' }}>
+                  <div style={{ fontSize: '8px', color: '#64748b', borderTop: '1px dashed #cbd5e1', paddingTop: '2px', marginTop: '2px' }}>
                     Candidate Signature
                   </div>
                 </div>
@@ -685,7 +708,7 @@ export default function HallTicketModal({ isOpen, onClose, studentData }) {
               </table>
             </div>
 
-            {/* Institutional Signatures & Authentication Stamp */}
+            {/* Institutional Signatures & Official Hyderabad Seal */}
             <div
               style={{
                 display: 'flex',
@@ -700,14 +723,14 @@ export default function HallTicketModal({ isOpen, onClose, studentData }) {
             >
               {/* Candidate Declaration */}
               <div style={{ maxWidth: '280px', fontSize: '9.5px', color: '#64748b', lineHeight: '1.4' }}>
-                <strong>Candidate Declaration:</strong> I hereby certify that the particulars furnished above are true and correct. I will adhere strictly to all BITS Pilani examination regulations.
+                <strong>Candidate Declaration:</strong> I hereby certify that the particulars furnished above are true and correct. I will adhere strictly to all BITS Pilani, Hyderabad Campus examination regulations.
               </div>
 
-              {/* Institutional Seal */}
+              {/* Official Hyderabad Campus Seal */}
               <div
                 style={{
-                  width: '90px',
-                  height: '90px',
+                  width: '94px',
+                  height: '94px',
                   borderRadius: '50%',
                   border: '2px dashed #004b93',
                   display: 'flex',
@@ -721,13 +744,13 @@ export default function HallTicketModal({ isOpen, onClose, studentData }) {
                 }}
               >
                 <span style={{ fontSize: '7px', fontWeight: '800', textTransform: 'uppercase' }}>BITS PILANI</span>
-                <span style={{ fontSize: '8.5px', fontWeight: '900', color: '#b91c1c' }}>WILP EXAM</span>
-                <span style={{ fontSize: '6.5px', fontWeight: '700' }}>SEAL OF DIVISION</span>
+                <span style={{ fontSize: '8px', fontWeight: '900', color: '#b91c1c' }}>HYDERABAD</span>
+                <span style={{ fontSize: '6.5px', fontWeight: '700' }}>WILP EXAM SEAL</span>
                 <span style={{ fontSize: '6px', color: '#64748b' }}>2026-27</span>
               </div>
 
-              {/* Controller of Examinations Signature */}
-              <div style={{ textAlign: 'center', minWidth: '180px' }}>
+              {/* Controller / In-Charge Examinations Signature */}
+              <div style={{ textAlign: 'center', minWidth: '190px' }}>
                 <div
                   style={{
                     fontFamily: "'Brush Script MT', 'Dancing Script', cursive, sans-serif",
@@ -742,11 +765,11 @@ export default function HallTicketModal({ isOpen, onClose, studentData }) {
                 <div style={{ fontSize: '11px', fontWeight: '800', color: '#0f172a', marginTop: '2px' }}>
                   Dr. M. S. Radhakrishnan
                 </div>
-                <div style={{ fontSize: '9.5px', color: '#475569' }}>
+                <div style={{ fontSize: '9.5px', color: '#475569', fontWeight: '600' }}>
                   Controller of Examinations
                 </div>
-                <div style={{ fontSize: '8.5px', color: '#64748b' }}>
-                  BITS Pilani (Rajasthan) India
+                <div style={{ fontSize: '8.5px', color: '#b91c1c', fontWeight: '700' }}>
+                  BITS Pilani, Hyderabad Campus
                 </div>
               </div>
             </div>
@@ -766,14 +789,14 @@ export default function HallTicketModal({ isOpen, onClose, studentData }) {
               }}
             >
               <div style={{ fontWeight: '800', color: '#004b93', marginBottom: '4px', textTransform: 'uppercase', fontSize: '10.5px' }}>
-                IMPORTANT INSTRUCTIONS FOR THE CANDIDATE
+                IMPORTANT INSTRUCTIONS FOR THE CANDIDATE • HYDERABAD CAMPUS
               </div>
               <ol style={{ paddingLeft: '16px', margin: 0 }}>
                 <li>This Admit Card must be kept accessible during each examination session and presented to the online AI proctor alongside a valid photo identity card (e.g. Aadhaar Card, Passport, or L&T Employee ID Card).</li>
                 <li>The examination portal opens strictly 30 minutes prior to scheduled start (06:00 PM IST). Candidates must complete facial recognition and room 360-degree environmental scan before 06:25 PM IST.</li>
                 <li>Dual camera proctoring (primary webcam + secondary angle camera via mobile phone) must remain active throughout the 150-minute testing window.</li>
                 <li>No electronic communication devices, secondary monitor screens, or unauthorized materials are permitted in the testing perimeter.</li>
-                <li>In case of technical or connectivity interruption during the exam, contact the WILP Emergency Helpdesk immediately: <strong>wilp.exams@pilani.bits-pilani.ac.in</strong> | Emergency Phone: <strong>+91-1596-242210</strong>.</li>
+                <li>In case of technical or connectivity interruption during the exam, contact the Hyderabad Campus WILP Emergency Helpdesk immediately: <strong>exams.wilp@hyderabad.bits-pilani.ac.in</strong> | Emergency Phone: <strong>+91-40-6630-3999 / +91-40-6630-3831</strong>.</li>
               </ol>
             </div>
 
@@ -800,7 +823,7 @@ export default function HallTicketModal({ isOpen, onClose, studentData }) {
                 ||| ||||| ||| ||||||| |||| |||||| |||||||| ||||| |||
               </div>
               <div style={{ fontSize: '9px', color: '#64748b', letterSpacing: '1px', marginTop: '2px' }}>
-                {candidate.barcodeString} • SYSTEM COMPATIBILITY: PASSED
+                {candidate.barcodeString} • BITS PILANI HYDERABAD CAMPUS • SYSTEM COMPATIBILITY: PASSED
               </div>
             </div>
 
@@ -823,7 +846,7 @@ export default function HallTicketModal({ isOpen, onClose, studentData }) {
           }}
         >
           <span>
-            💡 <strong>Tip:</strong> Click "Download Hall Ticket (PDF)" to directly save the PDF, or choose "Print / Save PDF" to select your printer.
+            📍 <strong>BITS Pilani, Hyderabad Campus</strong> • Jawahar Nagar, Hyderabad - 500078, Telangana.
           </span>
           <button
             onClick={onClose}

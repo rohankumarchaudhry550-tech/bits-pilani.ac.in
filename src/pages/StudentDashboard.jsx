@@ -112,7 +112,7 @@ export default function StudentDashboard() {
               {studentName}
             </h1>
             <p style={{ fontSize: '14px', color: 'var(--text-gray)' }}>
-              WILP M.Tech in Artificial Intelligence & Machine Learning
+              WILP M.Tech in Artificial Intelligence & Machine Learning • <strong>BITS Pilani, Hyderabad Campus</strong>
             </p>
           </div>
           <div style={{ backgroundColor: '#f0fdf4', border: '1px solid #bbf7d0', color: '#16a34a', padding: '10px 18px', borderRadius: '4px', display: 'flex', alignItems: 'center', gap: '10px', fontSize: '13px', fontWeight: '600' }}>
