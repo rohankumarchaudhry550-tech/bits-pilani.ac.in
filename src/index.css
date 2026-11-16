@@ -1679,3 +1679,54 @@ footer {
   transform: rotate(-45deg) translate(5px, -5px);
 }
 
+/* ==========================================================================
+   Print Media Styles & Utilities for Hall Ticket & Official Documents
+   ========================================================================== */
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.spin {
+  animation: spin 1s linear infinite;
+}
+
+@media print {
+  body {
+    background: #ffffff !important;
+    color: #000000 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  .no-print,
+  header,
+  nav,
+  footer,
+  button {
+    display: none !important;
+  }
+
+  body * {
+    visibility: hidden;
+  }
+
+  #bits-hall-ticket-document,
+  #bits-hall-ticket-document * {
+    visibility: visible;
+  }
+
+  #bits-hall-ticket-document {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 15px !important;
+    box-shadow: none !important;
+    border: 2px solid #004b93 !important;
+    page-break-inside: avoid;
+  }
+}
+

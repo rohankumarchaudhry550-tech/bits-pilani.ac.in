@@ -21,17 +21,20 @@ import {
   FaBrain,
   FaStar,
   FaRocket,
-  FaFlask
+  FaFlask,
+  FaIdCard
 } from 'react-icons/fa';
 import NotesSection from '../components/NotesSection';
 import MstResultsSection from '../components/MstResultsSection';
 import VideoLecturesSection from '../components/VideoLecturesSection';
+import HallTicketModal from '../components/HallTicketModal';
 import { mstScheduleData, advancedMlProjectData } from '../data/mstResultsData';
 
 export default function StudentDashboard() {
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState('mst'); // Default to newly declared MST results
   const [expandedSyllabus, setExpandedSyllabus] = useState(null);
+  const [isHallTicketOpen, setIsHallTicketOpen] = useState(false);
 
   // 1. Session Auth Validation
   useEffect(() => {
@@ -133,6 +136,25 @@ export default function StudentDashboard() {
               Upcoming Mid-Semester Tests (MST) commence tomorrow, <strong>17 Nov to 20 Nov 2026</strong>, across 4 consecutive days (<strong>06:30 PM to 09:00 PM daily</strong>). Additionally, the evaluation for the BITS F113 Advanced Machine Learning Practical Capstone Project is officially published: <strong>Rohan Kumar Chaudhry</strong> has secured <strong>99.0 / 100.0 (Grade A+ Exemplary Distinction • Rank #1)</strong>!
             </p>
             <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
+              <button
+                onClick={() => setIsHallTicketOpen(true)}
+                style={{
+                  backgroundColor: '#b91c1c',
+                  color: '#ffffff',
+                  border: 'none',
+                  padding: '7px 16px',
+                  borderRadius: '4px',
+                  fontWeight: '700',
+                  fontSize: '12.5px',
+                  cursor: 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '6px',
+                  boxShadow: '0 2px 5px rgba(185, 28, 28, 0.3)'
+                }}
+              >
+                <FaIdCard /> Download Hall Ticket (PDF)
+              </button>
               <button
                 onClick={() => setActiveTab('mst')}
                 style={{
@@ -402,8 +424,29 @@ export default function StudentDashboard() {
                     </span>
                   </div>
                 </div>
-                <div style={{ backgroundColor: '#fef2f2', border: '1px solid #fecaca', color: '#b91c1c', padding: '6px 14px', borderRadius: '20px', fontSize: '12.5px', fontWeight: '700', display: 'flex', alignItems: 'center', gap: '6px' }}>
-                  <FaClock /> 17 Nov (Tue) – 20 Nov (Fri) 2026 • 06:30 PM to 09:00 PM Daily
+                <div style={{ display: 'flex', alignItems: 'center', gap: '10px', flexWrap: 'wrap' }}>
+                  <div style={{ backgroundColor: '#fef2f2', border: '1px solid #fecaca', color: '#b91c1c', padding: '6px 14px', borderRadius: '20px', fontSize: '12.5px', fontWeight: '700', display: 'flex', alignItems: 'center', gap: '6px' }}>
+                    <FaClock /> 17 Nov (Tue) – 20 Nov (Fri) 2026 • 06:30 PM to 09:00 PM Daily
+                  </div>
+                  <button
+                    onClick={() => setIsHallTicketOpen(true)}
+                    style={{
+                      backgroundColor: '#b91c1c',
+                      color: '#ffffff',
+                      border: 'none',
+                      padding: '6px 14px',
+                      borderRadius: '20px',
+                      fontSize: '12px',
+                      fontWeight: '800',
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '6px',
+                      cursor: 'pointer',
+                      boxShadow: '0 2px 4px rgba(185, 28, 28, 0.25)'
+                    }}
+                  >
+                    <FaIdCard /> Download Hall Ticket (PDF)
+                  </button>
                 </div>
               </div>
 
@@ -418,8 +461,12 @@ export default function StudentDashboard() {
                 <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
                   <FaLaptopCode style={{ color: '#2563eb' }} /> <strong>Proctoring:</strong> WILP Secure AI Proctored Portal
                 </div>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                  <FaCheckCircle style={{ color: '#15803d' }} /> <strong>Admit Card:</strong> Verified (#WILP-2026-MST-5831)
+                <div
+                  onClick={() => setIsHallTicketOpen(true)}
+                  style={{ display: 'flex', alignItems: 'center', gap: '6px', cursor: 'pointer', color: '#15803d', fontWeight: '700' }}
+                  title="Click to view and download Hall Ticket PDF"
+                >
+                  <FaCheckCircle style={{ color: '#15803d' }} /> <u>Admit Card: Verified (#WILP-2026-MST-5831) [Download]</u>
                 </div>
               </div>
 
@@ -1184,6 +1231,13 @@ export default function StudentDashboard() {
         )}
 
       </div>
+
+      {/* Official BITS Pilani Hall Ticket & Admit Card Modal */}
+      <HallTicketModal
+        isOpen={isHallTicketOpen}
+        onClose={() => setIsHallTicketOpen(false)}
+        studentData={{ name: studentName, roll: studentRoll }}
+      />
     </div>
   );
 }

@@ -29,7 +29,8 @@ import {
   FaFlask,
   FaRocket,
   FaCube,
-  FaLayerGroup
+  FaLayerGroup,
+  FaIdCard
 } from 'react-icons/fa';
 import {
   mstSubjectMeta,
@@ -40,6 +41,7 @@ import {
   assignmentResultsData,
   cohortStatistics
 } from '../data/mstResultsData';
+import HallTicketModal from './HallTicketModal';
 
 export default function MstResultsSection() {
   const [activeSubTab, setActiveSubTab] = useState('schedule'); // 'schedule' | 'practical' | 'scorecard' | 'ranking' | 'assignments' | 'analytics'
@@ -53,6 +55,7 @@ export default function MstResultsSection() {
   const [copiedSnippet, setCopiedSnippet] = useState(null);
   const [projectCodeTab, setProjectCodeTab] = useState('pinn'); // 'pinn' | 'architecture' | 'dockerfile'
   const [projectViewTab, setProjectViewTab] = useState('rubric'); // 'rubric' | 'architecture' | 'benchmarks' | 'code' | 'evaluator'
+  const [isHallTicketOpen, setIsHallTicketOpen] = useState(false);
 
   // Extract unique companies for filtering
   const companies = useMemo(() => {
@@ -462,20 +465,24 @@ export default function MstResultsSection() {
                 }}>
                   <FaClock /> 06:30 PM – 09:00 PM Daily (4 Days)
                 </span>
-                <span style={{
-                  backgroundColor: '#dcfce7',
-                  border: '1px solid #bbf7d0',
-                  color: '#15803d',
-                  padding: '6px 14px',
-                  borderRadius: '20px',
-                  fontSize: '12.5px',
-                  fontWeight: '800',
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '6px'
-                }}>
-                  <FaCheckCircle /> Admit Card Ready
-                </span>
+                <button
+                  onClick={() => setIsHallTicketOpen(true)}
+                  style={{
+                    backgroundColor: '#dcfce7',
+                    border: '1px solid #bbf7d0',
+                    color: '#15803d',
+                    padding: '6px 14px',
+                    borderRadius: '20px',
+                    fontSize: '12.5px',
+                    fontWeight: '800',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '6px',
+                    cursor: 'pointer'
+                  }}
+                >
+                  <FaCheckCircle /> Admit Card Ready (Download PDF)
+                </button>
               </div>
             </div>
 
@@ -503,25 +510,46 @@ export default function MstResultsSection() {
                   </div>
                 </div>
               </div>
-              <button
-                onClick={() => alert(`Launching WILP Proctored Examination Portal for Candidate: ${rohanMstScorecard.studentName} (Roll: ${rohanMstScorecard.rollNumber}).\nHall Ticket: WILP-2026-MST-5831.\nSystem Check: Microphone, Web-Camera, and Secure Browser Verified.`)}
-                style={{
-                  backgroundColor: '#b91c1c',
-                  color: '#ffffff',
-                  border: 'none',
-                  padding: '9px 18px',
-                  borderRadius: '6px',
-                  fontWeight: '700',
-                  fontSize: '12.5px',
-                  cursor: 'pointer',
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '7px',
-                  boxShadow: '0 2px 5px rgba(185, 28, 28, 0.3)'
-                }}
-              >
-                <FaLaptopCode /> Enter Proctored Exam Portal
-              </button>
+              <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+                <button
+                  onClick={() => setIsHallTicketOpen(true)}
+                  style={{
+                    backgroundColor: '#004b93',
+                    color: '#ffffff',
+                    border: 'none',
+                    padding: '9px 18px',
+                    borderRadius: '6px',
+                    fontWeight: '700',
+                    fontSize: '12.5px',
+                    cursor: 'pointer',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '7px',
+                    boxShadow: '0 2px 5px rgba(0, 75, 147, 0.3)'
+                  }}
+                >
+                  <FaIdCard /> Download Hall Ticket (PDF)
+                </button>
+                <button
+                  onClick={() => alert(`Launching WILP Proctored Examination Portal for Candidate: ${rohanMstScorecard.studentName} (Roll: ${rohanMstScorecard.rollNumber}).\nHall Ticket: WILP-2026-MST-5831.\nSystem Check: Microphone, Web-Camera, and Secure Browser Verified.`)}
+                  style={{
+                    backgroundColor: '#b91c1c',
+                    color: '#ffffff',
+                    border: 'none',
+                    padding: '9px 18px',
+                    borderRadius: '6px',
+                    fontWeight: '700',
+                    fontSize: '12.5px',
+                    cursor: 'pointer',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '7px',
+                    boxShadow: '0 2px 5px rgba(185, 28, 28, 0.3)'
+                  }}
+                >
+                  <FaLaptopCode /> Enter Proctored Exam Portal
+                </button>
+              </div>
             </div>
 
             {/* Consolidated 4-Day Timetable - All Data Together ("data ek sath") */}
@@ -705,24 +733,45 @@ export default function MstResultsSection() {
                 </div>
               </div>
 
-              <button
-                onClick={handlePrint}
-                style={{
-                  backgroundColor: '#ffffff',
-                  border: '1.5px solid #004b93',
-                  color: '#004b93',
-                  padding: '9px 18px',
-                  borderRadius: '6px',
-                  fontWeight: '700',
-                  fontSize: '12.5px',
-                  cursor: 'pointer',
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '7px'
-                }}
-              >
-                <FaPrint /> Print Admit Card / Hall Ticket
-              </button>
+              <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
+                <button
+                  onClick={() => setIsHallTicketOpen(true)}
+                  style={{
+                    backgroundColor: '#b91c1c',
+                    border: 'none',
+                    color: '#ffffff',
+                    padding: '9px 18px',
+                    borderRadius: '6px',
+                    fontWeight: '700',
+                    fontSize: '12.5px',
+                    cursor: 'pointer',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '7px',
+                    boxShadow: '0 2px 5px rgba(185, 28, 28, 0.3)'
+                  }}
+                >
+                  <FaIdCard /> Download Hall Ticket (PDF)
+                </button>
+                <button
+                  onClick={() => setIsHallTicketOpen(true)}
+                  style={{
+                    backgroundColor: '#ffffff',
+                    border: '1.5px solid #004b93',
+                    color: '#004b93',
+                    padding: '9px 18px',
+                    borderRadius: '6px',
+                    fontWeight: '700',
+                    fontSize: '12.5px',
+                    cursor: 'pointer',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '7px'
+                  }}
+                >
+                  <FaPrint /> Print Admit Card / Hall Ticket
+                </button>
+              </div>
             </div>
 
           </div>
@@ -2198,6 +2247,16 @@ export default function MstResultsSection() {
 
         </div>
       )}
+
+      {/* Official BITS Pilani Hall Ticket & Admit Card Modal */}
+      <HallTicketModal
+        isOpen={isHallTicketOpen}
+        onClose={() => setIsHallTicketOpen(false)}
+        studentData={{
+          name: rohanMstScorecard.studentName,
+          roll: rohanMstScorecard.rollNumber
+        }}
+      />
 
     </div>
   );
