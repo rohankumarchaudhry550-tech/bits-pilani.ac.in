@@ -579,7 +579,7 @@ header {
 
 .hero_slider_container {
   position: relative;
-  height: 520px;
+  height: 480px;
   width: 100%;
   overflow: hidden;
   background-color: #000;
@@ -1506,9 +1506,100 @@ footer {
 }
 
 @media (max-width: 768px) {
+  /* Header & Navigation Mobile Optimizations */
+  .h-links_row {
+    display: none !important;
+  }
   .top_nav {
+    display: none !important;
+  }
+  .logo-row {
+    padding: 8px 0;
+  }
+  .logo_row_container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+  }
+  .bits_colored_logo {
+    height: 40px !important;
+    max-width: 175px !important;
+    width: auto !important;
+  }
+  .campus_dropdown_middle {
+    display: none !important;
+  }
+  .search_pill_container {
+    display: none !important;
+  }
+  .header_right_wrapper {
+    gap: 8px;
+  }
+  .explore_text {
+    font-size: 11px;
+    letter-spacing: 0.3px;
+  }
+  .secondreader_nav {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    background-color: #ffffff;
+    border-bottom: 1px solid var(--border-light);
+  }
+  .secondreader_nav::-webkit-scrollbar {
     display: none;
   }
+  .header_nav {
+    display: flex;
+    white-space: nowrap;
+    width: max-content;
+    justify-content: flex-start !important;
+    padding: 0 10px;
+  }
+  .nav_indg {
+    padding: 10px 14px;
+    font-size: 12px;
+  }
+  .submenu_panel {
+    display: none !important; /* Touch drawer handles mobile navigation */
+  }
+  .scholarship_announcement_bar {
+    font-size: 11px;
+    padding: 6px 10px;
+    letter-spacing: 0.5px;
+  }
+
+  /* Explore Drawer Mobile */
+  .sidebar09_row {
+    margin: 62px 0 0 !important;
+    height: calc(100vh - 62px) !important;
+    padding: 20px 0 40px !important;
+  }
+  .sidebar_container_flex {
+    flex-direction: column !important;
+    gap: 20px !important;
+  }
+  .sidebar09_col_sm {
+    width: 100% !important;
+  }
+  .sidebar_inner_columns {
+    flex-direction: column !important;
+    gap: 20px !important;
+  }
+
+  /* Hero Slider Mobile */
+  .hero_slider_container {
+    height: 210px !important;
+  }
+  .slider_arrow {
+    display: none !important;
+  }
+  .slider_dots {
+    bottom: 8px;
+  }
+
+  /* Grid & Sections Mobile */
   .stats_grid {
     grid-template-columns: 1fr;
     gap: 20px;
@@ -1530,15 +1621,6 @@ footer {
   .ioe_badge {
     display: none;
   }
-  .secondreader_nav {
-    overflow-x: auto;
-  }
-  .header_nav {
-    white-space: nowrap;
-  }
-  .submenu_panel {
-    display: none !important; /* On mobile, we stack or hide dropdowns */
-  }
   .slide_content {
     padding-left: 20px;
     padding-right: 20px;
@@ -1549,6 +1631,54 @@ footer {
   .campus_details_grid {
     grid-template-columns: 1fr;
   }
+
+  /* Student Dashboard Mobile Rules */
+  .dash_welcome_card {
+    padding: 18px 20px !important;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 12px !important;
+  }
+  .dash_welcome_title {
+    font-size: 22px !important;
+  }
+  .dash_announcement_alert {
+    padding: 16px 18px !important;
+    flex-direction: column !important;
+    gap: 12px !important;
+  }
+  .notes_workspace_grid {
+    grid-template-columns: 1fr !important;
+  }
+  .video_player_split {
+    grid-template-columns: 1fr !important;
+  }
+  .video_player_split > div:last-child {
+    border-left: none !important;
+    border-top: 1px solid #334155 !important;
+    max-height: 260px !important;
+  }
+}
+
+/* Horizontal Swipeable Tabs on all touch viewports */
+.dash_tabs_container,
+.mst_subtabs_container {
+  display: flex;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  white-space: nowrap;
+  scrollbar-width: none;
+  padding-bottom: 8px;
+  gap: 8px;
+}
+.dash_tabs_container::-webkit-scrollbar,
+.mst_subtabs_container::-webkit-scrollbar {
+  display: none;
+}
+.dash_tabs_container button,
+.mst_subtabs_container button {
+  flex-shrink: 0;
+  white-space: nowrap;
 }
 
 /* Student Dashboard Styles */
@@ -1560,6 +1690,12 @@ footer {
 
 @media (max-width: 900px) {
   .dashboard_grid {
+    grid-template-columns: 1fr !important;
+  }
+  .notes_workspace_grid {
+    grid-template-columns: 1fr !important;
+  }
+  .video_player_split {
     grid-template-columns: 1fr !important;
   }
 }

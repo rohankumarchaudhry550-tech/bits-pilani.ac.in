@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 export default function Login() {
@@ -6,6 +6,14 @@ export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+
+  // If already authenticated, redirect immediately to dashboard without asking to log in again
+  useEffect(() => {
+    const isLoggedIn = localStorage.getItem('studentLoggedIn') === 'true';
+    if (isLoggedIn) {
+      navigate('/dashboard', { replace: true });
+    }
+  }, [navigate]);
 
   const handleLogin = (e) => {
     e.preventDefault();

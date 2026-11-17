@@ -667,7 +667,7 @@ export default function NotesSection({ onOpenVideoLectures }) {
                 <h3 style={{ fontSize: '17px', color: 'var(--primary-dark)', fontWeight: '700', borderBottom: '2px solid #e2e8f0', paddingBottom: '6px', marginBottom: '14px', display: 'flex', alignItems: 'center', gap: '8px' }}>
                   <FaLightbulb style={{ color: '#eab308' }} /> 3. Governing Mathematical Formulas & Definitions
                 </h3>
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '12px' }}>
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '12px' }}>
                   {currentNote.keyFormulas.map((formula, fIdx) => (
                     <div key={fIdx} style={{ backgroundColor: '#f8fafc', border: '1.5px solid #cbd5e1', borderRadius: '6px', padding: '14px 16px' }}>
                       <span style={{ fontSize: '10.5px', color: '#64748b', fontWeight: '700', textTransform: 'uppercase', display: 'block', marginBottom: '6px' }}>
@@ -935,7 +935,7 @@ export default function NotesSection({ onOpenVideoLectures }) {
                   Detailed Course Modules (MST Coverage: Modules 1 to 4)
                 </h4>
 
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(420px, 1fr))', gap: '18px' }}>
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '18px' }}>
                   {course.modules.map(mod => (
                     <div key={mod.moduleNumber} style={{ border: '1px solid #e2e8f0', borderRadius: '8px', padding: '20px', backgroundColor: '#ffffff', borderTop: '4px solid var(--secondary-blue)' }}>
                       <span style={{ fontSize: '11px', fontWeight: '800', color: 'var(--secondary-blue)', textTransform: 'uppercase' }}>
@@ -1001,7 +1001,7 @@ export default function NotesSection({ onOpenVideoLectures }) {
             </button>
           </div>
 
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(450px, 1fr))', gap: '20px' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '20px' }}>
             
             {/* Card 1: Math Foundations */}
             <div style={{ border: '1.5px solid #bfdbfe', borderRadius: '8px', padding: '20px', backgroundColor: '#f8fafc', borderTop: '4px solid #2563eb' }}>

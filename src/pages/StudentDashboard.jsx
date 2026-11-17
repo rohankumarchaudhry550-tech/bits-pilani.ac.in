@@ -103,12 +103,12 @@ export default function StudentDashboard() {
       <div className="container">
         
         {/* Top welcome banner */}
-        <div style={{ backgroundColor: '#ffffff', borderRadius: '6px', boxShadow: 'var(--shadow-sm)', padding: '25px 30px', marginBottom: '30px', borderLeft: '5px solid var(--secondary-blue)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '15px' }}>
+        <div className="dash_welcome_card" style={{ backgroundColor: '#ffffff', borderRadius: '6px', boxShadow: 'var(--shadow-sm)', padding: '25px 30px', marginBottom: '30px', borderLeft: '5px solid var(--secondary-blue)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '15px' }}>
           <div>
             <span style={{ fontSize: '13px', fontWeight: '700', color: 'var(--secondary-blue)', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
               Welcome back
             </span>
-            <h1 style={{ fontSize: '28px', color: 'var(--primary-dark)', fontWeight: '600', margin: '5px 0' }}>
+            <h1 className="dash_welcome_title" style={{ fontSize: '28px', color: 'var(--primary-dark)', fontWeight: '600', margin: '5px 0' }}>
               {studentName}
             </h1>
             <p style={{ fontSize: '14px', color: 'var(--text-gray)' }}>
@@ -121,7 +121,7 @@ export default function StudentDashboard() {
         </div>
 
         {/* MST Examination Announcement Alert */}
-        <div style={{ backgroundColor: '#eff6ff', borderLeft: '5px solid #1d4ed8', color: '#1e3a8a', padding: '20px 30px', borderRadius: '6px', boxShadow: 'var(--shadow-sm)', marginBottom: '30px', display: 'flex', alignItems: 'flex-start', gap: '15px' }}>
+        <div className="dash_announcement_alert" style={{ backgroundColor: '#eff6ff', borderLeft: '5px solid #1d4ed8', color: '#1e3a8a', padding: '20px 30px', borderRadius: '6px', boxShadow: 'var(--shadow-sm)', marginBottom: '30px', display: 'flex', alignItems: 'flex-start', gap: '15px' }}>
           <FaTrophy style={{ fontSize: '28px', marginTop: '2px', color: '#f59e0b', flexShrink: 0 }} />
           <div style={{ flex: 1 }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '10px', marginBottom: '6px' }}>
@@ -190,14 +190,18 @@ export default function StudentDashboard() {
         </div>
 
         {/* Primary Dashboard Navigation Tabs */}
-        <div style={{
-          display: 'flex',
-          gap: '12px',
-          marginBottom: '25px',
-          borderBottom: '2px solid #e2e8f0',
-          paddingBottom: '10px',
-          flexWrap: 'wrap'
-        }}>
+        <div
+          className="dash_tabs_container"
+          style={{
+            display: 'flex',
+            gap: '12px',
+            marginBottom: '25px',
+            borderBottom: '2px solid #e2e8f0',
+            paddingBottom: '10px',
+            overflowX: 'auto',
+            WebkitOverflowScrolling: 'touch'
+          }}
+        >
           <button
             onClick={() => setActiveTab('mst')}
             style={{

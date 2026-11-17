@@ -265,13 +265,17 @@ export default function MstResultsSection() {
       </div>
 
       {/* 2. Sub-Tab Switcher */}
-      <div style={{
-        display: 'flex',
-        gap: '10px',
-        borderBottom: '2px solid #e2e8f0',
-        paddingBottom: '8px',
-        flexWrap: 'wrap'
-      }}>
+      <div
+        className="mst_subtabs_container"
+        style={{
+          display: 'flex',
+          gap: '10px',
+          borderBottom: '2px solid #e2e8f0',
+          paddingBottom: '8px',
+          overflowX: 'auto',
+          WebkitOverflowScrolling: 'touch'
+        }}
+      >
         <button
           onClick={() => setActiveSubTab('schedule')}
           style={{
@@ -626,7 +630,7 @@ export default function MstResultsSection() {
               Detailed Subject Syllabus Coverage & Hall Verification
             </h4>
 
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '20px' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '20px' }}>
               {mstScheduleData.map((item, index) => (
                 <div
                   key={index}
@@ -1438,7 +1442,7 @@ export default function MstResultsSection() {
               <FaAward style={{ color: '#fcb900' }} /> Subject-Wise Evaluation Details (Maximum Marks: 40 per Subject)
             </h3>
 
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(420px, 1fr))', gap: '20px' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '20px' }}>
               {rohanMstScorecard.subjectScores.map((subj, idx) => (
                 <div
                   key={idx}
@@ -2050,7 +2054,7 @@ export default function MstResultsSection() {
           </div>
 
           {/* Grid of Weekly Assignments */}
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(400px, 1fr))', gap: '18px' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '18px' }}>
             {assignmentResultsData.map((assign, idx) => {
               const isDiwali = assign.status === 'Diwali Break';
               const isGraded = assign.status === 'Graded';

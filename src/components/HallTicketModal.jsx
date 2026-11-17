@@ -5,16 +5,14 @@ import {
   FaPrint,
   FaCheckCircle,
   FaUniversity,
-  FaShieldAlt,
   FaQrcode,
   FaBarcode,
   FaClock,
   FaCalendarAlt,
-  FaUserCheck,
   FaIdCard,
   FaLaptopCode,
   FaSpinner,
-  FaMapMarkerAlt
+  FaMobileAlt
 } from 'react-icons/fa';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
@@ -93,22 +91,35 @@ export default function HallTicketModal({ isOpen, onClose, studentData }) {
       const element = hallTicketRef.current;
       if (!element) return;
 
+      // Force high-DPI desktop A4 capture on any device (phone or PC)
       const canvas = await html2canvas(element, {
-        scale: 2.5,
+        scale: 2,
         useCORS: true,
         allowTaint: true,
         logging: false,
-        backgroundColor: '#ffffff'
+        backgroundColor: '#ffffff',
+        windowWidth: 1200,
+        onclone: (clonedDoc) => {
+          const clonedElement = clonedDoc.getElementById('bits-hall-ticket-document');
+          if (clonedElement) {
+            clonedElement.style.width = '800px';
+            clonedElement.style.minWidth = '800px';
+            clonedElement.style.maxWidth = '800px';
+            clonedElement.style.padding = '26px 30px';
+            clonedElement.style.margin = '0 auto';
+            clonedElement.style.boxSizing = 'border-box';
+          }
+        }
       });
 
-      const imgData = canvas.toDataURL('image/png');
+      const imgData = canvas.toDataURL('image/png', 1.0);
       const pdf = new jsPDF({
         orientation: 'portrait',
         unit: 'mm',
         format: 'a4'
       });
 
-      const pdfWidth = pdf.internal.pageSize.getWidth();
+      const pdfWidth = pdf.internal.pageSize.getWidth(); // 210mm
       const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
 
       pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
@@ -136,13 +147,13 @@ export default function HallTicketModal({ isOpen, onClose, studentData }) {
         left: 0,
         right: 0,
         bottom: 0,
-        backgroundColor: 'rgba(15, 23, 42, 0.75)',
+        backgroundColor: 'rgba(15, 23, 42, 0.8)',
         backdropFilter: 'blur(5px)',
         zIndex: 9999,
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
-        padding: '20px',
+        padding: '10px',
         overflowY: 'auto'
       }}
       onClick={(e) => {
@@ -155,18 +166,18 @@ export default function HallTicketModal({ isOpen, onClose, studentData }) {
           borderRadius: '10px',
           maxWidth: '920px',
           width: '100%',
-          maxHeight: '94vh',
+          maxHeight: '96vh',
           display: 'flex',
           flexDirection: 'column',
-          boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.35)',
+          boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.4)',
           overflow: 'hidden'
         }}
       >
-        {/* Top Modal Action Bar */}
+        {/* Top Modal Sticky Action Bar */}
         <div
           className="no-print"
           style={{
-            padding: '16px 24px',
+            padding: '14px 18px',
             backgroundColor: '#0f172a',
             color: '#ffffff',
             display: 'flex',
@@ -174,22 +185,22 @@ export default function HallTicketModal({ isOpen, onClose, studentData }) {
             alignItems: 'center',
             borderBottom: '1px solid #334155',
             flexWrap: 'wrap',
-            gap: '12px'
+            gap: '10px'
           }}
         >
-          <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-            <FaIdCard style={{ color: '#fcb900', fontSize: '22px' }} />
+          <div style={{ display: 'flex', alignItems: 'center', gap: '10px', minWidth: '220px' }}>
+            <FaIdCard style={{ color: '#fcb900', fontSize: '20px' }} />
             <div>
-              <h3 style={{ fontSize: '16px', fontWeight: '700', margin: 0, display: 'flex', alignItems: 'center', gap: '8px' }}>
-                BITS Pilani, Hyderabad Campus • Official Hall Ticket
+              <h3 style={{ fontSize: '15px', fontWeight: '700', margin: 0 }}>
+                BITS Pilani, Hyderabad Campus
               </h3>
-              <span style={{ fontSize: '12px', color: '#94a3b8' }}>
-                Candidate: {candidate.name} ({candidate.roll}) • MST 17–20 Nov 2026
+              <span style={{ fontSize: '11px', color: '#94a3b8' }}>
+                Hall Ticket • {candidate.name} ({candidate.roll})
               </span>
             </div>
           </div>
 
-          <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap' }}>
             <button
               onClick={handleDownloadPdf}
               disabled={isGenerating}
@@ -197,20 +208,20 @@ export default function HallTicketModal({ isOpen, onClose, studentData }) {
                 backgroundColor: isGenerating ? '#475569' : '#16a34a',
                 color: '#ffffff',
                 border: 'none',
-                padding: '9px 18px',
+                padding: '8px 16px',
                 borderRadius: '6px',
                 fontWeight: '700',
-                fontSize: '13px',
+                fontSize: '12.5px',
                 cursor: isGenerating ? 'wait' : 'pointer',
                 display: 'flex',
                 alignItems: 'center',
-                gap: '8px',
+                gap: '7px',
                 boxShadow: '0 2px 6px rgba(22, 163, 74, 0.35)',
                 transition: 'all 0.2s'
               }}
             >
               {isGenerating ? <FaSpinner className="spin" /> : <FaDownload />}
-              {isGenerating ? 'Generating High-Res PDF...' : downloadSuccess ? 'Downloaded Successfully!' : 'Download Hall Ticket (PDF)'}
+              {isGenerating ? 'Generating PDF...' : downloadSuccess ? 'Downloaded!' : 'Download Hall Ticket (PDF)'}
             </button>
 
             <button
@@ -219,14 +230,14 @@ export default function HallTicketModal({ isOpen, onClose, studentData }) {
                 backgroundColor: '#1e293b',
                 color: '#ffffff',
                 border: '1px solid #475569',
-                padding: '9px 16px',
+                padding: '8px 14px',
                 borderRadius: '6px',
                 fontWeight: '600',
-                fontSize: '13px',
+                fontSize: '12px',
                 cursor: 'pointer',
                 display: 'flex',
                 alignItems: 'center',
-                gap: '8px'
+                gap: '6px'
               }}
             >
               <FaPrint /> Print / Save PDF
@@ -235,12 +246,12 @@ export default function HallTicketModal({ isOpen, onClose, studentData }) {
             <button
               onClick={onClose}
               style={{
-                backgroundColor: 'transparent',
+                backgroundColor: 'rgba(255,255,255,0.1)',
                 border: 'none',
-                color: '#94a3b8',
-                fontSize: '20px',
+                color: '#ffffff',
+                fontSize: '18px',
                 cursor: 'pointer',
-                padding: '6px',
+                padding: '6px 10px',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
@@ -253,8 +264,28 @@ export default function HallTicketModal({ isOpen, onClose, studentData }) {
           </div>
         </div>
 
+        {/* Mobile Swipe Notice Banner */}
+        <div
+          className="no-print"
+          style={{
+            backgroundColor: '#eff6ff',
+            borderBottom: '1px solid #bfdbfe',
+            padding: '8px 16px',
+            fontSize: '11.5px',
+            color: '#1e40af',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '8px'
+          }}
+        >
+          <FaMobileAlt style={{ fontSize: '14px', flexShrink: 0 }} />
+          <span>
+            <strong>Mobile Tip:</strong> Swipe horizontally inside the box below to inspect full admit card details, or tap <strong>"Download Hall Ticket (PDF)"</strong> to get the crystal-clear official single-page A4 document!
+          </span>
+        </div>
+
         {/* Scrollable Container containing Printable Hall Ticket */}
-        <div style={{ overflowY: 'auto', padding: '24px', backgroundColor: '#f1f5f9' }}>
+        <div style={{ overflowX: 'auto', overflowY: 'auto', padding: '16px', backgroundColor: '#f1f5f9', WebkitOverflowScrolling: 'touch' }}>
           
           {/* THE OFFICIAL PRINTABLE HALL TICKET ELEMENT */}
           <div
@@ -262,15 +293,17 @@ export default function HallTicketModal({ isOpen, onClose, studentData }) {
             ref={hallTicketRef}
             style={{
               backgroundColor: '#ffffff',
-              padding: '28px 32px',
+              padding: '24px 28px',
               borderRadius: '4px',
               border: '3px double #004b93',
               boxShadow: '0 4px 15px rgba(0,0,0,0.06)',
               position: 'relative',
               maxWidth: '820px',
+              minWidth: '700px',
               margin: '0 auto',
               fontFamily: "'Segoe UI', Roboto, Helvetica, Arial, sans-serif",
-              color: '#0f172a'
+              color: '#0f172a',
+              boxSizing: 'border-box'
             }}
           >
             {/* Watermark Logo in Background */}
@@ -280,7 +313,7 @@ export default function HallTicketModal({ isOpen, onClose, studentData }) {
                 top: '52%',
                 left: '50%',
                 transform: 'translate(-50%, -50%) rotate(-28deg)',
-                fontSize: '48px',
+                fontSize: '44px',
                 fontWeight: '900',
                 color: 'rgba(0, 75, 147, 0.035)',
                 letterSpacing: '8px',
@@ -301,18 +334,18 @@ export default function HallTicketModal({ isOpen, onClose, studentData }) {
                 alignItems: 'center',
                 justifyContent: 'space-between',
                 borderBottom: '2.5px solid #004b93',
-                paddingBottom: '16px',
-                marginBottom: '16px',
+                paddingBottom: '14px',
+                marginBottom: '14px',
                 position: 'relative',
                 zIndex: 1
               }}
             >
-              <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
                 {/* Official BITS Pilani Logo Image */}
                 <div
                   style={{
-                    width: '80px',
-                    height: '80px',
+                    width: '74px',
+                    height: '74px',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
@@ -324,20 +357,12 @@ export default function HallTicketModal({ isOpen, onClose, studentData }) {
                     alt="BITS Pilani Crest Logo"
                     crossOrigin="anonymous"
                     style={{
-                      maxHeight: '76px',
-                      maxWidth: '76px',
+                      maxHeight: '72px',
+                      maxWidth: '72px',
                       objectFit: 'contain'
                     }}
                     onError={(e) => {
-                      // Fallback to stylized university crest if image fails
                       e.target.style.display = 'none';
-                      if (e.target.parentNode) {
-                        e.target.parentNode.innerHTML = `
-                          <div style="width:68px;height:68px;border-radius:50%;background:#004b93;border:3px solid #c29b38;display:flex;align-items:center;justify-content:center;color:#ffffff;font-size:30px;">
-                            🏛️
-                          </div>
-                        `;
-                      }
                     }}
                   />
                 </div>
@@ -345,7 +370,7 @@ export default function HallTicketModal({ isOpen, onClose, studentData }) {
                 <div>
                   <h1
                     style={{
-                      fontSize: '18px',
+                      fontSize: '17px',
                       fontWeight: '900',
                       color: '#004b93',
                       letterSpacing: '0.4px',
@@ -357,7 +382,7 @@ export default function HallTicketModal({ isOpen, onClose, studentData }) {
                   </h1>
                   <h2
                     style={{
-                      fontSize: '14.5px',
+                      fontSize: '14px',
                       fontWeight: '800',
                       color: '#b91c1c',
                       letterSpacing: '0.5px',
@@ -369,7 +394,7 @@ export default function HallTicketModal({ isOpen, onClose, studentData }) {
                   </h2>
                   <div
                     style={{
-                      fontSize: '11.5px',
+                      fontSize: '11px',
                       fontWeight: '700',
                       color: '#475569',
                       margin: '0 0 2px 0'
@@ -379,7 +404,7 @@ export default function HallTicketModal({ isOpen, onClose, studentData }) {
                   </div>
                   <div
                     style={{
-                      fontSize: '10px',
+                      fontSize: '9.5px',
                       color: '#64748b'
                     }}
                   >
@@ -394,13 +419,13 @@ export default function HallTicketModal({ isOpen, onClose, studentData }) {
                   textAlign: 'center',
                   border: '1.5px solid #cbd5e1',
                   borderRadius: '6px',
-                  padding: '6px 10px',
+                  padding: '5px 8px',
                   backgroundColor: '#f8fafc',
                   flexShrink: 0
                 }}
               >
-                <FaQrcode style={{ fontSize: '42px', color: '#004b93' }} />
-                <div style={{ fontSize: '8.5px', fontWeight: '800', color: '#15803d', marginTop: '2px' }}>
+                <FaQrcode style={{ fontSize: '38px', color: '#004b93' }} />
+                <div style={{ fontSize: '8px', fontWeight: '800', color: '#15803d', marginTop: '2px' }}>
                   HYD VERIFIED
                 </div>
               </div>
@@ -412,18 +437,18 @@ export default function HallTicketModal({ isOpen, onClose, studentData }) {
                 backgroundColor: '#004b93',
                 color: '#ffffff',
                 textAlign: 'center',
-                padding: '8px 12px',
+                padding: '7px 10px',
                 borderRadius: '4px',
-                marginBottom: '16px',
+                marginBottom: '14px',
                 position: 'relative',
                 zIndex: 1,
                 borderBottom: '3px solid #b58b2a'
               }}
             >
-              <div style={{ fontSize: '14px', fontWeight: '900', letterSpacing: '1.5px', textTransform: 'uppercase' }}>
+              <div style={{ fontSize: '13.5px', fontWeight: '900', letterSpacing: '1.2px', textTransform: 'uppercase' }}>
                 MID-SEMESTER TEST (MST) ADMIT CARD / HALL TICKET
               </div>
-              <div style={{ fontSize: '11px', color: '#fef08a', fontWeight: '700' }}>
+              <div style={{ fontSize: '10.5px', color: '#fef08a', fontWeight: '700' }}>
                 First Semester 2026-27 • BITS Pilani, Hyderabad Campus • Online AI-Proctored Mode
               </div>
             </div>
@@ -437,9 +462,9 @@ export default function HallTicketModal({ isOpen, onClose, studentData }) {
                 backgroundColor: '#f8fafc',
                 border: '1px solid #e2e8f0',
                 borderRadius: '6px',
-                padding: '8px 14px',
-                marginBottom: '16px',
-                fontSize: '12px',
+                padding: '7px 12px',
+                marginBottom: '14px',
+                fontSize: '11.5px',
                 position: 'relative',
                 zIndex: 1,
                 flexWrap: 'wrap',
@@ -448,7 +473,7 @@ export default function HallTicketModal({ isOpen, onClose, studentData }) {
             >
               <div>
                 <strong>Hall Ticket No:</strong>{' '}
-                <span style={{ color: '#b91c1c', fontWeight: '800', fontSize: '13px' }}>
+                <span style={{ color: '#b91c1c', fontWeight: '800', fontSize: '12.5px' }}>
                   {candidate.hallTicketNo}
                 </span>
               </div>
@@ -459,11 +484,11 @@ export default function HallTicketModal({ isOpen, onClose, studentData }) {
                 </span>
               </div>
               <div>
-                <strong>Date of Issue:</strong> {candidate.dateOfIssue}
+                <strong>Issue Date:</strong> {candidate.dateOfIssue}
               </div>
               <div>
-                <strong>Token:</strong>{' '}
-                <span style={{ fontFamily: 'monospace', color: '#475569', fontSize: '11px' }}>
+                <strong>Auth Token:</strong>{' '}
+                <span style={{ fontFamily: 'monospace', color: '#475569', fontSize: '10.5px' }}>
                   {candidate.verificationToken.slice(0, 16)}...
                 </span>
               </div>
@@ -473,9 +498,9 @@ export default function HallTicketModal({ isOpen, onClose, studentData }) {
             <div
               style={{
                 display: 'grid',
-                gridTemplateColumns: '1fr 170px',
-                gap: '16px',
-                marginBottom: '18px',
+                gridTemplateColumns: '1fr 160px',
+                gap: '14px',
+                marginBottom: '16px',
                 position: 'relative',
                 zIndex: 1
               }}
@@ -485,65 +510,65 @@ export default function HallTicketModal({ isOpen, onClose, studentData }) {
                 style={{
                   width: '100%',
                   borderCollapse: 'collapse',
-                  fontSize: '12px',
+                  fontSize: '11.5px',
                   backgroundColor: '#ffffff',
                   border: '1px solid #cbd5e1'
                 }}
               >
                 <tbody>
                   <tr style={{ borderBottom: '1px solid #e2e8f0' }}>
-                    <td style={{ padding: '7px 10px', backgroundColor: '#f8fafc', fontWeight: '700', width: '38%', color: '#334155' }}>
+                    <td style={{ padding: '6px 8px', backgroundColor: '#f8fafc', fontWeight: '700', width: '38%', color: '#334155' }}>
                       Candidate Full Name:
                     </td>
-                    <td style={{ padding: '7px 10px', fontWeight: '900', color: '#004b93', fontSize: '13.5px' }}>
+                    <td style={{ padding: '6px 8px', fontWeight: '900', color: '#004b93', fontSize: '13px' }}>
                       {candidate.name}
                     </td>
                   </tr>
                   <tr style={{ borderBottom: '1px solid #e2e8f0' }}>
-                    <td style={{ padding: '7px 10px', backgroundColor: '#f8fafc', fontWeight: '700', color: '#334155' }}>
+                    <td style={{ padding: '6px 8px', backgroundColor: '#f8fafc', fontWeight: '700', color: '#334155' }}>
                       Student ID / Roll No:
                     </td>
-                    <td style={{ padding: '7px 10px', fontWeight: '800', color: '#0f172a' }}>
+                    <td style={{ padding: '6px 8px', fontWeight: '800', color: '#0f172a' }}>
                       {candidate.roll}
                     </td>
                   </tr>
                   <tr style={{ borderBottom: '1px solid #e2e8f0' }}>
-                    <td style={{ padding: '7px 10px', backgroundColor: '#f8fafc', fontWeight: '700', color: '#334155' }}>
+                    <td style={{ padding: '6px 8px', backgroundColor: '#f8fafc', fontWeight: '700', color: '#334155' }}>
                       Degree Programme:
                     </td>
-                    <td style={{ padding: '7px 10px', fontWeight: '600', color: '#0f172a' }}>
+                    <td style={{ padding: '6px 8px', fontWeight: '600', color: '#0f172a' }}>
                       {candidate.program}
                     </td>
                   </tr>
                   <tr style={{ borderBottom: '1px solid #e2e8f0' }}>
-                    <td style={{ padding: '7px 10px', backgroundColor: '#f8fafc', fontWeight: '700', color: '#334155' }}>
+                    <td style={{ padding: '6px 8px', backgroundColor: '#f8fafc', fontWeight: '700', color: '#334155' }}>
                       Campus Affiliation:
                     </td>
-                    <td style={{ padding: '7px 10px', fontWeight: '800', color: '#b91c1c' }}>
+                    <td style={{ padding: '6px 8px', fontWeight: '800', color: '#b91c1c' }}>
                       BITS Pilani, Hyderabad Campus
                     </td>
                   </tr>
                   <tr style={{ borderBottom: '1px solid #e2e8f0' }}>
-                    <td style={{ padding: '7px 10px', backgroundColor: '#f8fafc', fontWeight: '700', color: '#334155' }}>
+                    <td style={{ padding: '6px 8px', backgroundColor: '#f8fafc', fontWeight: '700', color: '#334155' }}>
                       Sponsoring Corporate:
                     </td>
-                    <td style={{ padding: '7px 10px', fontWeight: '700', color: '#059669' }}>
+                    <td style={{ padding: '6px 8px', fontWeight: '700', color: '#059669' }}>
                       {candidate.sponsor}
                     </td>
                   </tr>
                   <tr style={{ borderBottom: '1px solid #e2e8f0' }}>
-                    <td style={{ padding: '7px 10px', backgroundColor: '#f8fafc', fontWeight: '700', color: '#334155' }}>
+                    <td style={{ padding: '6px 8px', backgroundColor: '#f8fafc', fontWeight: '700', color: '#334155' }}>
                       Exam Center / Mode:
                     </td>
-                    <td style={{ padding: '7px 10px', color: '#0f172a' }}>
+                    <td style={{ padding: '6px 8px', color: '#0f172a' }}>
                       {candidate.examCenter}
                     </td>
                   </tr>
                   <tr>
-                    <td style={{ padding: '7px 10px', backgroundColor: '#f8fafc', fontWeight: '700', color: '#334155' }}>
+                    <td style={{ padding: '6px 8px', backgroundColor: '#f8fafc', fontWeight: '700', color: '#334155' }}>
                       Portal Session ID:
                     </td>
-                    <td style={{ padding: '7px 10px', fontFamily: 'monospace', color: '#2563eb', fontWeight: '700' }}>
+                    <td style={{ padding: '6px 8px', fontFamily: 'monospace', color: '#2563eb', fontWeight: '700' }}>
                       {candidate.portalId}
                     </td>
                   </tr>
@@ -556,26 +581,26 @@ export default function HallTicketModal({ isOpen, onClose, studentData }) {
                   display: 'flex',
                   flexDirection: 'column',
                   alignItems: 'center',
-                  gap: '8px'
+                  gap: '6px'
                 }}
               >
                 {/* Photo Frame */}
                 <div
                   style={{
-                    width: '140px',
-                    height: '165px',
-                    border: '2.5px solid #004b93',
+                    width: '135px',
+                    height: '155px',
+                    border: '2px solid #004b93',
                     borderRadius: '4px',
                     backgroundColor: '#e2e8f0',
                     position: 'relative',
                     overflow: 'hidden',
-                    boxShadow: '0 3px 8px rgba(0,0,0,0.15)'
+                    boxShadow: '0 2px 6px rgba(0,0,0,0.15)'
                   }}
                 >
                   {/* Candidate Real Photo */}
                   <img
                     src={candidate.photoUrl}
-                    alt="Rohan Kumar Chaudhry - Candidate Photograph"
+                    alt="Candidate Photograph"
                     crossOrigin="anonymous"
                     style={{
                       width: '100%',
@@ -590,13 +615,13 @@ export default function HallTicketModal({ isOpen, onClose, studentData }) {
                   <div
                     style={{
                       position: 'absolute',
-                      bottom: '5px',
-                      right: '5px',
+                      bottom: '4px',
+                      right: '4px',
                       backgroundColor: 'rgba(185, 28, 28, 0.92)',
                       color: '#ffffff',
-                      fontSize: '7.5px',
+                      fontSize: '7px',
                       fontWeight: '900',
-                      padding: '2px 6px',
+                      padding: '2px 5px',
                       borderRadius: '3px',
                       textTransform: 'uppercase',
                       letterSpacing: '0.4px',
@@ -611,10 +636,10 @@ export default function HallTicketModal({ isOpen, onClose, studentData }) {
                 {/* Candidate Signature Box */}
                 <div
                   style={{
-                    width: '140px',
+                    width: '135px',
                     border: '1px solid #cbd5e1',
                     borderRadius: '3px',
-                    padding: '4px 6px',
+                    padding: '3px 5px',
                     textAlign: 'center',
                     backgroundColor: '#ffffff'
                   }}
@@ -622,7 +647,7 @@ export default function HallTicketModal({ isOpen, onClose, studentData }) {
                   <div
                     style={{
                       fontFamily: "'Brush Script MT', 'Dancing Script', cursive, sans-serif",
-                      fontSize: '18px',
+                      fontSize: '17px',
                       color: '#0f172a',
                       fontWeight: '700',
                       letterSpacing: '0.5px',
@@ -631,7 +656,7 @@ export default function HallTicketModal({ isOpen, onClose, studentData }) {
                   >
                     Rohan K. Chaudhry
                   </div>
-                  <div style={{ fontSize: '8px', color: '#64748b', borderTop: '1px dashed #cbd5e1', paddingTop: '2px', marginTop: '2px' }}>
+                  <div style={{ fontSize: '7.5px', color: '#64748b', borderTop: '1px dashed #cbd5e1', paddingTop: '2px', marginTop: '1px' }}>
                     Candidate Signature
                   </div>
                 </div>
@@ -639,15 +664,15 @@ export default function HallTicketModal({ isOpen, onClose, studentData }) {
             </div>
 
             {/* Examination Schedule Timetable (17–20 Nov 2026, 06:30 PM to 09:00 PM Daily) */}
-            <div style={{ marginBottom: '16px', position: 'relative', zIndex: 1 }}>
+            <div style={{ marginBottom: '14px', position: 'relative', zIndex: 1 }}>
               <div
                 style={{
-                  fontSize: '12px',
+                  fontSize: '11.5px',
                   fontWeight: '800',
                   color: '#004b93',
                   textTransform: 'uppercase',
                   letterSpacing: '0.5px',
-                  marginBottom: '6px',
+                  marginBottom: '5px',
                   display: 'flex',
                   alignItems: 'center',
                   gap: '6px'
@@ -660,19 +685,19 @@ export default function HallTicketModal({ isOpen, onClose, studentData }) {
                 style={{
                   width: '100%',
                   borderCollapse: 'collapse',
-                  fontSize: '11.5px',
+                  fontSize: '11px',
                   textAlign: 'left',
                   border: '1.5px solid #004b93'
                 }}
               >
                 <thead>
                   <tr style={{ backgroundColor: '#004b93', color: '#ffffff' }}>
-                    <th style={{ padding: '7px 8px', width: '22%' }}>Date & Day</th>
-                    <th style={{ padding: '7px 8px', width: '18%' }}>Exam Slot</th>
-                    <th style={{ padding: '7px 8px', width: '12%' }}>Course</th>
-                    <th style={{ padding: '7px 8px', width: '28%' }}>Course Title</th>
-                    <th style={{ padding: '7px 8px', width: '10%' }}>Duration</th>
-                    <th style={{ padding: '7px 8px', width: '10%' }}>Proctor</th>
+                    <th style={{ padding: '6px 8px', width: '22%' }}>Date & Day</th>
+                    <th style={{ padding: '6px 8px', width: '18%' }}>Exam Slot</th>
+                    <th style={{ padding: '6px 8px', width: '12%' }}>Course</th>
+                    <th style={{ padding: '6px 8px', width: '28%' }}>Course Title</th>
+                    <th style={{ padding: '6px 8px', width: '10%' }}>Duration</th>
+                    <th style={{ padding: '6px 8px', width: '10%' }}>Proctor</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -684,22 +709,22 @@ export default function HallTicketModal({ isOpen, onClose, studentData }) {
                         borderBottom: '1px solid #cbd5e1'
                       }}
                     >
-                      <td style={{ padding: '7px 8px', fontWeight: '700', color: '#b91c1c' }}>
+                      <td style={{ padding: '6px 8px', fontWeight: '700', color: '#b91c1c' }}>
                         {item.day}
                       </td>
-                      <td style={{ padding: '7px 8px', fontWeight: '800', color: '#0f172a' }}>
+                      <td style={{ padding: '6px 8px', fontWeight: '800', color: '#0f172a' }}>
                         {item.time}
                       </td>
-                      <td style={{ padding: '7px 8px', fontWeight: '800', color: '#004b93' }}>
+                      <td style={{ padding: '6px 8px', fontWeight: '800', color: '#004b93' }}>
                         {item.code}
                       </td>
-                      <td style={{ padding: '7px 8px', fontWeight: '600' }}>
+                      <td style={{ padding: '6px 8px', fontWeight: '600' }}>
                         {item.name}
                       </td>
-                      <td style={{ padding: '7px 8px', color: '#475569' }}>
+                      <td style={{ padding: '6px 8px', color: '#475569' }}>
                         {item.duration}
                       </td>
-                      <td style={{ padding: '7px 8px', color: '#16a34a', fontWeight: '700' }}>
+                      <td style={{ padding: '6px 8px', color: '#16a34a', fontWeight: '700' }}>
                         ✓ {item.hall}
                       </td>
                     </tr>
@@ -715,22 +740,22 @@ export default function HallTicketModal({ isOpen, onClose, studentData }) {
                 justifyContent: 'space-between',
                 alignItems: 'flex-end',
                 borderTop: '1.5px solid #cbd5e1',
-                paddingTop: '14px',
-                marginBottom: '16px',
+                paddingTop: '12px',
+                marginBottom: '14px',
                 position: 'relative',
                 zIndex: 1
               }}
             >
               {/* Candidate Declaration */}
-              <div style={{ maxWidth: '280px', fontSize: '9.5px', color: '#64748b', lineHeight: '1.4' }}>
+              <div style={{ maxWidth: '280px', fontSize: '9px', color: '#64748b', lineHeight: '1.4' }}>
                 <strong>Candidate Declaration:</strong> I hereby certify that the particulars furnished above are true and correct. I will adhere strictly to all BITS Pilani, Hyderabad Campus examination regulations.
               </div>
 
               {/* Official Hyderabad Campus Seal */}
               <div
                 style={{
-                  width: '94px',
-                  height: '94px',
+                  width: '86px',
+                  height: '86px',
                   borderRadius: '50%',
                   border: '2px dashed #004b93',
                   display: 'flex',
@@ -739,22 +764,22 @@ export default function HallTicketModal({ isOpen, onClose, studentData }) {
                   justifyContent: 'center',
                   color: '#004b93',
                   textAlign: 'center',
-                  padding: '4px',
+                  padding: '3px',
                   backgroundColor: 'rgba(0, 75, 147, 0.02)'
                 }}
               >
-                <span style={{ fontSize: '7px', fontWeight: '800', textTransform: 'uppercase' }}>BITS PILANI</span>
-                <span style={{ fontSize: '8px', fontWeight: '900', color: '#b91c1c' }}>HYDERABAD</span>
-                <span style={{ fontSize: '6.5px', fontWeight: '700' }}>WILP EXAM SEAL</span>
-                <span style={{ fontSize: '6px', color: '#64748b' }}>2026-27</span>
+                <span style={{ fontSize: '6.5px', fontWeight: '800', textTransform: 'uppercase' }}>BITS PILANI</span>
+                <span style={{ fontSize: '7.5px', fontWeight: '900', color: '#b91c1c' }}>HYDERABAD</span>
+                <span style={{ fontSize: '6px', fontWeight: '700' }}>WILP EXAM SEAL</span>
+                <span style={{ fontSize: '5.5px', color: '#64748b' }}>2026-27</span>
               </div>
 
               {/* Controller / In-Charge Examinations Signature */}
-              <div style={{ textAlign: 'center', minWidth: '190px' }}>
+              <div style={{ textAlign: 'center', minWidth: '180px' }}>
                 <div
                   style={{
                     fontFamily: "'Brush Script MT', 'Dancing Script', cursive, sans-serif",
-                    fontSize: '20px',
+                    fontSize: '19px',
                     color: '#004b93',
                     fontWeight: '700',
                     lineHeight: '1.2'
@@ -762,13 +787,13 @@ export default function HallTicketModal({ isOpen, onClose, studentData }) {
                 >
                   M. S. Radhakrishnan
                 </div>
-                <div style={{ fontSize: '11px', fontWeight: '800', color: '#0f172a', marginTop: '2px' }}>
+                <div style={{ fontSize: '10.5px', fontWeight: '800', color: '#0f172a', marginTop: '2px' }}>
                   Dr. M. S. Radhakrishnan
                 </div>
-                <div style={{ fontSize: '9.5px', color: '#475569', fontWeight: '600' }}>
+                <div style={{ fontSize: '9px', color: '#475569', fontWeight: '600' }}>
                   Controller of Examinations
                 </div>
-                <div style={{ fontSize: '8.5px', color: '#b91c1c', fontWeight: '700' }}>
+                <div style={{ fontSize: '8px', color: '#b91c1c', fontWeight: '700' }}>
                   BITS Pilani, Hyderabad Campus
                 </div>
               </div>
@@ -780,19 +805,19 @@ export default function HallTicketModal({ isOpen, onClose, studentData }) {
                 backgroundColor: '#f8fafc',
                 border: '1px solid #e2e8f0',
                 borderRadius: '4px',
-                padding: '10px 12px',
-                fontSize: '10px',
+                padding: '9px 12px',
+                fontSize: '9.5px',
                 color: '#334155',
-                lineHeight: '1.45',
+                lineHeight: '1.4',
                 position: 'relative',
                 zIndex: 1
               }}
             >
-              <div style={{ fontWeight: '800', color: '#004b93', marginBottom: '4px', textTransform: 'uppercase', fontSize: '10.5px' }}>
+              <div style={{ fontWeight: '800', color: '#004b93', marginBottom: '3px', textTransform: 'uppercase', fontSize: '10px' }}>
                 IMPORTANT INSTRUCTIONS FOR THE CANDIDATE • HYDERABAD CAMPUS
               </div>
               <ol style={{ paddingLeft: '16px', margin: 0 }}>
-                <li>This Admit Card must be kept accessible during each examination session and presented to the online AI proctor alongside a valid photo identity card (e.g. Aadhaar Card, Passport, or L&T Employee ID Card).</li>
+                <li>This Admit Card must be kept accessible during each examination session and presented to the online AI proctor alongside a valid photo identity card (Aadhaar Card, Passport, or L&T Employee ID Card).</li>
                 <li>The examination portal opens strictly 30 minutes prior to scheduled start (06:00 PM IST). Candidates must complete facial recognition and room 360-degree environmental scan before 06:25 PM IST.</li>
                 <li>Dual camera proctoring (primary webcam + secondary angle camera via mobile phone) must remain active throughout the 150-minute testing window.</li>
                 <li>No electronic communication devices, secondary monitor screens, or unauthorized materials are permitted in the testing perimeter.</li>
@@ -803,10 +828,10 @@ export default function HallTicketModal({ isOpen, onClose, studentData }) {
             {/* Bottom Barcode Graphic */}
             <div
               style={{
-                marginTop: '12px',
+                marginTop: '10px',
                 textAlign: 'center',
                 borderTop: '1px solid #e2e8f0',
-                paddingTop: '8px',
+                paddingTop: '6px',
                 position: 'relative',
                 zIndex: 1
               }}
@@ -814,7 +839,7 @@ export default function HallTicketModal({ isOpen, onClose, studentData }) {
               <div
                 style={{
                   fontFamily: "'Courier New', Courier, monospace",
-                  fontSize: '14px',
+                  fontSize: '13px',
                   letterSpacing: '5px',
                   fontWeight: '700',
                   color: '#1e293b'
@@ -822,7 +847,7 @@ export default function HallTicketModal({ isOpen, onClose, studentData }) {
               >
                 ||| ||||| ||| ||||||| |||| |||||| |||||||| ||||| |||
               </div>
-              <div style={{ fontSize: '9px', color: '#64748b', letterSpacing: '1px', marginTop: '2px' }}>
+              <div style={{ fontSize: '8.5px', color: '#64748b', letterSpacing: '1px', marginTop: '2px' }}>
                 {candidate.barcodeString} • BITS PILANI HYDERABAD CAMPUS • SYSTEM COMPATIBILITY: PASSED
               </div>
             </div>
@@ -835,14 +860,16 @@ export default function HallTicketModal({ isOpen, onClose, studentData }) {
         <div
           className="no-print"
           style={{
-            padding: '12px 24px',
+            padding: '10px 18px',
             backgroundColor: '#f8fafc',
             borderTop: '1px solid #e2e8f0',
             display: 'flex',
             justifyContent: 'space-between',
             alignItems: 'center',
-            fontSize: '12px',
-            color: '#64748b'
+            fontSize: '11.5px',
+            color: '#64748b',
+            flexWrap: 'wrap',
+            gap: '8px'
           }}
         >
           <span>
@@ -853,9 +880,9 @@ export default function HallTicketModal({ isOpen, onClose, studentData }) {
             style={{
               backgroundColor: '#e2e8f0',
               border: 'none',
-              padding: '6px 14px',
+              padding: '5px 12px',
               borderRadius: '4px',
-              fontSize: '12px',
+              fontSize: '11.5px',
               fontWeight: '600',
               cursor: 'pointer',
               color: '#334155'

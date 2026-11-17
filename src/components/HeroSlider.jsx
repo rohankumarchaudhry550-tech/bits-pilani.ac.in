@@ -41,7 +41,7 @@ export default function HeroSlider() {
   };
 
   return (
-    <div className="hero_slider_container" style={{ height: '480px' }}>
+    <div className="hero_slider_container">
       {slides.map((slide, idx) => (
         <div key={idx} className={`slide ${idx === currentSlide ? 'active' : ''}`}>
           <div 

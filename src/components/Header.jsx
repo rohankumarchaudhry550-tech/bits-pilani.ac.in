@@ -65,18 +65,6 @@ export default function Header() {
             <a href="https://www.bits-pilani.ac.in/ipcd-overview/" target="_blank" rel="noopener noreferrer">INTERNATIONALIZATION</a>
             <a href="https://www.bits-pilani.ac.in/contact-us/" target="_blank" rel="noopener noreferrer" className="top_nav_contact">CONTACT</a>
           </div>
-          
-          <div className="top_nav_right">
-            {isLoggedIn && (
-              <div className="top_student_auth">
-                <span className="student_name_label">
-                  Welcome, {studentName}
-                </span>
-                <Link to="/dashboard" className="student_dash_link">PORTAL DASHBOARD</Link>
-                <button onClick={handleLogout} className="student_logout_btn">LOGOUT</button>
-              </div>
-            )}
-          </div>
         </div>
       </div>
 
