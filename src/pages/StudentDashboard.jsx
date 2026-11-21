@@ -35,6 +35,8 @@ export default function StudentDashboard() {
   const [activeTab, setActiveTab] = useState('mst'); // Default to newly declared MST results
   const [expandedSyllabus, setExpandedSyllabus] = useState(null);
   const [isHallTicketOpen, setIsHallTicketOpen] = useState(false);
+  const [hallTicketType, setHallTicketType] = useState('final');
+  const [mstSubTab, setMstSubTab] = useState('final_datesheet');
 
   // 1. Session Auth Validation
   useEffect(() => {
@@ -120,26 +122,29 @@ export default function StudentDashboard() {
           </div>
         </div>
 
-        {/* MST Examination Announcement Alert */}
-        <div className="dash_announcement_alert" style={{ backgroundColor: '#eff6ff', borderLeft: '5px solid #1d4ed8', color: '#1e3a8a', padding: '20px 30px', borderRadius: '6px', boxShadow: 'var(--shadow-sm)', marginBottom: '30px', display: 'flex', alignItems: 'flex-start', gap: '15px' }}>
-          <FaTrophy style={{ fontSize: '28px', marginTop: '2px', color: '#f59e0b', flexShrink: 0 }} />
+        {/* Comprehensive Final Exam Datesheet & Academic Highlights Alert */}
+        <div className="dash_announcement_alert" style={{ backgroundColor: '#eff6ff', borderLeft: '5px solid #004b93', color: '#1e3a8a', padding: '20px 30px', borderRadius: '6px', boxShadow: 'var(--shadow-sm)', marginBottom: '30px', display: 'flex', alignItems: 'flex-start', gap: '15px' }}>
+          <FaCalendarAlt style={{ fontSize: '28px', marginTop: '2px', color: '#004b93', flexShrink: 0 }} />
           <div style={{ flex: 1 }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '10px', marginBottom: '6px' }}>
               <h4 style={{ fontSize: '16.5px', fontWeight: '700', color: '#1e3a8a', margin: 0 }}>
-                📅 Mid-Semester Test (MST) Schedule Announced & Advanced ML Practical Project (99/100 A+) Released!
+                🎓 First Semester Comprehensive Final Examination Datesheet (16 Dec – 26 Dec 2026) Declared!
               </h4>
-              <span style={{ backgroundColor: '#16a34a', color: '#ffffff', fontSize: '11px', fontWeight: '800', padding: '3px 10px', borderRadius: '12px', textTransform: 'uppercase' }}>
-                Batch Rank #1 of 45 (158/160 MST • 99/100 Practical)
+              <span style={{ backgroundColor: '#0284c7', color: '#ffffff', fontSize: '11px', fontWeight: '800', padding: '3px 10px', borderRadius: '12px', textTransform: 'uppercase' }}>
+                4 Papers • 2 to 3-Day Gaps • Christmas Holiday (25 Dec)
               </span>
             </div>
             <p style={{ fontSize: '13.5px', lineHeight: '1.5', color: '#334155', margin: '0 0 12px' }}>
-              Upcoming Mid-Semester Tests (MST) commence tomorrow, <strong>17 Nov to 20 Nov 2026</strong>, across 4 consecutive days (<strong>06:30 PM to 09:00 PM daily</strong>). Additionally, the evaluation for the BITS F113 Advanced Machine Learning Practical Capstone Project is officially published: <strong>Rohan Kumar Chaudhry</strong> has secured <strong>99.0 / 100.0 (Grade A+ Exemplary Distinction • Rank #1)</strong>!
+              The official datesheet for the First Semester Comprehensive Final Examinations is published: <strong>16 Dec 2026 (Wed) to 26 Dec 2026 (Sat)</strong> daily from <strong>06:00 PM to 09:00 PM IST (3.0 Hours)</strong>. All exams are structured with generous 2-to-3 day revision gaps and 25 Dec Christmas Gazetted Holiday. Rohan Kumar Chaudhry enters the final assessment holding <strong>Cohort Rank #1 (158/160 MST • 99/100 Practical Project)</strong>.
             </p>
             <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
               <button
-                onClick={() => setIsHallTicketOpen(true)}
+                onClick={() => {
+                  setMstSubTab('final_datesheet');
+                  setActiveTab('mst');
+                }}
                 style={{
-                  backgroundColor: '#b91c1c',
+                  backgroundColor: '#004b93',
                   color: '#ffffff',
                   border: 'none',
                   padding: '7px 16px',
@@ -150,28 +155,38 @@ export default function StudentDashboard() {
                   display: 'flex',
                   alignItems: 'center',
                   gap: '6px',
-                  boxShadow: '0 2px 5px rgba(185, 28, 28, 0.3)'
+                  boxShadow: '0 2px 5px rgba(0, 75, 147, 0.3)'
                 }}
               >
-                <FaIdCard /> Download Hall Ticket (PDF)
+                <FaCalendarAlt /> View Final Exam Datesheet (16–26 Dec) →
               </button>
               <button
-                onClick={() => setActiveTab('mst')}
+                onClick={() => {
+                  setHallTicketType('final');
+                  setIsHallTicketOpen(true);
+                }}
                 style={{
-                  backgroundColor: '#1d4ed8',
+                  backgroundColor: '#16a34a',
                   color: '#ffffff',
                   border: 'none',
                   padding: '7px 16px',
                   borderRadius: '4px',
                   fontWeight: '700',
                   fontSize: '12.5px',
-                  cursor: 'pointer'
+                  cursor: 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '6px',
+                  boxShadow: '0 2px 5px rgba(22, 163, 74, 0.3)'
                 }}
               >
-                View MST Schedule & Scorecard →
+                <FaIdCard /> Download Final Admit Card (PDF)
               </button>
               <button
-                onClick={() => setActiveTab('notes')}
+                onClick={() => {
+                  setMstSubTab('scorecard');
+                  setActiveTab('mst');
+                }}
                 style={{
                   backgroundColor: '#ffffff',
                   color: '#1d4ed8',
@@ -183,7 +198,7 @@ export default function StudentDashboard() {
                   cursor: 'pointer'
                 }}
               >
-                Open Lecture Notes (41 Sessions)
+                🏆 View MST Results (Rank #1)
               </button>
             </div>
           </div>
@@ -319,7 +334,7 @@ export default function StudentDashboard() {
 
         {/* Tab Content Display */}
         {activeTab === 'mst' ? (
-          <MstResultsSection />
+          <MstResultsSection initialSubTab={mstSubTab} />
         ) : activeTab === 'videos' ? (
           <VideoLecturesSection onOpenNotes={(noteId) => setActiveTab('notes')} />
         ) : activeTab === 'notes' ? (
@@ -1240,6 +1255,7 @@ export default function StudentDashboard() {
       <HallTicketModal
         isOpen={isHallTicketOpen}
         onClose={() => setIsHallTicketOpen(false)}
+        defaultExamType={hallTicketType}
         studentData={{ name: studentName, roll: studentRoll }}
       />
     </div>

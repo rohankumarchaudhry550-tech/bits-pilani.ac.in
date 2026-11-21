@@ -35,6 +35,7 @@ import {
 import {
   mstSubjectMeta,
   mstScheduleData,
+  finalExamScheduleData,
   rohanMstScorecard,
   advancedMlProjectData,
   cohortMstRankings,
@@ -43,8 +44,9 @@ import {
 } from '../data/mstResultsData';
 import HallTicketModal from './HallTicketModal';
 
-export default function MstResultsSection() {
-  const [activeSubTab, setActiveSubTab] = useState('schedule'); // 'schedule' | 'practical' | 'scorecard' | 'ranking' | 'assignments' | 'analytics'
+export default function MstResultsSection({ initialSubTab = 'final_datesheet' }) {
+  const [activeSubTab, setActiveSubTab] = useState(initialSubTab || 'final_datesheet');
+  const [hallTicketType, setHallTicketType] = useState('final');
   const [searchQuery, setSearchQuery] = useState('');
   const [filterCompany, setFilterCompany] = useState('ALL');
   const [filterGrade, setFilterGrade] = useState('ALL');
@@ -277,6 +279,37 @@ export default function MstResultsSection() {
         }}
       >
         <button
+          onClick={() => setActiveSubTab('final_datesheet')}
+          style={{
+            padding: '10px 18px',
+            borderRadius: '6px',
+            border: activeSubTab === 'final_datesheet' ? '2px solid #004b93' : '1px solid #cbd5e1',
+            backgroundColor: activeSubTab === 'final_datesheet' ? '#004b93' : '#ffffff',
+            color: activeSubTab === 'final_datesheet' ? '#ffffff' : '#334155',
+            fontWeight: '700',
+            fontSize: '13.5px',
+            cursor: 'pointer',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '8px',
+            boxShadow: activeSubTab === 'final_datesheet' ? '0 2px 6px rgba(0, 75, 147, 0.25)' : 'none',
+            transition: 'all 0.2s'
+          }}
+        >
+          <FaCalendarAlt style={{ color: activeSubTab === 'final_datesheet' ? '#fcb900' : '#004b93' }} /> 🎓 Final Exam Datesheet (16–26 Dec)
+          <span style={{
+            backgroundColor: activeSubTab === 'final_datesheet' ? '#fcb900' : '#eff6ff',
+            color: activeSubTab === 'final_datesheet' ? '#0f172a' : '#1d4ed8',
+            padding: '2px 7px',
+            borderRadius: '10px',
+            fontSize: '11px',
+            fontWeight: '800'
+          }}>
+            16 Dec – 26 Dec • With Gap
+          </span>
+        </button>
+
+        <button
           onClick={() => setActiveSubTab('schedule')}
           style={{
             padding: '10px 18px',
@@ -418,6 +451,417 @@ export default function MstResultsSection() {
           <FaChartBar /> Batch Analytics & Bell Curve
         </button>
       </div>
+
+      {/* 3. SUB-TAB CONTENT: (0) Official Comprehensive Final Examination Datesheet (16 Dec – 26 Dec 2026) */}
+      {activeSubTab === 'final_datesheet' && (
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '25px' }}>
+          
+          {/* Official Final Exam Notice Header Card */}
+          <div style={{
+            backgroundColor: '#ffffff',
+            borderRadius: '8px',
+            boxShadow: '0 2px 10px rgba(0,0,0,0.06)',
+            border: '2px solid #e2e8f0',
+            borderTop: '5px solid #004b93',
+            padding: '30px'
+          }}>
+            <div style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              borderBottom: '2px solid #004b93',
+              paddingBottom: '20px',
+              marginBottom: '25px',
+              flexWrap: 'wrap',
+              gap: '15px'
+            }}>
+              <div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '10px', color: '#004b93', fontWeight: '800', fontSize: '18px' }}>
+                  <img src="/bits-logo.webp" alt="BITS Logo" style={{ height: '36px', objectFit: 'contain' }} /> BIRLA INSTITUTE OF TECHNOLOGY & SCIENCE, PILANI — HYDERABAD CAMPUS
+                </div>
+                <div style={{ fontSize: '13px', color: '#b91c1c', fontWeight: '700', marginTop: '3px' }}>
+                  Work Integrated Learning Programmes (WILP) Division • Examination Cell
+                </div>
+                <div style={{ fontSize: '12px', color: '#64748b' }}>
+                  Jawahar Nagar, Kapra Mandal, Hyderabad - 500078, Telangana • Ref: BITS/WILP/HYD/EXAM/2026-27/SEM1/COMPRE-041
+                </div>
+              </div>
+
+              <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
+                <span style={{
+                  backgroundColor: '#eff6ff',
+                  border: '1.5px solid #bfdbfe',
+                  color: '#1d4ed8',
+                  padding: '7px 16px',
+                  borderRadius: '20px',
+                  fontSize: '12.5px',
+                  fontWeight: '800',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '6px'
+                }}>
+                  <FaClock /> 06:00 PM – 09:00 PM IST (3.0 Hrs Daily)
+                </span>
+                <button
+                  onClick={() => {
+                    setHallTicketType('final');
+                    setIsHallTicketOpen(true);
+                  }}
+                  style={{
+                    backgroundColor: '#16a34a',
+                    border: 'none',
+                    color: '#ffffff',
+                    padding: '7px 18px',
+                    borderRadius: '20px',
+                    fontSize: '12.5px',
+                    fontWeight: '800',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '6px',
+                    cursor: 'pointer',
+                    boxShadow: '0 2px 6px rgba(22, 163, 74, 0.35)'
+                  }}
+                >
+                  <FaIdCard /> Download Final Hall Ticket (PDF)
+                </button>
+              </div>
+            </div>
+
+            {/* Notification Title Strip */}
+            <div style={{
+              backgroundColor: '#f0f9ff',
+              border: '1px solid #bae6fd',
+              borderRadius: '8px',
+              padding: '16px 20px',
+              marginBottom: '25px',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              flexWrap: 'wrap',
+              gap: '12px'
+            }}>
+              <div>
+                <span style={{ backgroundColor: '#0284c7', color: '#ffffff', padding: '3px 10px', borderRadius: '12px', fontSize: '11px', fontWeight: '800', textTransform: 'uppercase' }}>
+                  Official Notification • Confirmed Datesheet
+                </span>
+                <h3 style={{ fontSize: '18px', color: '#0369a1', fontWeight: '800', margin: '6px 0 2px' }}>
+                  First Semester 2026-27 Comprehensive Final Examination (End-Semester) Datesheet
+                </h3>
+                <p style={{ fontSize: '13px', color: '#334155', margin: 0 }}>
+                  Examinations commence on <strong>16 December 2026 (Wednesday)</strong> and conclude on <strong>26 December 2026 (Saturday)</strong>. All papers scheduled with dedicated <strong>2-to-3 day revision gaps</strong> and gazetted Christmas holiday (25 Dec).
+                </p>
+              </div>
+
+              <div style={{ textAlign: 'right' }}>
+                <span style={{ fontSize: '11px', color: '#64748b' }}>Date of Release:</span>
+                <div style={{ fontSize: '13px', fontWeight: '800', color: '#0f172a' }}>21 November 2026</div>
+                <span style={{ fontSize: '11px', color: '#16a34a', fontWeight: '700' }}>✓ Approved by Senate</span>
+              </div>
+            </div>
+
+            {/* Key Schedule Metrics Strip */}
+            <div style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
+              gap: '15px',
+              marginBottom: '30px'
+            }}>
+              <div style={{ backgroundColor: '#f8fafc', border: '1px solid #e2e8f0', borderRadius: '8px', padding: '15px 18px', borderLeft: '4px solid #004b93' }}>
+                <span style={{ fontSize: '11px', color: '#64748b', fontWeight: '700', textTransform: 'uppercase' }}>Exam Window</span>
+                <div style={{ fontSize: '16px', fontWeight: '800', color: '#0f172a', margin: '3px 0' }}>16 Dec – 26 Dec 2026</div>
+                <span style={{ fontSize: '11.5px', color: '#004b93', fontWeight: '600' }}>11 Calendar Days • 4 Core Papers</span>
+              </div>
+
+              <div style={{ backgroundColor: '#f8fafc', border: '1px solid #e2e8f0', borderRadius: '8px', padding: '15px 18px', borderLeft: '4px solid #16a34a' }}>
+                <span style={{ fontSize: '11px', color: '#64748b', fontWeight: '700', textTransform: 'uppercase' }}>Exam Timings</span>
+                <div style={{ fontSize: '16px', fontWeight: '800', color: '#0f172a', margin: '3px 0' }}>06:00 PM – 09:00 PM IST</div>
+                <span style={{ fontSize: '11.5px', color: '#16a34a', fontWeight: '600' }}>3.0 Hours (180 Minutes) Daily</span>
+              </div>
+
+              <div style={{ backgroundColor: '#f8fafc', border: '1px solid #e2e8f0', borderRadius: '8px', padding: '15px 18px', borderLeft: '4px solid #d97706' }}>
+                <span style={{ fontSize: '11px', color: '#64748b', fontWeight: '700', textTransform: 'uppercase' }}>Assessment Format</span>
+                <div style={{ fontSize: '16px', fontWeight: '800', color: '#0f172a', margin: '3px 0' }}>Part A + Part B</div>
+                <span style={{ fontSize: '11.5px', color: '#d97706', fontWeight: '600' }}>Part A Closed (25M) + Part B Open (45M)</span>
+              </div>
+
+              <div style={{ backgroundColor: '#f8fafc', border: '1px solid #e2e8f0', borderRadius: '8px', padding: '15px 18px', borderLeft: '4px solid #7c3aed' }}>
+                <span style={{ fontSize: '11px', color: '#64748b', fontWeight: '700', textTransform: 'uppercase' }}>Revision Gaps</span>
+                <div style={{ fontSize: '16px', fontWeight: '800', color: '#0f172a', margin: '3px 0' }}>2 to 3 Days Gap</div>
+                <span style={{ fontSize: '11.5px', color: '#7c3aed', fontWeight: '600' }}>Dedicated prep between every exam</span>
+              </div>
+            </div>
+
+            {/* Gap Calendar & Timeline Visualizer */}
+            <div style={{ marginBottom: '30px' }}>
+              <h4 style={{ fontSize: '15.5px', fontWeight: '800', color: '#0f172a', marginBottom: '14px', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                <FaCalendarAlt style={{ color: '#004b93' }} /> Visual Examination Calendar & Revision Gap Breakdown (16 Dec – 26 Dec 2026)
+              </h4>
+
+              <div style={{
+                display: 'grid',
+                gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))',
+                gap: '12px'
+              }}>
+                {/* 16 Dec: Exam 1 */}
+                <div style={{ backgroundColor: '#eff6ff', border: '2px solid #2563eb', borderRadius: '8px', padding: '14px', position: 'relative' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '6px' }}>
+                    <span style={{ backgroundColor: '#2563eb', color: '#ffffff', padding: '2px 8px', borderRadius: '10px', fontSize: '10.5px', fontWeight: '800' }}>
+                      EXAM DAY 1
+                    </span>
+                    <span style={{ fontSize: '12px', fontWeight: '800', color: '#1e40af' }}>16 Dec (Wed)</span>
+                  </div>
+                  <div style={{ fontSize: '14px', fontWeight: '800', color: '#0f172a' }}>BITS F112</div>
+                  <div style={{ fontSize: '12px', color: '#334155', fontWeight: '600' }}>Math Foundations for ML</div>
+                  <div style={{ fontSize: '11px', color: '#2563eb', marginTop: '6px', fontWeight: '700' }}>⏰ 06:00 PM – 09:00 PM (180 Mins)</div>
+                </div>
+
+                {/* 17-18 Dec: Gap 1 */}
+                <div style={{ backgroundColor: '#f0fdf4', border: '1.5px dashed #16a34a', borderRadius: '8px', padding: '14px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '6px' }}>
+                    <span style={{ backgroundColor: '#dcfce7', color: '#15803d', padding: '2px 8px', borderRadius: '10px', fontSize: '10.5px', fontWeight: '800' }}>
+                      2 DAYS REVISION GAP
+                    </span>
+                    <span style={{ fontSize: '12px', fontWeight: '700', color: '#15803d' }}>17 & 18 Dec</span>
+                  </div>
+                  <div style={{ fontSize: '12.5px', fontWeight: '700', color: '#166534' }}>Full Preparation & Self-Study</div>
+                  <div style={{ fontSize: '11px', color: '#4b5563', marginTop: '4px' }}>Revision for BITS F111 Stats (ANOVA, Sampling, Hypothesis Testing)</div>
+                </div>
+
+                {/* 19 Dec: Exam 2 */}
+                <div style={{ backgroundColor: '#eff6ff', border: '2px solid #2563eb', borderRadius: '8px', padding: '14px' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '6px' }}>
+                    <span style={{ backgroundColor: '#2563eb', color: '#ffffff', padding: '2px 8px', borderRadius: '10px', fontSize: '10.5px', fontWeight: '800' }}>
+                      EXAM DAY 2
+                    </span>
+                    <span style={{ fontSize: '12px', fontWeight: '800', color: '#1e40af' }}>19 Dec (Sat)</span>
+                  </div>
+                  <div style={{ fontSize: '14px', fontWeight: '800', color: '#0f172a' }}>BITS F111</div>
+                  <div style={{ fontSize: '12px', color: '#334155', fontWeight: '600' }}>Intro to Statistical Methods</div>
+                  <div style={{ fontSize: '11px', color: '#2563eb', marginTop: '6px', fontWeight: '700' }}>⏰ 06:00 PM – 09:00 PM (180 Mins)</div>
+                </div>
+
+                {/* 20-21 Dec: Gap 2 */}
+                <div style={{ backgroundColor: '#f0fdf4', border: '1.5px dashed #16a34a', borderRadius: '8px', padding: '14px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '6px' }}>
+                    <span style={{ backgroundColor: '#dcfce7', color: '#15803d', padding: '2px 8px', borderRadius: '10px', fontSize: '10.5px', fontWeight: '800' }}>
+                      2 DAYS REVISION GAP
+                    </span>
+                    <span style={{ fontSize: '12px', fontWeight: '700', color: '#15803d' }}>20 & 21 Dec</span>
+                  </div>
+                  <div style={{ fontSize: '12.5px', fontWeight: '700', color: '#166534' }}>Weekend + Monday Revision</div>
+                  <div style={{ fontSize: '11px', color: '#4b5563', marginTop: '4px' }}>Revision for BITS F113 ML (SVMs, Ensembles, Trees, Clustering)</div>
+                </div>
+
+                {/* 22 Dec: Exam 3 */}
+                <div style={{ backgroundColor: '#eff6ff', border: '2px solid #2563eb', borderRadius: '8px', padding: '14px' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '6px' }}>
+                    <span style={{ backgroundColor: '#2563eb', color: '#ffffff', padding: '2px 8px', borderRadius: '10px', fontSize: '10.5px', fontWeight: '800' }}>
+                      EXAM DAY 3
+                    </span>
+                    <span style={{ fontSize: '12px', fontWeight: '800', color: '#1e40af' }}>22 Dec (Tue)</span>
+                  </div>
+                  <div style={{ fontSize: '14px', fontWeight: '800', color: '#0f172a' }}>BITS F113</div>
+                  <div style={{ fontSize: '12px', color: '#334155', fontWeight: '600' }}>Machine Learning</div>
+                  <div style={{ fontSize: '11px', color: '#2563eb', marginTop: '6px', fontWeight: '700' }}>⏰ 06:00 PM – 09:00 PM (180 Mins)</div>
+                </div>
+
+                {/* 23-25 Dec: Gap 3 & Christmas */}
+                <div style={{ backgroundColor: '#fef3c7', border: '1.5px dashed #d97706', borderRadius: '8px', padding: '14px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '6px' }}>
+                    <span style={{ backgroundColor: '#fde68a', color: '#92400e', padding: '2px 8px', borderRadius: '10px', fontSize: '10.5px', fontWeight: '800' }}>
+                      3 DAYS GAP • CHRISTMAS
+                    </span>
+                    <span style={{ fontSize: '12px', fontWeight: '700', color: '#92400e' }}>23, 24 & 25 Dec</span>
+                  </div>
+                  <div style={{ fontSize: '12.5px', fontWeight: '700', color: '#92400e' }}>3 Days Extended Prep Gap</div>
+                  <div style={{ fontSize: '11px', color: '#78350f', marginTop: '4px' }}>Includes 25 Dec (Christmas Gazetted Holiday) • Prep for AI & Comp. Intel</div>
+                </div>
+
+                {/* 26 Dec: Exam 4 (Final Concludes) */}
+                <div style={{ backgroundColor: '#fdf2f8', border: '2px solid #db2777', borderRadius: '8px', padding: '14px' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '6px' }}>
+                    <span style={{ backgroundColor: '#db2777', color: '#ffffff', padding: '2px 8px', borderRadius: '10px', fontSize: '10.5px', fontWeight: '800' }}>
+                      EXAM DAY 4 • CONCLUDES
+                    </span>
+                    <span style={{ fontSize: '12px', fontWeight: '800', color: '#9d174d' }}>26 Dec (Sat)</span>
+                  </div>
+                  <div style={{ fontSize: '14px', fontWeight: '800', color: '#0f172a' }}>BITS F114</div>
+                  <div style={{ fontSize: '12px', color: '#334155', fontWeight: '600' }}>Artificial & Comp. Intelligence</div>
+                  <div style={{ fontSize: '11px', color: '#db2777', marginTop: '6px', fontWeight: '700' }}>⏰ 06:00 PM – 09:00 PM • Semester Concludes!</div>
+                </div>
+              </div>
+            </div>
+
+            {/* Official Comprehensive Final Datesheet Table */}
+            <div style={{ overflowX: 'auto', marginBottom: '30px' }}>
+              <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '13px', textAlign: 'left' }}>
+                <thead>
+                  <tr style={{ backgroundColor: '#004b93', color: '#ffffff', textTransform: 'uppercase', fontSize: '11.5px', letterSpacing: '0.5px' }}>
+                    <th style={{ padding: '12px 14px', width: '6%' }}>Exam</th>
+                    <th style={{ padding: '12px 14px', width: '18%' }}>Date & Day</th>
+                    <th style={{ padding: '12px 14px', width: '18%' }}>Exam Slot</th>
+                    <th style={{ padding: '12px 14px', width: '10%' }}>Code</th>
+                    <th style={{ padding: '12px 14px', width: '22%' }}>Subject Title & Faculty</th>
+                    <th style={{ padding: '12px 14px', width: '14%' }}>Preparation Gap</th>
+                    <th style={{ padding: '12px 14px', width: '12%' }}>Venue / Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {finalExamScheduleData.map((item, index) => (
+                    <tr
+                      key={index}
+                      style={{
+                        backgroundColor: index % 2 === 0 ? '#ffffff' : '#f8fafc',
+                        borderBottom: '1px solid #e2e8f0'
+                      }}
+                    >
+                      <td style={{ padding: '14px', fontWeight: '800', color: '#004b93' }}>
+                        #{index + 1}
+                      </td>
+                      <td style={{ padding: '14px' }}>
+                        <div style={{ fontWeight: '800', color: '#0f172a' }}>{item.date}</div>
+                        <div style={{ fontSize: '11.5px', color: '#004b93', fontWeight: '700' }}>{item.dayOfWeek}</div>
+                      </td>
+                      <td style={{ padding: '14px' }}>
+                        <div style={{ fontWeight: '800', color: '#16a34a' }}>{item.timeSlot}</div>
+                        <div style={{ fontSize: '11px', color: '#64748b' }}>{item.duration}</div>
+                      </td>
+                      <td style={{ padding: '14px', fontWeight: '800', color: '#004b93' }}>
+                        <span style={{ backgroundColor: '#eff6ff', padding: '3px 8px', borderRadius: '4px', border: '1px solid #bfdbfe' }}>
+                          {item.code}
+                        </span>
+                      </td>
+                      <td style={{ padding: '14px' }}>
+                        <div style={{ fontWeight: '700', color: '#0f172a' }}>{item.subject}</div>
+                        <div style={{ fontSize: '11.5px', color: '#64748b' }}>Instructor: <strong>{item.instructor}</strong></div>
+                        <div style={{ fontSize: '11px', color: '#d97706', marginTop: '2px', fontWeight: '600' }}>
+                          Format: Part A Closed (25M) + Part B Open (45M)
+                        </div>
+                      </td>
+                      <td style={{ padding: '14px' }}>
+                        <span style={{
+                          backgroundColor: index === 3 ? '#fdf2f8' : index === 2 ? '#fef3c7' : '#f0fdf4',
+                          color: index === 3 ? '#9d174d' : index === 2 ? '#92400e' : '#15803d',
+                          border: `1px solid ${index === 3 ? '#fbcfe8' : index === 2 ? '#fde68a' : '#bbf7d0'}`,
+                          padding: '4px 10px',
+                          borderRadius: '12px',
+                          fontSize: '11px',
+                          fontWeight: '800',
+                          display: 'inline-block'
+                        }}>
+                          {item.gapAfter}
+                        </span>
+                      </td>
+                      <td style={{ padding: '14px' }}>
+                        <div style={{ fontSize: '12px', fontWeight: '700', color: '#004b93' }}>{item.room.split(' ')[0]} {item.room.split(' ')[1]} {item.room.split(' ')[2]}</div>
+                        <div style={{ fontSize: '11px', color: '#16a34a', fontWeight: '700', display: 'flex', alignItems: 'center', gap: '4px', marginTop: '2px' }}>
+                          <FaCheckCircle /> Admit Card Ready
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+
+            {/* Subject-Wise Comprehensive Syllabus Breakdown */}
+            <h4 style={{ fontSize: '16px', fontWeight: '800', color: '#0f172a', marginBottom: '15px' }}>
+              Subject Syllabus Coverage & Approved Open-Book References
+            </h4>
+
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '20px', marginBottom: '30px' }}>
+              {finalExamScheduleData.map((item, index) => (
+                <div
+                  key={index}
+                  style={{
+                    border: '1px solid #e2e8f0',
+                    borderRadius: '8px',
+                    padding: '20px',
+                    backgroundColor: '#ffffff',
+                    borderLeft: '5px solid #004b93',
+                    boxShadow: '0 1px 4px rgba(0,0,0,0.04)',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    justifyContent: 'space-between'
+                  }}
+                >
+                  <div>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '8px' }}>
+                      <span style={{ backgroundColor: '#004b93', color: '#ffffff', padding: '2px 8px', borderRadius: '4px', fontSize: '11px', fontWeight: '800' }}>
+                        {item.code}
+                      </span>
+                      <span style={{ fontSize: '11.5px', color: '#b91c1c', fontWeight: '800' }}>
+                        {item.date}
+                      </span>
+                    </div>
+
+                    <h5 style={{ fontSize: '15px', fontWeight: '700', color: '#0f172a', margin: '4px 0 6px' }}>
+                      {item.subject}
+                    </h5>
+
+                    <div style={{ fontSize: '12px', color: '#475569', marginBottom: '8px' }}>
+                      👨‍🏫 Instructor: <strong>{item.instructor}</strong> • ⏰ {item.timeSlot}
+                    </div>
+
+                    <div style={{ backgroundColor: '#f8fafc', padding: '10px 12px', borderRadius: '6px', border: '1px solid #e2e8f0', marginBottom: '10px' }}>
+                      <span style={{ fontSize: '10.5px', fontWeight: '800', color: '#004b93', textTransform: 'uppercase', display: 'block', marginBottom: '4px' }}>
+                        Comprehensive Syllabus:
+                      </span>
+                      <p style={{ fontSize: '12px', color: '#334155', margin: 0, lineHeight: '1.45' }}>
+                        {item.topics}
+                      </p>
+                    </div>
+
+                    <div style={{ fontSize: '11.5px', color: '#64748b' }}>
+                      <strong>Format:</strong> Part A (25M Closed Book) + Part B (45M Open Book)
+                    </div>
+                  </div>
+
+                  <div style={{ marginTop: '14px', paddingTop: '10px', borderTop: '1px solid #f1f5f9', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <span style={{ fontSize: '11px', color: '#16a34a', fontWeight: '700' }}>
+                      {item.gapAfter}
+                    </span>
+                    <button
+                      onClick={() => {
+                        setHallTicketType('final');
+                        setIsHallTicketOpen(true);
+                      }}
+                      style={{
+                        backgroundColor: '#eff6ff',
+                        border: '1px solid #bfdbfe',
+                        color: '#1d4ed8',
+                        padding: '4px 10px',
+                        borderRadius: '4px',
+                        fontSize: '11px',
+                        fontWeight: '700',
+                        cursor: 'pointer'
+                      }}
+                    >
+                      Hall Ticket →
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* Official Comprehensive Final Examination Regulations */}
+            <div style={{ backgroundColor: '#f8fafc', border: '1px solid #e2e8f0', borderRadius: '8px', padding: '20px 24px' }}>
+              <h4 style={{ fontSize: '15px', fontWeight: '800', color: '#004b93', margin: '0 0 12px', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                <FaInfoCircle /> Official BITS Pilani Comprehensive Examination Regulations (Hyderabad Campus)
+              </h4>
+              <ul style={{ margin: 0, paddingLeft: '20px', fontSize: '12.5px', color: '#334155', lineHeight: '1.6' }}>
+                <li><strong>Examination Structure:</strong> All 4 papers are conducted in 2 contiguous parts: <strong>Part A (Closed Book, 60 Minutes, 25 Marks)</strong> testing conceptual foundations, definitions, and short proofs, followed immediately by <strong>Part B (Open Book, 120 Minutes, 45 Marks)</strong> testing analytical synthesis and numerical problem solving.</li>
+                <li><strong>Approved Open-Book Materials:</strong> During Part B, candidates are permitted to consult prescribed physical textbooks, bound lecture note printouts, and handwritten spiral notebooks. No digital browsing, unapproved PDF viewers, or communication tools are allowed.</li>
+                <li><strong>Calculator Policy:</strong> Non-programmable scientific calculators (Casio fx-991ES / fx-82MS series or equivalent) are strictly permitted throughout both Part A and Part B.</li>
+                <li><strong>Proctoring Perimeter:</strong> Dual camera streaming (laptop web-camera + secondary 45-degree angle mobile camera) must remain active throughout the 180-minute window without interruption.</li>
+                <li><strong>Emergency Technical Helpline:</strong> In case of bandwidth fluctuations or system crash, report to the BITS Pilani Hyderabad Examination Control Cell: <strong>exams.wilp@hyderabad.bits-pilani.ac.in</strong> / Helpline: <strong>+91-40-6630-3999</strong>.</li>
+              </ul>
+            </div>
+
+          </div>
+
+        </div>
+      )}
 
       {/* 3. SUB-TAB CONTENT: (0) Official MST Exam Schedule (17–20 Nov 2026, 06:30 PM to 09:00 PM Daily) */}
       {activeSubTab === 'schedule' && (
@@ -2256,6 +2700,7 @@ export default function MstResultsSection() {
       <HallTicketModal
         isOpen={isHallTicketOpen}
         onClose={() => setIsHallTicketOpen(false)}
+        defaultExamType={hallTicketType}
         studentData={{
           name: rohanMstScorecard.studentName,
           roll: rohanMstScorecard.rollNumber

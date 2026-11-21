@@ -17,12 +17,15 @@ import {
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 
-export default function HallTicketModal({ isOpen, onClose, studentData }) {
+export default function HallTicketModal({ isOpen, onClose, studentData, defaultExamType = 'final' }) {
+  const [examType, setExamType] = useState(defaultExamType || 'final');
   const [isGenerating, setIsGenerating] = useState(false);
   const [downloadSuccess, setDownloadSuccess] = useState(false);
   const hallTicketRef = useRef(null);
 
   if (!isOpen) return null;
+
+  const isFinal = examType === 'final';
 
   const candidate = {
     name: studentData?.name || 'Rohan Kumar Chaudhry',
@@ -32,17 +35,66 @@ export default function HallTicketModal({ isOpen, onClose, studentData }) {
     sponsor: 'Larsen & Toubro Limited (L&T) Executive Program',
     campus: 'Hyderabad Campus',
     campusAddress: 'Jawahar Nagar, Kapra Mandal, Hyderabad - 500078, Telangana',
-    hallTicketNo: 'WILP-2026-MST-HYD-5831',
+    examTitle: isFinal ? 'COMPREHENSIVE FINAL EXAMINATION' : 'MID-SEMESTER TEST (MST)',
+    examSubtitle: isFinal
+      ? 'First Semester 2026-27 • 16 Dec to 26 Dec 2026 (06:00 PM – 09:00 PM IST) • BITS Pilani, Hyderabad Campus'
+      : 'First Semester 2026-27 • BITS Pilani, Hyderabad Campus • Online AI-Proctored Mode',
+    hallTicketNo: isFinal ? 'WILP-2026-COMPRE-HYD-5831' : 'WILP-2026-MST-HYD-5831',
     examCenter: 'BITS Pilani, Hyderabad Campus (Online Proctored Division)',
-    portalId: 'BITS-HYD-PROCTOR-ALPHA-5831',
-    dateOfIssue: '16 November 2026',
-    barcodeString: '*WILP-2026-MST-HYD-5831*',
-    verificationToken: 'BITS-HYD-AUTH-7892-2026ML005831-SECURE',
+    portalId: isFinal ? 'BITS-HYD-COMPRE-ALPHA-5831' : 'BITS-HYD-PROCTOR-ALPHA-5831',
+    dateOfIssue: isFinal ? '21 November 2026' : '16 November 2026',
+    barcodeString: isFinal ? '*WILP-2026-COMPRE-HYD-5831*' : '*WILP-2026-MST-HYD-5831*',
+    verificationToken: isFinal
+      ? 'BITS-HYD-COMPRE-9182-2026ML005831-SECURE'
+      : 'BITS-HYD-AUTH-7892-2026ML005831-SECURE',
     photoUrl: '/rohan-candidate-photo.jpg',
     logoUrl: '/bits-logo.webp'
   };
 
-  const schedule = [
+  const finalSchedule = [
+    {
+      day: 'Day 1: 16 Dec 2026 (Wednesday)',
+      time: '06:00 PM – 09:00 PM',
+      code: 'BITS F112',
+      name: 'Mathematical Foundations for Machine Learning',
+      duration: '180 Mins (3.0 Hrs)',
+      hall: 'Online Hall HYD-A1',
+      invigilator: 'Dr. A. Sen',
+      status: 'Admitted (Part A: Closed + Part B: Open)'
+    },
+    {
+      day: 'Day 2: 19 Dec 2026 (Saturday)',
+      time: '06:00 PM – 09:00 PM',
+      code: 'BITS F111',
+      name: 'Introduction to Statistical Methods',
+      duration: '180 Mins (3.0 Hrs)',
+      hall: 'Online Hall HYD-A2',
+      invigilator: 'Prof. R. Sharma',
+      status: 'Admitted (Part A: Closed + Part B: Open)'
+    },
+    {
+      day: 'Day 3: 22 Dec 2026 (Tuesday)',
+      time: '06:00 PM – 09:00 PM',
+      code: 'BITS F113',
+      name: 'Machine Learning',
+      duration: '180 Mins (3.0 Hrs)',
+      hall: 'Online Hall HYD-A1',
+      invigilator: 'Dr. K. Patel',
+      status: 'Admitted (Part A: Closed + Part B: Open)'
+    },
+    {
+      day: 'Day 4: 26 Dec 2026 (Saturday)',
+      time: '06:00 PM – 09:00 PM',
+      code: 'BITS F114',
+      name: 'Artificial and Computational Intelligence',
+      duration: '180 Mins (3.0 Hrs)',
+      hall: 'Online Hall HYD-A3',
+      invigilator: 'Prof. S. Das',
+      status: 'Admitted (Part A: Closed + Part B: Open)'
+    }
+  ];
+
+  const mstSchedule = [
     {
       day: 'Day 1: 17 Nov 2026 (Tuesday)',
       time: '06:30 PM – 09:00 PM',
@@ -85,6 +137,8 @@ export default function HallTicketModal({ isOpen, onClose, studentData }) {
     }
   ];
 
+  const schedule = isFinal ? finalSchedule : mstSchedule;
+
   const handleDownloadPdf = async () => {
     setIsGenerating(true);
     try {
@@ -123,7 +177,11 @@ export default function HallTicketModal({ isOpen, onClose, studentData }) {
       const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
 
       pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
-      pdf.save(`BITS_Hyderabad_HallTicket_${candidate.roll}_MST.pdf`);
+      pdf.save(
+        isFinal
+          ? `BITS_Hyderabad_Comprehensive_Final_HallTicket_${candidate.roll}.pdf`
+          : `BITS_Hyderabad_HallTicket_${candidate.roll}_MST.pdf`
+      );
 
       setDownloadSuccess(true);
       setTimeout(() => setDownloadSuccess(false), 3500);
@@ -198,6 +256,42 @@ export default function HallTicketModal({ isOpen, onClose, studentData }) {
                 Hall Ticket • {candidate.name} ({candidate.roll})
               </span>
             </div>
+          </div>
+
+          {/* Exam Type Toggle */}
+          <div style={{ display: 'flex', gap: '6px', backgroundColor: 'rgba(255,255,255,0.08)', padding: '3px', borderRadius: '6px' }}>
+            <button
+              onClick={() => setExamType('final')}
+              style={{
+                backgroundColor: isFinal ? '#fcb900' : 'transparent',
+                color: isFinal ? '#0f172a' : '#cbd5e1',
+                border: 'none',
+                padding: '5px 12px',
+                borderRadius: '4px',
+                fontWeight: '700',
+                fontSize: '11.5px',
+                cursor: 'pointer',
+                transition: 'all 0.2s'
+              }}
+            >
+              🎓 Final Exam (16–26 Dec)
+            </button>
+            <button
+              onClick={() => setExamType('mst')}
+              style={{
+                backgroundColor: !isFinal ? '#fcb900' : 'transparent',
+                color: !isFinal ? '#0f172a' : '#cbd5e1',
+                border: 'none',
+                padding: '5px 12px',
+                borderRadius: '4px',
+                fontWeight: '700',
+                fontSize: '11.5px',
+                cursor: 'pointer',
+                transition: 'all 0.2s'
+              }}
+            >
+              📋 MST (17–20 Nov)
+            </button>
           </div>
 
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap' }}>
@@ -446,10 +540,10 @@ export default function HallTicketModal({ isOpen, onClose, studentData }) {
               }}
             >
               <div style={{ fontSize: '13.5px', fontWeight: '900', letterSpacing: '1.2px', textTransform: 'uppercase' }}>
-                MID-SEMESTER TEST (MST) ADMIT CARD / HALL TICKET
+                {candidate.examTitle} ADMIT CARD / HALL TICKET
               </div>
               <div style={{ fontSize: '10.5px', color: '#fef08a', fontWeight: '700' }}>
-                First Semester 2026-27 • BITS Pilani, Hyderabad Campus • Online AI-Proctored Mode
+                {candidate.examSubtitle}
               </div>
             </div>
 
@@ -678,7 +772,10 @@ export default function HallTicketModal({ isOpen, onClose, studentData }) {
                   gap: '6px'
                 }}
               >
-                <FaCalendarAlt style={{ color: '#b91c1c' }} /> Mid-Semester Test (MST) Timetable & Paper Allocation
+                <FaCalendarAlt style={{ color: '#b91c1c' }} />{' '}
+                {isFinal
+                  ? 'Comprehensive Final Examination Timetable (16 Dec – 26 Dec 2026)'
+                  : 'Mid-Semester Test (MST) Timetable & Paper Allocation'}
               </div>
 
               <table
@@ -819,8 +916,8 @@ export default function HallTicketModal({ isOpen, onClose, studentData }) {
               <ol style={{ paddingLeft: '16px', margin: 0 }}>
                 <li>This Admit Card must be kept accessible during each examination session and presented to the online AI proctor alongside a valid photo identity card (Aadhaar Card, Passport, or L&T Employee ID Card).</li>
                 <li>The examination portal opens strictly 30 minutes prior to scheduled start (06:00 PM IST). Candidates must complete facial recognition and room 360-degree environmental scan before 06:25 PM IST.</li>
-                <li>Dual camera proctoring (primary webcam + secondary angle camera via mobile phone) must remain active throughout the 150-minute testing window.</li>
-                <li>No electronic communication devices, secondary monitor screens, or unauthorized materials are permitted in the testing perimeter.</li>
+                <li>Dual camera proctoring (primary webcam + secondary angle camera via mobile phone) must remain active throughout the {isFinal ? '180-minute (3.0-hour)' : '150-minute (2.5-hour)'} testing window.</li>
+                <li>{isFinal ? 'Comprehensive Final Examinations are evaluated in two parts: Part A (60 Mins) is strictly Closed Book. Part B (120 Mins) permits approved textbooks and printed/handwritten lecture notes.' : 'No electronic communication devices, secondary monitor screens, or unauthorized materials are permitted in the testing perimeter.'}</li>
                 <li>In case of technical or connectivity interruption during the exam, contact the Hyderabad Campus WILP Emergency Helpdesk immediately: <strong>exams.wilp@hyderabad.bits-pilani.ac.in</strong> | Emergency Phone: <strong>+91-40-6630-3999 / +91-40-6630-3831</strong>.</li>
               </ol>
             </div>
@@ -848,7 +945,7 @@ export default function HallTicketModal({ isOpen, onClose, studentData }) {
                 ||| ||||| ||| ||||||| |||| |||||| |||||||| ||||| |||
               </div>
               <div style={{ fontSize: '8.5px', color: '#64748b', letterSpacing: '1px', marginTop: '2px' }}>
-                {candidate.barcodeString} • BITS PILANI HYDERABAD CAMPUS • SYSTEM COMPATIBILITY: PASSED
+                {candidate.barcodeString} • BITS PILANI HYDERABAD CAMPUS • {isFinal ? 'COMPREHENSIVE FINAL EXAM 2026-27' : 'MST EXAM 2026-27'} • SYSTEM COMPATIBILITY: PASSED
               </div>
             </div>
 

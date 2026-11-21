@@ -141,6 +141,98 @@ export const mstScheduleData = [
   }
 ];
 
+// Official First Semester Comprehensive Final Examination Datesheet (16 Dec – 26 Dec 2026)
+export const finalExamScheduleData = [
+  {
+    dayNumber: 'Exam 1 of 4',
+    dayBadge: '16 Dec 2026 - Wednesday',
+    date: '16 December 2026',
+    dayOfWeek: 'Wednesday',
+    timeSlot: '06:00 PM – 09:00 PM IST',
+    duration: '3.0 Hours (180 Mins)',
+    code: 'BITS F112',
+    subject: 'Mathematical Foundations for Machine Learning',
+    instructor: 'Dr. A. Sen',
+    room: 'Online Exam Hall HYD-A1 (WILP Proctored Portal)',
+    examMode: 'Online Proctored (Webcam + 360° Room Monitor)',
+    format: 'Part A: Closed Book (60 Mins, 25 M) + Part B: Open Book (120 Mins, 45 M)',
+    badgeColor: '#1d4ed8',
+    status: 'Official Datesheet Confirmed • Admit Card Active',
+    gapAfter: '2 Days Revision Gap (17 & 18 Dec 2026)',
+    gapDaysCount: 2,
+    nextExamDate: '19 Dec 2026',
+    maxMarks: 70,
+    weightage: '50% (Comprehensive Final)',
+    topics: 'Complete Modules 1-5: Linear Algebra, Vector Spaces, Orthogonal Projections, Spectral Theorem, SVD, Multivariate Calculus, Hessian, Convex Optimization & KKT Conditions.'
+  },
+  {
+    dayNumber: 'Exam 2 of 4',
+    dayBadge: '19 Dec 2026 - Saturday',
+    date: '19 December 2026',
+    dayOfWeek: 'Saturday',
+    timeSlot: '06:00 PM – 09:00 PM IST',
+    duration: '3.0 Hours (180 Mins)',
+    code: 'BITS F111',
+    subject: 'Introduction to Statistical Methods',
+    instructor: 'Prof. R. Sharma',
+    room: 'Online Exam Hall HYD-A2 (WILP Proctored Portal)',
+    examMode: 'Online Proctored (Webcam + 360° Room Monitor)',
+    format: 'Part A: Closed Book (60 Mins, 25 M) + Part B: Open Book (120 Mins, 45 M)',
+    badgeColor: '#1d4ed8',
+    status: 'Official Datesheet Confirmed • Admit Card Active',
+    gapAfter: '2 Days Revision Gap (20 & 21 Dec 2026, includes Sunday)',
+    gapDaysCount: 2,
+    nextExamDate: '22 Dec 2026',
+    maxMarks: 70,
+    weightage: '50% (Comprehensive Final)',
+    topics: 'Complete Modules 1-5: Probability Distributions (Normal, Binomial, Poisson), Central Limit Theorem, Maximum Likelihood Estimation, Hypothesis Testing (Z/t/Chi-sq/F), One & Two-Way ANOVA, Multiple Linear Regression.'
+  },
+  {
+    dayNumber: 'Exam 3 of 4',
+    dayBadge: '22 Dec 2026 - Tuesday',
+    date: '22 December 2026',
+    dayOfWeek: 'Tuesday',
+    timeSlot: '06:00 PM – 09:00 PM IST',
+    duration: '3.0 Hours (180 Mins)',
+    code: 'BITS F113',
+    subject: 'Machine Learning',
+    instructor: 'Dr. K. Patel',
+    room: 'Online Exam Hall HYD-A1 (WILP Proctored Portal)',
+    examMode: 'Online Proctored (Webcam + 360° Room Monitor)',
+    format: 'Part A: Closed Book (60 Mins, 25 M) + Part B: Open Book (120 Mins, 45 M)',
+    badgeColor: '#1d4ed8',
+    status: 'Official Datesheet Confirmed • Admit Card Active',
+    gapAfter: '3 Days Revision Gap (23, 24 & 25 Dec - Christmas Gazetted Holiday)',
+    gapDaysCount: 3,
+    nextExamDate: '26 Dec 2026',
+    maxMarks: 70,
+    weightage: '50% (Comprehensive Final)',
+    topics: 'Complete Modules 1-5: Regularized Linear/Logistic Models, Kernel SVMs, Decision Trees, Ensembles (Random Forest, Gradient Boosting, XGBoost), Unsupervised K-Means, GMMs, PCA, t-SNE & Bias-Variance Decomposition.'
+  },
+  {
+    dayNumber: 'Exam 4 of 4',
+    dayBadge: '26 Dec 2026 - Saturday',
+    date: '26 December 2026',
+    dayOfWeek: 'Saturday',
+    timeSlot: '06:00 PM – 09:00 PM IST',
+    duration: '3.0 Hours (180 Mins)',
+    code: 'BITS F114',
+    subject: 'Artificial and Computational Intelligence',
+    instructor: 'Prof. S. Das',
+    room: 'Online Exam Hall HYD-A3 (WILP Proctored Portal)',
+    examMode: 'Online Proctored (Webcam + 360° Room Monitor)',
+    format: 'Part A: Closed Book (60 Mins, 25 M) + Part B: Open Book (120 Mins, 45 M)',
+    badgeColor: '#1d4ed8',
+    status: 'Official Datesheet Confirmed • Final Exam Concludes',
+    gapAfter: 'Comprehensive Final Examinations Concluded!',
+    gapDaysCount: 0,
+    nextExamDate: 'Semester Concluded',
+    maxMarks: 70,
+    weightage: '50% (Comprehensive Final)',
+    topics: 'Complete Modules 1-5: Heuristic Search (A*, IDA*, RBFS), Game Playing (Alpha-Beta Pruning, Expectiminimax), Propositional & First-Order Resolution Logic, Automated Planning (STRIPS), Bayesian Networks & MDPs.'
+  }
+];
+
 // Rohan Kumar Chaudhry's Verified Performance
 export const rohanMstScorecard = {
   studentName: 'Rohan Kumar Chaudhry',
