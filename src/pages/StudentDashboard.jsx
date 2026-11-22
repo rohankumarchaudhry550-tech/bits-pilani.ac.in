@@ -22,7 +22,8 @@ import {
   FaStar,
   FaRocket,
   FaFlask,
-  FaIdCard
+  FaIdCard,
+  FaUniversity
 } from 'react-icons/fa';
 import NotesSection from '../components/NotesSection';
 import MstResultsSection from '../components/MstResultsSection';
@@ -439,7 +440,7 @@ export default function StudentDashboard() {
                       Official Mid-Semester Test (MST) Schedule
                     </h3>
                     <span style={{ fontSize: '13px', color: 'var(--text-gray)' }}>
-                      First Semester 2026-27 • Online Proctored Examination
+                      First Semester 2026-27 • Offline In-Person Examination (Hyderabad Campus)
                     </span>
                   </div>
                 </div>
@@ -478,7 +479,7 @@ export default function StudentDashboard() {
                   <FaClock style={{ color: '#16a34a' }} /> <strong>Daily Slot:</strong> 06:30 PM – 09:00 PM (2.5 Hours / 150 Mins)
                 </div>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                  <FaLaptopCode style={{ color: '#2563eb' }} /> <strong>Proctoring:</strong> WILP Secure AI Proctored Portal
+                  <FaUniversity style={{ color: '#004b93' }} /> <strong>Mode & Venue:</strong> Offline Physical Exam (Academic Block / LTC, Hyderabad Campus)
                 </div>
                 <div
                   onClick={() => setIsHallTicketOpen(true)}
@@ -562,9 +563,9 @@ export default function StudentDashboard() {
                           boxShadow: '0 2px 4px rgba(185, 28, 28, 0.25)',
                           transition: 'background-color 0.2s'
                         }}
-                        onClick={() => alert(`Launching Examination Portal for ${exam.code}: ${exam.subject}.\nDate: ${exam.date}\nSlot: ${exam.timeSlot}\nDuration: ${exam.duration}\nProctor: Verified.`)}
+                        onClick={() => alert(`Offline Physical Exam Venue & Seating Details:\n\nSubject: [${exam.code}] ${exam.subject}\nDate: ${exam.date}\nSlot: ${exam.timeSlot}\nVenue: ${exam.room}\nAllocated Desk: Desk #42 (Row B1)\nReporting Time: 05:30 PM (30 mins before exam start)\nMode: Offline Pen & Paper (Physical Answer Booklet & OMR Sheet)\nCenter: BITS Pilani Hyderabad Campus, Telangana`)}
                       >
-                        <FaLaptopCode /> Enter Exam Portal (Ready)
+                        <FaUniversity /> Offline Hall & Seating Info
                       </button>
                     </div>
                   </div>

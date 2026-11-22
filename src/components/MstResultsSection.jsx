@@ -753,7 +753,7 @@ export default function MstResultsSection({ initialSubTab = 'final_datesheet' })
                         </span>
                       </td>
                       <td style={{ padding: '14px' }}>
-                        <div style={{ fontSize: '12px', fontWeight: '700', color: '#004b93' }}>{item.room.split(' ')[0]} {item.room.split(' ')[1]} {item.room.split(' ')[2]}</div>
+                        <div style={{ fontSize: '12px', fontWeight: '700', color: '#004b93' }}>📍 {item.room.split('(')[0].trim()}</div>
                         <div style={{ fontSize: '11px', color: '#16a34a', fontWeight: '700', display: 'flex', alignItems: 'center', gap: '4px', marginTop: '2px' }}>
                           <FaCheckCircle /> Admit Card Ready
                         </div>
@@ -853,8 +853,8 @@ export default function MstResultsSection({ initialSubTab = 'final_datesheet' })
                 <li><strong>Examination Structure:</strong> All 4 papers are conducted in 2 contiguous parts: <strong>Part A (Closed Book, 60 Minutes, 25 Marks)</strong> testing conceptual foundations, definitions, and short proofs, followed immediately by <strong>Part B (Open Book, 120 Minutes, 45 Marks)</strong> testing analytical synthesis and numerical problem solving.</li>
                 <li><strong>Approved Open-Book Materials:</strong> During Part B, candidates are permitted to consult prescribed physical textbooks, bound lecture note printouts, and handwritten spiral notebooks. No digital browsing, unapproved PDF viewers, or communication tools are allowed.</li>
                 <li><strong>Calculator Policy:</strong> Non-programmable scientific calculators (Casio fx-991ES / fx-82MS series or equivalent) are strictly permitted throughout both Part A and Part B.</li>
-                <li><strong>Proctoring Perimeter:</strong> Dual camera streaming (laptop web-camera + secondary 45-degree angle mobile camera) must remain active throughout the 180-minute window without interruption.</li>
-                <li><strong>Emergency Technical Helpline:</strong> In case of bandwidth fluctuations or system crash, report to the BITS Pilani Hyderabad Examination Control Cell: <strong>exams.wilp@hyderabad.bits-pilani.ac.in</strong> / Helpline: <strong>+91-40-6630-3999</strong>.</li>
+                <li><strong>In-Person Offline Invigilation:</strong> Candidates must report to the physical exam hall (Academic Block / Lecture Theatre Complex, BITS Pilani Hyderabad Campus) with their printed Admit Card and original photo identity card. Desks and physical answer booklets are pre-allocated.</li>
+                <li><strong>Examination Control Helpline:</strong> For seating queries or physical access assistance on campus, contact the BITS Pilani Hyderabad Examination Control Cell: <strong>exams.wilp@hyderabad.bits-pilani.ac.in</strong> / Helpline: <strong>+91-40-6630-3999</strong>.</li>
               </ul>
             </div>
 
@@ -979,9 +979,9 @@ export default function MstResultsSection({ initialSubTab = 'final_datesheet' })
                   <FaIdCard /> Download Hall Ticket (PDF)
                 </button>
                 <button
-                  onClick={() => alert(`Launching WILP Proctored Examination Portal for Candidate: ${rohanMstScorecard.studentName} (Roll: ${rohanMstScorecard.rollNumber}).\nHall Ticket: WILP-2026-MST-5831.\nSystem Check: Microphone, Web-Camera, and Secure Browser Verified.`)}
+                  onClick={() => alert(`Offline Examination Center: BITS Pilani, Hyderabad Campus.\nVenue: Academic Block / Lecture Theatre Complex (LTC).\nCandidate: ${rohanMstScorecard.studentName} (Roll: ${rohanMstScorecard.rollNumber}).\nAssigned Desk: Desk #42 (Row B1).\nHall Ticket: WILP-2026-MST-HYD-5831.\nReporting Time: 30 minutes before exam start (06:00 PM IST).\nPlease bring printed Admit Card and original Photo ID.`)}
                   style={{
-                    backgroundColor: '#b91c1c',
+                    backgroundColor: '#004b93',
                     color: '#ffffff',
                     border: 'none',
                     padding: '9px 18px',
@@ -992,10 +992,10 @@ export default function MstResultsSection({ initialSubTab = 'final_datesheet' })
                     display: 'flex',
                     alignItems: 'center',
                     gap: '7px',
-                    boxShadow: '0 2px 5px rgba(185, 28, 28, 0.3)'
+                    boxShadow: '0 2px 5px rgba(0, 75, 147, 0.3)'
                   }}
                 >
-                  <FaLaptopCode /> Enter Proctored Exam Portal
+                  <FaUniversity /> Offline Hall & Seating Info
                 </button>
               </div>
             </div>
@@ -1016,7 +1016,7 @@ export default function MstResultsSection({ initialSubTab = 'final_datesheet' })
                     <th style={{ padding: '12px 14px' }}>Course Instructor</th>
                     <th style={{ padding: '12px 14px' }}>Duration</th>
                     <th style={{ padding: '12px 14px' }}>Max Marks</th>
-                    <th style={{ padding: '12px 14px', borderRadius: '0 6px 0 0' }}>Portal Hall</th>
+                    <th style={{ padding: '12px 14px', borderRadius: '0 6px 0 0' }}>Offline Exam Hall</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -1060,7 +1060,7 @@ export default function MstResultsSection({ initialSubTab = 'final_datesheet' })
                       </td>
                       <td style={{ padding: '14px', color: '#475569' }}>
                         <span style={{ backgroundColor: '#eff6ff', color: '#1e40af', padding: '3px 8px', borderRadius: '4px', fontSize: '11.5px', fontWeight: '600', border: '1px solid #bfdbfe' }}>
-                          {item.room.split(' ')[0]} {item.room.split(' ')[1]} {item.room.split(' ')[2]} {item.room.split(' ')[3]}
+                          📍 {item.room.split('(')[0].trim()}
                         </span>
                       </td>
                     </tr>
@@ -1131,7 +1131,7 @@ export default function MstResultsSection({ initialSubTab = 'final_datesheet' })
                       ⏰ {item.timeSlot}
                     </span>
                     <button
-                      onClick={() => alert(`Launching Proctored Exam Portal for ${item.code}: ${item.subject}.\nDate: ${item.date}\nTime: ${item.timeSlot}\nDuration: ${item.duration}.\nProctor Session: Ready.`)}
+                      onClick={() => alert(`Offline Physical Exam: ${item.code} - ${item.subject}.\nDate: ${item.date}\nTime: ${item.timeSlot}\nDuration: ${item.duration}.\nVenue: ${item.room}.\nAssigned Desk: Desk #42 (Row B1).\nCenter: BITS Pilani, Hyderabad Campus.\nPlease report 30 minutes before exam commencement with printed Admit Card.`)}
                       style={{
                         backgroundColor: '#0f172a',
                         color: '#ffffff',
@@ -1146,7 +1146,7 @@ export default function MstResultsSection({ initialSubTab = 'final_datesheet' })
                         gap: '6px'
                       }}
                     >
-                      <FaLaptopCode /> Launch Portal
+                      <FaUniversity /> Hall Details
                     </button>
                   </div>
                 </div>
@@ -1177,7 +1177,7 @@ export default function MstResultsSection({ initialSubTab = 'final_datesheet' })
                   Program: {rohanMstScorecard.program} • Sponsor: {rohanMstScorecard.sponsor}
                 </div>
                 <div style={{ fontSize: '11.5px', color: '#16a34a', fontWeight: '700', marginTop: '4px', display: 'flex', alignItems: 'center', gap: '6px' }}>
-                  <FaCheckCircle /> Biometric & Camera Compatibility: PASS • AI Dual Proctoring: VERIFIED • Hall Ticket #WILP-2026-MST-HYD-5831 (Hyderabad Campus)
+                  <FaCheckCircle /> Physical Hall Seating: ALLOCATED (Desk #42) • In-Person Verification: READY • Hall Ticket #WILP-2026-MST-HYD-5831 (Hyderabad Campus)
                 </div>
               </div>
 

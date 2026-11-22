@@ -2811,9 +2811,9 @@ print("Resolvent clause:", resolvent) # {'A', 'C'}`,
     detailedNotes: `
 ### Today's Intensive Workshop Summary:
 - Solved 12 model examination problems covering all 4 modules of BITS F112 and BITS F111.
-- Walked through proctoring requirements, mathematical notation formatting in the exam editor, and time management strategies for the 2-hour slots.
+- Walked through offline exam hall protocols, mathematical notation formatting in physical answer booklets, and time management strategies for the 2.5-hour slots.
 - Addressed student doubts on SVD singular vector signs, KKT complementary slackness, and ANOVA degree of freedom calculations.
-- Verified that all student admit cards and webcam environments are ready for tomorrow's 11:00 AM kickoff!
+- Verified that all student admit cards, physical desk allocations at Hyderabad Campus LTC, and stationary are ready for tomorrow's kickoff!
     `,
         objectives: [
       "Comprehend core theoretical concepts, definitions, and operational mechanisms.",

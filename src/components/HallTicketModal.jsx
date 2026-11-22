@@ -37,11 +37,11 @@ export default function HallTicketModal({ isOpen, onClose, studentData, defaultE
     campusAddress: 'Jawahar Nagar, Kapra Mandal, Hyderabad - 500078, Telangana',
     examTitle: isFinal ? 'COMPREHENSIVE FINAL EXAMINATION' : 'MID-SEMESTER TEST (MST)',
     examSubtitle: isFinal
-      ? 'First Semester 2026-27 • 16 Dec to 26 Dec 2026 (06:00 PM – 09:00 PM IST) • BITS Pilani, Hyderabad Campus'
-      : 'First Semester 2026-27 • BITS Pilani, Hyderabad Campus • Online AI-Proctored Mode',
+      ? 'First Semester 2026-27 • 16 Dec to 26 Dec 2026 (06:00 PM – 09:00 PM IST) • BITS Pilani, Hyderabad Campus (Offline)'
+      : 'First Semester 2026-27 • BITS Pilani, Hyderabad Campus • Offline In-Person Examination Mode',
     hallTicketNo: isFinal ? 'WILP-2026-COMPRE-HYD-5831' : 'WILP-2026-MST-HYD-5831',
-    examCenter: 'BITS Pilani, Hyderabad Campus (Online Proctored Division)',
-    portalId: isFinal ? 'BITS-HYD-COMPRE-ALPHA-5831' : 'BITS-HYD-PROCTOR-ALPHA-5831',
+    examCenter: 'BITS Pilani, Hyderabad Campus (Physical Examination Center, Academic Block, Hyderabad - 500078)',
+    portalId: 'Desk #42 (Row B1, LTC)',
     dateOfIssue: isFinal ? '21 November 2026' : '16 November 2026',
     barcodeString: isFinal ? '*WILP-2026-COMPRE-HYD-5831*' : '*WILP-2026-MST-HYD-5831*',
     verificationToken: isFinal
@@ -58,7 +58,7 @@ export default function HallTicketModal({ isOpen, onClose, studentData, defaultE
       code: 'BITS F112',
       name: 'Mathematical Foundations for Machine Learning',
       duration: '180 Mins (3.0 Hrs)',
-      hall: 'Online Hall HYD-A1',
+      hall: 'Offline Hall LTC-101 (Desk #42)',
       invigilator: 'Dr. A. Sen',
       status: 'Admitted (Part A: Closed + Part B: Open)'
     },
@@ -68,7 +68,7 @@ export default function HallTicketModal({ isOpen, onClose, studentData, defaultE
       code: 'BITS F111',
       name: 'Introduction to Statistical Methods',
       duration: '180 Mins (3.0 Hrs)',
-      hall: 'Online Hall HYD-A2',
+      hall: 'Offline Hall LTC-102 (Desk #42)',
       invigilator: 'Prof. R. Sharma',
       status: 'Admitted (Part A: Closed + Part B: Open)'
     },
@@ -78,7 +78,7 @@ export default function HallTicketModal({ isOpen, onClose, studentData, defaultE
       code: 'BITS F113',
       name: 'Machine Learning',
       duration: '180 Mins (3.0 Hrs)',
-      hall: 'Online Hall HYD-A1',
+      hall: 'Offline Hall LTC-101 (Desk #42)',
       invigilator: 'Dr. K. Patel',
       status: 'Admitted (Part A: Closed + Part B: Open)'
     },
@@ -88,7 +88,7 @@ export default function HallTicketModal({ isOpen, onClose, studentData, defaultE
       code: 'BITS F114',
       name: 'Artificial and Computational Intelligence',
       duration: '180 Mins (3.0 Hrs)',
-      hall: 'Online Hall HYD-A3',
+      hall: 'Offline Hall LTC-103 (Desk #42)',
       invigilator: 'Prof. S. Das',
       status: 'Admitted (Part A: Closed + Part B: Open)'
     }
@@ -101,7 +101,7 @@ export default function HallTicketModal({ isOpen, onClose, studentData, defaultE
       code: 'BITS F112',
       name: 'Mathematical Foundations for Machine Learning',
       duration: '150 Mins',
-      hall: 'Online Hall HYD-1',
+      hall: 'Offline Hall LTC-101 (Desk #42)',
       invigilator: 'Dr. A. Sen',
       status: 'Admitted'
     },
@@ -111,7 +111,7 @@ export default function HallTicketModal({ isOpen, onClose, studentData, defaultE
       code: 'BITS F111',
       name: 'Introduction to Statistical Methods',
       duration: '150 Mins',
-      hall: 'Online Hall HYD-2',
+      hall: 'Offline Hall LTC-102 (Desk #42)',
       invigilator: 'Prof. R. Sharma',
       status: 'Admitted'
     },
@@ -121,7 +121,7 @@ export default function HallTicketModal({ isOpen, onClose, studentData, defaultE
       code: 'BITS F113',
       name: 'Machine Learning',
       duration: '150 Mins',
-      hall: 'Online Hall HYD-1',
+      hall: 'Offline Hall LTC-101 (Desk #42)',
       invigilator: 'Dr. K. Patel',
       status: 'Admitted'
     },
@@ -131,7 +131,7 @@ export default function HallTicketModal({ isOpen, onClose, studentData, defaultE
       code: 'BITS F114',
       name: 'Artificial and Computational Intelligence',
       duration: '150 Mins',
-      hall: 'Online Hall HYD-3',
+      hall: 'Offline Hall LTC-103 (Desk #42)',
       invigilator: 'Prof. S. Das',
       status: 'Admitted'
     }
@@ -660,9 +660,9 @@ export default function HallTicketModal({ isOpen, onClose, studentData, defaultE
                   </tr>
                   <tr>
                     <td style={{ padding: '6px 8px', backgroundColor: '#f8fafc', fontWeight: '700', color: '#334155' }}>
-                      Portal Session ID:
+                      Assigned Hall & Desk:
                     </td>
-                    <td style={{ padding: '6px 8px', fontFamily: 'monospace', color: '#2563eb', fontWeight: '700' }}>
+                    <td style={{ padding: '6px 8px', fontFamily: 'monospace', color: '#16a34a', fontWeight: '800' }}>
                       {candidate.portalId}
                     </td>
                   </tr>
@@ -792,9 +792,9 @@ export default function HallTicketModal({ isOpen, onClose, studentData, defaultE
                     <th style={{ padding: '6px 8px', width: '22%' }}>Date & Day</th>
                     <th style={{ padding: '6px 8px', width: '18%' }}>Exam Slot</th>
                     <th style={{ padding: '6px 8px', width: '12%' }}>Course</th>
-                    <th style={{ padding: '6px 8px', width: '28%' }}>Course Title</th>
+                    <th style={{ padding: '6px 8px', width: '24%' }}>Course Title</th>
                     <th style={{ padding: '6px 8px', width: '10%' }}>Duration</th>
-                    <th style={{ padding: '6px 8px', width: '10%' }}>Proctor</th>
+                    <th style={{ padding: '6px 8px', width: '14%' }}>Offline Exam Hall</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -914,11 +914,12 @@ export default function HallTicketModal({ isOpen, onClose, studentData, defaultE
                 IMPORTANT INSTRUCTIONS FOR THE CANDIDATE • HYDERABAD CAMPUS
               </div>
               <ol style={{ paddingLeft: '16px', margin: 0 }}>
-                <li>This Admit Card must be kept accessible during each examination session and presented to the online AI proctor alongside a valid photo identity card (Aadhaar Card, Passport, or L&T Employee ID Card).</li>
-                <li>The examination portal opens strictly 30 minutes prior to scheduled start (06:00 PM IST). Candidates must complete facial recognition and room 360-degree environmental scan before 06:25 PM IST.</li>
-                <li>Dual camera proctoring (primary webcam + secondary angle camera via mobile phone) must remain active throughout the {isFinal ? '180-minute (3.0-hour)' : '150-minute (2.5-hour)'} testing window.</li>
-                <li>{isFinal ? 'Comprehensive Final Examinations are evaluated in two parts: Part A (60 Mins) is strictly Closed Book. Part B (120 Mins) permits approved textbooks and printed/handwritten lecture notes.' : 'No electronic communication devices, secondary monitor screens, or unauthorized materials are permitted in the testing perimeter.'}</li>
-                <li>In case of technical or connectivity interruption during the exam, contact the Hyderabad Campus WILP Emergency Helpdesk immediately: <strong>exams.wilp@hyderabad.bits-pilani.ac.in</strong> | Emergency Phone: <strong>+91-40-6630-3999 / +91-40-6630-3831</strong>.</li>
+                <li>This physical Admit Card must be presented at the examination hall entrance alongside a valid photo identity card (Aadhaar Card, Passport, or L&T Employee ID Card).</li>
+                <li>Candidates must report to the designated Offline Examination Hall (Academic Block / Lecture Theatre Complex, BITS Pilani Hyderabad Campus) strictly 30 minutes prior to scheduled start (by 05:30 PM IST). Entry closes 10 minutes before commencement.</li>
+                <li>Physical answer booklets and OMR sheets will be supplied in the hall. Candidates must bring their own blue/black ballpoint pens, pencils, and erasers.</li>
+                <li>{isFinal ? 'Comprehensive Final Examinations are conducted offline in two parts: Part A (60 Mins) is strictly Closed Book. Part B (120 Mins) permits approved physical textbooks and bound printed/handwritten lecture notes.' : 'All offline examinations are conducted under strict institutional invigilation in designated lecture halls.'}</li>
+                <li>All mobile phones, smartwatches, and communication devices must be deposited at the hall entrance. Non-programmable scientific calculators (Casio fx-991 series or equivalent) are permitted.</li>
+                <li>In-person examination venue: Academic Block / Lecture Theatre Complex, BITS Pilani Hyderabad Campus, Jawahar Nagar, Kapra Mandal, Hyderabad - 500078. Emergency Contact: <strong>+91-40-6630-3999 / exams.wilp@hyderabad.bits-pilani.ac.in</strong>.</li>
               </ol>
             </div>
 
