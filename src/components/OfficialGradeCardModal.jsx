@@ -820,18 +820,15 @@ export default function OfficialGradeCardModal({ isOpen, onClose, initialResultT
               <div style={{ textAlign: 'center' }}>
                 <img
                   src={bitsOfficialStampBase64}
-                  alt="BITS Pilani Official Examination Division Seal"
+                  alt="BITS Pilani Seal"
                   style={{
-                    width: '82px',
-                    height: '82px',
+                    width: '86px',
+                    height: '86px',
                     objectFit: 'contain',
                     transform: 'rotate(-3deg)',
                     filter: 'drop-shadow(0 1px 3px rgba(0, 75, 147, 0.25))'
                   }}
                 />
-                <div style={{ fontSize: '7.5px', fontWeight: '800', color: '#004b93', letterSpacing: '0.5px', marginTop: '2px' }}>
-                  OFFICIAL INSTITUTIONAL SEAL
-                </div>
               </div>
 
               {/* Controller of Examinations Signature Block */}

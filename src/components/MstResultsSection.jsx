@@ -2101,7 +2101,7 @@ export default function MstResultsSection({ initialSubTab = 'mst2_result' }) {
                   }}
                 />
                 <div style={{ textAlign: 'left' }}>
-                  <span style={{ fontSize: '10.5px', color: '#64748b', fontWeight: '700', textTransform: 'uppercase', display: 'block' }}>Official Examination Seal</span>
+                  <span style={{ fontSize: '10.5px', color: '#64748b', fontWeight: '700', textTransform: 'uppercase', display: 'block' }}>Institutional Verification</span>
                   <div style={{ fontSize: '13px', fontWeight: '800', color: '#004b93', display: 'flex', alignItems: 'center', gap: '5px' }}>
                     <FaCheckCircle style={{ color: '#16a34a' }} /> Digitally Certified
                   </div>

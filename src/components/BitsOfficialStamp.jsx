@@ -7,7 +7,7 @@ export default function BitsOfficialStamp({
   opacity = 0.94,
   style = {},
   className = '',
-  title = 'BITS Pilani Hyderabad Campus Official Institutional Seal'
+  title = 'BITS Pilani Hyderabad Campus Seal'
 }) {
   return (
     <div
@@ -28,7 +28,7 @@ export default function BitsOfficialStamp({
     >
       <img
         src={bitsOfficialStampBase64}
-        alt="BITS Pilani Official Examination Division Seal"
+        alt="BITS Pilani Seal"
         width={size}
         height={size}
         style={{

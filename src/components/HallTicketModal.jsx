@@ -861,18 +861,15 @@ export default function HallTicketModal({ isOpen, onClose, studentData, defaultE
               >
                 <img
                   src={bitsOfficialStampBase64}
-                  alt="BITS Pilani Official Examination Division Seal"
+                  alt="BITS Pilani Seal"
                   style={{
-                    width: '88px',
-                    height: '88px',
+                    width: '92px',
+                    height: '92px',
                     objectFit: 'contain',
                     transform: 'rotate(-3deg)',
                     filter: 'drop-shadow(0 1px 3px rgba(0, 75, 147, 0.25))'
                   }}
                 />
-                <span style={{ fontSize: '7.5px', color: '#004b93', fontWeight: '800', marginTop: '2px', letterSpacing: '0.4px' }}>
-                  OFFICIAL INSTITUTIONAL SEAL
-                </span>
               </div>
 
               {/* Controller / In-Charge Examinations Signature */}
