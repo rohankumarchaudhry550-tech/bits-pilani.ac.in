@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import {
   FaTimes,
   FaDownload,
@@ -21,12 +21,19 @@ import {
   rohanAssignmentScorecard,
   assignmentResultsData
 } from '../data/mstResultsData';
+import { bitsLogoBase64 } from '../data/bitsLogoBase64';
 
 export default function OfficialGradeCardModal({ isOpen, onClose, initialResultType = 'mst1' }) {
   const [resultType, setResultType] = useState(initialResultType || 'mst1'); // 'mst1' | 'mst2' | 'assignments'
   const [isGenerating, setIsGenerating] = useState(false);
   const [downloadSuccess, setDownloadSuccess] = useState(false);
   const gradeCardRef = useRef(null);
+
+  useEffect(() => {
+    if (initialResultType) {
+      setResultType(initialResultType);
+    }
+  }, [initialResultType, isOpen]);
 
   if (!isOpen) return null;
 
@@ -58,51 +65,136 @@ export default function OfficialGradeCardModal({ isOpen, onClose, initialResultT
     ? '14 November 2026'
     : '15 November 2026';
 
+  const doCaptureAndDownload = async (typeToSave) => {
+    const element = gradeCardRef.current;
+    if (!element) {
+      throw new Error('Grade sheet element not found in DOM');
+    }
+
+    // Small delay to ensure styles and canvas are ready
+    await new Promise((resolve) => setTimeout(resolve, 150));
+
+    const canvas = await html2canvas(element, {
+      scale: 2,
+      useCORS: true,
+      allowTaint: false,
+      logging: false,
+      backgroundColor: '#ffffff',
+      windowWidth: 1200,
+      scrollX: 0,
+      scrollY: 0,
+      onclone: (clonedDoc) => {
+        const clonedElement = clonedDoc.getElementById('bits-official-grade-sheet');
+        if (clonedElement) {
+          clonedElement.style.width = '800px';
+          clonedElement.style.minWidth = '800px';
+          clonedElement.style.maxWidth = '800px';
+          clonedElement.style.padding = '24px 28px';
+          clonedElement.style.margin = '0 auto';
+          clonedElement.style.boxSizing = 'border-box';
+          clonedElement.style.boxShadow = 'none';
+        }
+      }
+    });
+
+    const imgData = canvas.toDataURL('image/png', 1.0);
+    const pdf = new jsPDF({
+      orientation: 'portrait',
+      unit: 'mm',
+      format: 'a4'
+    });
+
+    const pageWidth = pdf.internal.pageSize.getWidth(); // 210mm
+    const pageHeight = pdf.internal.pageSize.getHeight(); // 297mm
+    const margin = 6; // 6mm margin
+    const printableWidth = pageWidth - (margin * 2); // 198mm
+    const printableHeight = (canvas.height * printableWidth) / canvas.width;
+
+    if (printableHeight <= (pageHeight - margin * 2)) {
+      // Fits perfectly on single page
+      const yOffset = margin + Math.max(0, (pageHeight - margin * 2 - printableHeight) / 2);
+      pdf.addImage(imgData, 'PNG', margin, yOffset, printableWidth, printableHeight);
+    } else if (printableHeight <= (pageHeight * 1.15)) {
+      // Fits with slight scaling to keep entire official transcript on 1 page
+      const scaledHeight = pageHeight - (margin * 2);
+      const scaledWidth = (canvas.width * scaledHeight) / canvas.height;
+      const xOffset = margin + (printableWidth - scaledWidth) / 2;
+      pdf.addImage(imgData, 'PNG', xOffset, margin, scaledWidth, scaledHeight);
+    } else {
+      // Multi-page handling
+      let heightLeft = printableHeight;
+      let position = margin;
+
+      pdf.addImage(imgData, 'PNG', margin, position, printableWidth, printableHeight);
+      heightLeft -= (pageHeight - margin * 2);
+
+      while (heightLeft > 0) {
+        position = heightLeft - printableHeight + margin;
+        pdf.addPage();
+        pdf.addImage(imgData, 'PNG', margin, position, printableWidth, printableHeight);
+        heightLeft -= (pageHeight - margin * 2);
+      }
+    }
+
+    const currentScorecard = typeToSave === 'mst2'
+      ? rohanMst2Scorecard
+      : typeToSave === 'assignments'
+      ? rohanAssignmentScorecard
+      : rohanMstScorecard;
+
+    const fileName = `BITS_Pilani_Hyderabad_Official_Grade_Sheet_${currentScorecard.rollNumber}_${typeToSave.toUpperCase()}.pdf`;
+
+    try {
+      const blob = pdf.output('blob');
+      const blobUrl = URL.createObjectURL(blob);
+      const downloadLink = document.createElement('a');
+      downloadLink.href = blobUrl;
+      downloadLink.download = fileName;
+      document.body.appendChild(downloadLink);
+      downloadLink.click();
+      setTimeout(() => {
+        document.body.removeChild(downloadLink);
+        URL.revokeObjectURL(blobUrl);
+      }, 3000);
+    } catch (blobErr) {
+      pdf.save(fileName);
+    }
+  };
+
   const handleDownloadPdf = async () => {
     setIsGenerating(true);
     try {
-      const element = gradeCardRef.current;
-      if (!element) return;
-
-      const canvas = await html2canvas(element, {
-        scale: 2,
-        useCORS: true,
-        allowTaint: true,
-        logging: false,
-        backgroundColor: '#ffffff',
-        windowWidth: 1200,
-        onclone: (clonedDoc) => {
-          const clonedElement = clonedDoc.getElementById('bits-official-grade-sheet');
-          if (clonedElement) {
-            clonedElement.style.width = '800px';
-            clonedElement.style.minWidth = '800px';
-            clonedElement.style.maxWidth = '800px';
-            clonedElement.style.padding = '28px 32px';
-            clonedElement.style.margin = '0 auto';
-            clonedElement.style.boxSizing = 'border-box';
-          }
-        }
-      });
-
-      const imgData = canvas.toDataURL('image/png', 1.0);
-      const pdf = new jsPDF({
-        orientation: 'portrait',
-        unit: 'mm',
-        format: 'a4'
-      });
-
-      const pdfWidth = pdf.internal.pageSize.getWidth();
-      const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
-
-      pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
-      pdf.save(
-        `BITS_Pilani_Official_Grade_Sheet_${scorecard.rollNumber}_${resultType.toUpperCase()}.pdf`
-      );
-
+      await doCaptureAndDownload(resultType);
       setDownloadSuccess(true);
       setTimeout(() => setDownloadSuccess(false), 3500);
     } catch (error) {
       console.error('Error generating PDF:', error);
+      alert('Generating printable grade sheet view. You can choose "Save as PDF" from your browser print dialog.');
+      window.print();
+    } finally {
+      setIsGenerating(false);
+    }
+  };
+
+  const handleDownloadBothMst = async () => {
+    setIsGenerating(true);
+    try {
+      // 1. Download MST-1
+      setResultType('mst1');
+      await new Promise((r) => setTimeout(r, 200));
+      await doCaptureAndDownload('mst1');
+
+      // 2. Download MST-2
+      await new Promise((r) => setTimeout(r, 600));
+      setResultType('mst2');
+      await new Promise((r) => setTimeout(r, 200));
+      await doCaptureAndDownload('mst2');
+
+      setDownloadSuccess(true);
+      setTimeout(() => setDownloadSuccess(false), 4000);
+    } catch (error) {
+      console.error('Error downloading both MST PDFs:', error);
+      alert('Generating printable grade sheet view.');
       window.print();
     } finally {
       setIsGenerating(false);
@@ -223,7 +315,7 @@ export default function OfficialGradeCardModal({ isOpen, onClose, initialResultT
               </button>
             </div>
 
-            {/* Download PDF Button */}
+            {/* Download Active PDF Button */}
             <button
               onClick={handleDownloadPdf}
               disabled={isGenerating}
@@ -243,7 +335,30 @@ export default function OfficialGradeCardModal({ isOpen, onClose, initialResultT
               }}
             >
               {isGenerating ? <FaSpinner className="fa-spin" /> : downloadSuccess ? <FaCheckCircle /> : <FaDownload />}
-              {isGenerating ? 'Generating PDF...' : downloadSuccess ? 'Downloaded!' : 'Download Official PDF'}
+              {isGenerating ? 'Generating PDF...' : downloadSuccess ? 'Downloaded!' : `Download ${isMst2 ? 'MST-2' : isMst1 ? 'MST-1' : 'Assignments'} PDF`}
+            </button>
+
+            {/* Download Both MSTs Button */}
+            <button
+              onClick={handleDownloadBothMst}
+              disabled={isGenerating}
+              style={{
+                backgroundColor: '#004b93',
+                color: '#ffffff',
+                border: 'none',
+                padding: '7px 14px',
+                borderRadius: '6px',
+                fontSize: '12px',
+                fontWeight: '700',
+                cursor: isGenerating ? 'wait' : 'pointer',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '6px',
+                boxShadow: '0 2px 4px rgba(0,0,0,0.2)'
+              }}
+              title="Download official PDF transcripts for both MST-1 and MST-2"
+            >
+              <FaDownload /> Download Both MSTs (1 & 2)
             </button>
 
             {/* Print Button */}
@@ -364,16 +479,13 @@ export default function OfficialGradeCardModal({ isOpen, onClose, initialResultT
               }}
             >
               <img
-                src="/bits-logo.webp"
+                src={bitsLogoBase64}
                 alt="BITS Pilani Logo"
                 style={{
                   width: '85px',
                   height: '85px',
                   objectFit: 'contain',
                   filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.15))'
-                }}
-                onError={(e) => {
-                  e.target.style.display = 'none';
                 }}
               />
 

@@ -251,12 +251,15 @@ export default function MstResultsSection({ initialSubTab = 'mst2_result' }) {
               <FaGraduationCap style={{ color: '#004b93' }} /> 🎓 MST-1 Result (158/160)
             </button>
             <button
-              onClick={() => setIsGradeCardModalOpen(true)}
+              onClick={() => {
+                setResultEvaluationType('mst2');
+                setIsGradeCardModalOpen(true);
+              }}
               style={{
                 backgroundColor: '#b91c1c',
                 color: '#ffffff',
                 border: 'none',
-                padding: '10px 18px',
+                padding: '10px 16px',
                 borderRadius: '6px',
                 fontWeight: '800',
                 fontSize: '13px',
@@ -266,8 +269,32 @@ export default function MstResultsSection({ initialSubTab = 'mst2_result' }) {
                 gap: '8px',
                 boxShadow: '0 2px 8px rgba(0,0,0,0.2)'
               }}
+              title="Download official PDF grade sheet for MST-2 (Second Result)"
             >
-              <FaDownload /> Download Grade Card (PDF)
+              <FaDownload /> Download MST-2 PDF
+            </button>
+            <button
+              onClick={() => {
+                setResultEvaluationType('mst1');
+                setIsGradeCardModalOpen(true);
+              }}
+              style={{
+                backgroundColor: '#004b93',
+                color: '#ffffff',
+                border: 'none',
+                padding: '10px 16px',
+                borderRadius: '6px',
+                fontWeight: '800',
+                fontSize: '13px',
+                cursor: 'pointer',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '8px',
+                boxShadow: '0 2px 8px rgba(0,0,0,0.2)'
+              }}
+              title="Download official PDF grade sheet for MST-1"
+            >
+              <FaDownload /> Download MST-1 PDF
             </button>
             <button
               onClick={handlePrint}
@@ -3059,6 +3086,13 @@ export default function MstResultsSection({ initialSubTab = 'mst2_result' }) {
           name: rohanMstScorecard.studentName,
           roll: rohanMstScorecard.rollNumber
         }}
+      />
+
+      {/* Official BITS Pilani Grade Card & Transcript Modal */}
+      <OfficialGradeCardModal
+        isOpen={isGradeCardModalOpen}
+        onClose={() => setIsGradeCardModalOpen(false)}
+        initialResultType={effectiveResultType}
       />
 
     </div>
