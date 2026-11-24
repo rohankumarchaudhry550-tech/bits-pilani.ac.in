@@ -30,7 +30,8 @@ import {
   FaRocket,
   FaCube,
   FaLayerGroup,
-  FaIdCard
+  FaIdCard,
+  FaDownload
 } from 'react-icons/fa';
 import {
   mstSubjectMeta,
