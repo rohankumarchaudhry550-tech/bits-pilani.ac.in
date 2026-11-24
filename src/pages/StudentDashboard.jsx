@@ -37,7 +37,7 @@ export default function StudentDashboard() {
   const [expandedSyllabus, setExpandedSyllabus] = useState(null);
   const [isHallTicketOpen, setIsHallTicketOpen] = useState(false);
   const [hallTicketType, setHallTicketType] = useState('final');
-  const [mstSubTab, setMstSubTab] = useState('final_datesheet');
+  const [mstSubTab, setMstSubTab] = useState('mst2_result');
 
   // 1. Session Auth Validation
   useEffect(() => {
