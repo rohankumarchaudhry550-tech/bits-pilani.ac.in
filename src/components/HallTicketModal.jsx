@@ -16,6 +16,7 @@ import {
 } from 'react-icons/fa';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
+import { bitsOfficialStampBase64 } from '../data/bitsStampBase64';
 
 export default function HallTicketModal({ isOpen, onClose, studentData, defaultExamType = 'final' }) {
   const [examType, setExamType] = useState(defaultExamType || 'final');
@@ -848,27 +849,30 @@ export default function HallTicketModal({ isOpen, onClose, studentData, defaultE
                 <strong>Candidate Declaration:</strong> I hereby certify that the particulars furnished above are true and correct. I will adhere strictly to all BITS Pilani, Hyderabad Campus examination regulations.
               </div>
 
-              {/* Official Hyderabad Campus Seal */}
+              {/* Official BITS Pilani Hyderabad Cogwheel Seal */}
               <div
                 style={{
-                  width: '86px',
-                  height: '86px',
-                  borderRadius: '50%',
-                  border: '2px dashed #004b93',
                   display: 'flex',
                   flexDirection: 'column',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  color: '#004b93',
-                  textAlign: 'center',
-                  padding: '3px',
-                  backgroundColor: 'rgba(0, 75, 147, 0.02)'
+                  textAlign: 'center'
                 }}
               >
-                <span style={{ fontSize: '6.5px', fontWeight: '800', textTransform: 'uppercase' }}>BITS PILANI</span>
-                <span style={{ fontSize: '7.5px', fontWeight: '900', color: '#b91c1c' }}>HYDERABAD</span>
-                <span style={{ fontSize: '6px', fontWeight: '700' }}>WILP EXAM SEAL</span>
-                <span style={{ fontSize: '5.5px', color: '#64748b' }}>2026-27</span>
+                <img
+                  src={bitsOfficialStampBase64}
+                  alt="BITS Pilani Official Examination Division Seal"
+                  style={{
+                    width: '88px',
+                    height: '88px',
+                    objectFit: 'contain',
+                    transform: 'rotate(-3deg)',
+                    filter: 'drop-shadow(0 1px 3px rgba(0, 75, 147, 0.25))'
+                  }}
+                />
+                <span style={{ fontSize: '7.5px', color: '#004b93', fontWeight: '800', marginTop: '2px', letterSpacing: '0.4px' }}>
+                  OFFICIAL INSTITUTIONAL SEAL
+                </span>
               </div>
 
               {/* Controller / In-Charge Examinations Signature */}

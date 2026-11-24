@@ -22,6 +22,7 @@ import {
   assignmentResultsData
 } from '../data/mstResultsData';
 import { bitsLogoBase64 } from '../data/bitsLogoBase64';
+import { bitsOfficialStampBase64 } from '../data/bitsStampBase64';
 
 export default function OfficialGradeCardModal({ isOpen, onClose, initialResultType = 'mst1' }) {
   const [resultType, setResultType] = useState(initialResultType || 'mst1'); // 'mst1' | 'mst2' | 'assignments'
@@ -794,7 +795,7 @@ export default function OfficialGradeCardModal({ isOpen, onClose, initialResultT
                 paddingTop: '16px',
                 display: 'flex',
                 justifyContent: 'space-between',
-                alignItems: 'flex-end',
+                alignItems: 'center',
                 flexWrap: 'wrap',
                 gap: '16px',
                 fontSize: '11px'
@@ -815,28 +816,27 @@ export default function OfficialGradeCardModal({ isOpen, onClose, initialResultT
                 </div>
               </div>
 
-              {/* Institutional Seal & Signature Block */}
-              <div style={{ textAlign: 'center', minWidth: '220px' }}>
-                {/* Visual Stamp Seal */}
-                <div
+              {/* Official BITS Pilani Hyderabad Cogwheel Seal */}
+              <div style={{ textAlign: 'center' }}>
+                <img
+                  src={bitsOfficialStampBase64}
+                  alt="BITS Pilani Official Examination Division Seal"
                   style={{
-                    display: 'inline-block',
-                    border: '1.5px dashed #004b93',
-                    borderRadius: '50%',
-                    width: '68px',
-                    height: '68px',
-                    margin: '0 auto 6px',
-                    padding: '8px',
-                    textAlign: 'center',
-                    backgroundColor: 'rgba(0, 75, 147, 0.04)'
+                    width: '82px',
+                    height: '82px',
+                    objectFit: 'contain',
+                    transform: 'rotate(-3deg)',
+                    filter: 'drop-shadow(0 1px 3px rgba(0, 75, 147, 0.25))'
                   }}
-                >
-                  <div style={{ fontSize: '7.5px', fontWeight: '800', color: '#004b93', textTransform: 'uppercase', lineHeight: '1.2' }}>
-                    BITS PILANI<br />EXAM DIV<br />★ VERIFIED ★
-                  </div>
+                />
+                <div style={{ fontSize: '7.5px', fontWeight: '800', color: '#004b93', letterSpacing: '0.5px', marginTop: '2px' }}>
+                  OFFICIAL INSTITUTIONAL SEAL
                 </div>
+              </div>
 
-                <div style={{ fontFamily: "'Brush Script MT', cursive, sans-serif", fontSize: '20px', color: '#004b93', lineHeight: '1' }}>
+              {/* Controller of Examinations Signature Block */}
+              <div style={{ textAlign: 'center', minWidth: '190px' }}>
+                <div style={{ fontFamily: "'Brush Script MT', cursive, sans-serif", fontSize: '22px', color: '#004b93', lineHeight: '1' }}>
                   M. S. Radhakrishnan
                 </div>
                 <div style={{ borderTop: '1px solid #475569', marginTop: '4px', paddingTop: '4px', fontWeight: '700', color: '#0f172a' }}>
@@ -846,7 +846,7 @@ export default function OfficialGradeCardModal({ isOpen, onClose, initialResultT
                   Controller of Examinations
                 </div>
                 <div style={{ fontSize: '9.5px', color: '#64748b' }}>
-                  Birla Institute of Technology and Science, Pilani
+                  BITS Pilani, Hyderabad Campus
                 </div>
               </div>
             </div>

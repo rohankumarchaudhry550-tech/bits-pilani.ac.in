@@ -50,6 +50,7 @@ import {
 } from '../data/mstResultsData';
 import HallTicketModal from './HallTicketModal';
 import OfficialGradeCardModal from './OfficialGradeCardModal';
+import { bitsOfficialStampBase64 } from '../data/bitsStampBase64';
 
 export default function MstResultsSection({ initialSubTab = 'mst2_result' }) {
   const [activeSubTab, setActiveSubTab] = useState(initialSubTab || 'mst2_result');
@@ -2080,17 +2081,32 @@ export default function MstResultsSection({ initialSubTab = 'mst2_result' }) {
               </div>
 
               <div style={{
-                textAlign: 'right',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '12px',
                 backgroundColor: '#f8fafc',
-                padding: '10px 16px',
-                borderRadius: '6px',
-                border: '1px solid #cbd5e1'
+                padding: '8px 16px',
+                borderRadius: '8px',
+                border: '1.5px solid #cbd5e1'
               }}>
-                <span style={{ fontSize: '11px', color: '#64748b', fontWeight: '700', textTransform: 'uppercase' }}>Authentication Seal</span>
-                <div style={{ fontSize: '13px', fontWeight: '800', color: '#16a34a', display: 'flex', alignItems: 'center', gap: '5px', justifyContent: 'flex-end' }}>
-                  <FaCheckCircle /> Digitally Verified
+                <img
+                  src={bitsOfficialStampBase64}
+                  alt="BITS Pilani Official Examination Division Seal"
+                  style={{
+                    width: '64px',
+                    height: '64px',
+                    objectFit: 'contain',
+                    transform: 'rotate(-2deg)',
+                    filter: 'drop-shadow(0 1px 3px rgba(0, 75, 147, 0.25))'
+                  }}
+                />
+                <div style={{ textAlign: 'left' }}>
+                  <span style={{ fontSize: '10.5px', color: '#64748b', fontWeight: '700', textTransform: 'uppercase', display: 'block' }}>Official Examination Seal</span>
+                  <div style={{ fontSize: '13px', fontWeight: '800', color: '#004b93', display: 'flex', alignItems: 'center', gap: '5px' }}>
+                    <FaCheckCircle style={{ color: '#16a34a' }} /> Digitally Certified
+                  </div>
+                  <span style={{ fontSize: '10px', color: '#64748b' }}>Doc ID: BITS/HYD/MST26/005831</span>
                 </div>
-                <span style={{ fontSize: '11px', color: '#94a3b8' }}>Doc ID: BITS/WILP/MST26/005831</span>
               </div>
             </div>
 
@@ -2302,24 +2318,40 @@ export default function MstResultsSection({ initialSubTab = 'mst2_result' }) {
               color: '#475569'
             }}>
               <div>
-                <strong>Declared by:</strong> {rohanMstScorecard.signedBy}
-                <div style={{ fontSize: '11.5px', color: '#64748b' }}>Pilani Campus, Rajasthan • Result Authorized & Finalized</div>
+                <strong style={{ color: '#0f172a' }}>Declared by:</strong> Dr. M. S. Radhakrishnan, Controller of Examinations
+                <div style={{ fontSize: '11.5px', color: '#64748b' }}>BITS Pilani, Hyderabad Campus • Division of Evaluation &amp; Examinations</div>
+                <div style={{ fontSize: '11px', color: '#16a34a', fontWeight: '700', marginTop: '3px', display: 'flex', alignItems: 'center', gap: '5px' }}>
+                  <FaCheckCircle /> Distinction Confirmed (CGPA: 10.0 • Cohort Topper)
+                </div>
               </div>
 
-              <div style={{ textAlign: 'right' }}>
-                <span style={{
-                  backgroundColor: '#f0fdf4',
-                  border: '1px solid #86efac',
-                  color: '#15803d',
-                  padding: '6px 14px',
-                  borderRadius: '6px',
-                  fontWeight: '700',
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  gap: '6px'
-                }}>
-                  <FaCheckCircle /> Distinction Confirmed (CGPA: 10.0)
-                </span>
+              {/* Official Seal & Signature Block */}
+              <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+                <img
+                  src={bitsOfficialStampBase64}
+                  alt="BITS Pilani Official Examination Division Seal"
+                  style={{
+                    width: '74px',
+                    height: '74px',
+                    objectFit: 'contain',
+                    transform: 'rotate(-3deg)',
+                    filter: 'drop-shadow(0 1px 3px rgba(0, 75, 147, 0.25))'
+                  }}
+                />
+                <div style={{ textAlign: 'center', minWidth: '160px' }}>
+                  <div style={{ fontFamily: "'Brush Script MT', cursive, sans-serif", fontSize: '21px', color: '#004b93', lineHeight: '1' }}>
+                    M. S. Radhakrishnan
+                  </div>
+                  <div style={{ borderTop: '1px solid #475569', marginTop: '4px', paddingTop: '4px', fontWeight: '700', color: '#0f172a', fontSize: '12px' }}>
+                    Dr. M. S. Radhakrishnan
+                  </div>
+                  <div style={{ fontSize: '10px', color: '#64748b' }}>
+                    Controller of Examinations
+                  </div>
+                  <div style={{ fontSize: '9px', color: '#94a3b8' }}>
+                    BITS Pilani, Hyderabad
+                  </div>
+                </div>
               </div>
             </div>
 

@@ -1,0 +1,101 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 320" width="320" height="320">
+  <g id="bits-official-seal">
+    <!-- Outer Cogwheel Gear Teeth Border -->
+    <path d="M 295.00 160.00 L 312.00 160.00 L 311.04 177.02 L 294.15 175.12 L 291.62 190.04 L 308.19 193.82 L 303.47 210.20 L 287.42 204.59 L 281.63 218.57 L 296.95 225.95 L 288.70 240.87 L 274.31 231.82 L 265.55 244.17 L 278.84 254.77 L 267.48 267.48 L 255.46 255.46 L 244.17 265.55 L 254.77 278.84 L 240.87 288.70 L 231.82 274.31 L 218.57 281.63 L 225.95 296.95 L 210.20 303.47 L 204.59 287.42 L 190.04 291.62 L 193.82 308.19 L 177.02 311.04 L 175.12 294.15 L 160.00 295.00 L 160.00 312.00 L 142.98 311.04 L 144.88 294.15 L 129.96 291.62 L 126.18 308.19 L 109.80 303.47 L 115.41 287.42 L 101.43 281.63 L 94.05 296.95 L 79.13 288.70 L 88.18 274.31 L 75.83 265.55 L 65.23 278.84 L 52.52 267.48 L 64.54 255.46 L 54.45 244.17 L 41.16 254.77 L 31.30 240.87 L 45.69 231.82 L 38.37 218.57 L 23.05 225.95 L 16.53 210.20 L 32.58 204.59 L 28.38 190.04 L 11.81 193.82 L 8.96 177.02 L 25.85 175.12 L 25.00 160.00 L 8.00 160.00 L 8.96 142.98 L 25.85 144.88 L 28.38 129.96 L 11.81 126.18 L 16.53 109.80 L 32.58 115.41 L 38.37 101.43 L 23.05 94.05 L 31.30 79.13 L 45.69 88.18 L 54.45 75.83 L 41.16 65.23 L 52.52 52.52 L 64.54 64.54 L 75.83 54.45 L 65.23 41.16 L 79.13 31.30 L 88.18 45.69 L 101.43 38.37 L 94.05 23.05 L 109.80 16.53 L 115.41 32.58 L 129.96 28.38 L 126.18 11.81 L 142.98 8.96 L 144.88 25.85 L 160.00 25.00 L 160.00 8.00 L 177.02 8.96 L 175.12 25.85 L 190.04 28.38 L 193.82 11.81 L 210.20 16.53 L 204.59 32.58 L 218.57 38.37 L 225.95 23.05 L 240.87 31.30 L 231.82 45.69 L 244.17 54.45 L 254.77 41.16 L 267.48 52.52 L 255.46 64.54 L 265.55 75.83 L 278.84 65.23 L 288.70 79.13 L 274.31 88.18 L 281.63 101.43 L 296.95 94.05 L 303.47 109.80 L 287.42 115.41 L 291.62 129.96 L 308.19 126.18 L 311.04 142.98 L 294.15 144.88 L 295.00 160.00 Z" fill="#004b93" />
+    <circle cx="160" cy="160" r="135" fill="#004b93" />
+
+    <!-- Text Track Background (White Ring) -->
+    <circle cx="160" cy="160" r="131" fill="#ffffff" stroke="#004b93" stroke-width="3" />
+    <circle cx="160" cy="160" r="95" fill="#ffffff" stroke="#004b93" stroke-width="3.5" />
+    <circle cx="160" cy="160" r="91" fill="none" stroke="#004b93" stroke-width="1.2" />
+
+    <!-- Top Text along curve -->
+    <g id="top-letters">
+      <text x="46.07" y="156.02" transform="rotate(-88.0 46.07 156.02)" text-anchor="middle" dominant-baseline="central" font-family="'Arial Black', Impact, sans-serif" font-size="12.5" font-weight="900" fill="#004b93">B</text>
+      <text x="46.76" y="146.83" transform="rotate(-83.4 46.76 146.83)" text-anchor="middle" dominant-baseline="central" font-family="'Arial Black', Impact, sans-serif" font-size="12.5" font-weight="900" fill="#004b93">I</text>
+      <text x="48.20" y="137.73" transform="rotate(-78.7 48.20 137.73)" text-anchor="middle" dominant-baseline="central" font-family="'Arial Black', Impact, sans-serif" font-size="12.5" font-weight="900" fill="#004b93">R</text>
+      <text x="50.36" y="128.78" transform="rotate(-74.1 50.36 128.78)" text-anchor="middle" dominant-baseline="central" font-family="'Arial Black', Impact, sans-serif" font-size="12.5" font-weight="900" fill="#004b93">L</text>
+      <text x="53.24" y="120.03" transform="rotate(-69.5 53.24 120.03)" text-anchor="middle" dominant-baseline="central" font-family="'Arial Black', Impact, sans-serif" font-size="12.5" font-weight="900" fill="#004b93">A</text>
+      <text x="61.06" y="103.36" transform="rotate(-60.2 61.06 103.36)" text-anchor="middle" dominant-baseline="central" font-family="'Arial Black', Impact, sans-serif" font-size="12.5" font-weight="900" fill="#004b93">I</text>
+      <text x="65.96" y="95.56" transform="rotate(-55.6 65.96 95.56)" text-anchor="middle" dominant-baseline="central" font-family="'Arial Black', Impact, sans-serif" font-size="12.5" font-weight="900" fill="#004b93">N</text>
+      <text x="71.47" y="88.18" transform="rotate(-50.9 71.47 88.18)" text-anchor="middle" dominant-baseline="central" font-family="'Arial Black', Impact, sans-serif" font-size="12.5" font-weight="900" fill="#004b93">S</text>
+      <text x="77.56" y="81.26" transform="rotate(-46.3 77.56 81.26)" text-anchor="middle" dominant-baseline="central" font-family="'Arial Black', Impact, sans-serif" font-size="12.5" font-weight="900" fill="#004b93">T</text>
+      <text x="84.19" y="74.86" transform="rotate(-41.7 84.19 74.86)" text-anchor="middle" dominant-baseline="central" font-family="'Arial Black', Impact, sans-serif" font-size="12.5" font-weight="900" fill="#004b93">I</text>
+      <text x="91.31" y="69.02" transform="rotate(-37.1 91.31 69.02)" text-anchor="middle" dominant-baseline="central" font-family="'Arial Black', Impact, sans-serif" font-size="12.5" font-weight="900" fill="#004b93">T</text>
+      <text x="98.88" y="63.77" transform="rotate(-32.4 98.88 63.77)" text-anchor="middle" dominant-baseline="central" font-family="'Arial Black', Impact, sans-serif" font-size="12.5" font-weight="900" fill="#004b93">U</text>
+      <text x="106.85" y="59.15" transform="rotate(-27.8 106.85 59.15)" text-anchor="middle" dominant-baseline="central" font-family="'Arial Black', Impact, sans-serif" font-size="12.5" font-weight="900" fill="#004b93">T</text>
+      <text x="115.17" y="55.19" transform="rotate(-23.2 115.17 55.19)" text-anchor="middle" dominant-baseline="central" font-family="'Arial Black', Impact, sans-serif" font-size="12.5" font-weight="900" fill="#004b93">E</text>
+      <text x="132.62" y="49.34" transform="rotate(-13.9 132.62 49.34)" text-anchor="middle" dominant-baseline="central" font-family="'Arial Black', Impact, sans-serif" font-size="12.5" font-weight="900" fill="#004b93">O</text>
+      <text x="141.65" y="47.49" transform="rotate(-9.3 141.65 47.49)" text-anchor="middle" dominant-baseline="central" font-family="'Arial Black', Impact, sans-serif" font-size="12.5" font-weight="900" fill="#004b93">F</text>
+      <text x="160.00" y="46.00" transform="rotate(0.0 160.00 46.00)" text-anchor="middle" dominant-baseline="central" font-family="'Arial Black', Impact, sans-serif" font-size="12.5" font-weight="900" fill="#004b93">T</text>
+      <text x="169.21" y="46.37" transform="rotate(4.6 169.21 46.37)" text-anchor="middle" dominant-baseline="central" font-family="'Arial Black', Impact, sans-serif" font-size="12.5" font-weight="900" fill="#004b93">E</text>
+      <text x="178.35" y="47.49" transform="rotate(9.3 178.35 47.49)" text-anchor="middle" dominant-baseline="central" font-family="'Arial Black', Impact, sans-serif" font-size="12.5" font-weight="900" fill="#004b93">C</text>
+      <text x="187.38" y="49.34" transform="rotate(13.9 187.38 49.34)" text-anchor="middle" dominant-baseline="central" font-family="'Arial Black', Impact, sans-serif" font-size="12.5" font-weight="900" fill="#004b93">H</text>
+      <text x="196.22" y="51.91" transform="rotate(18.5 196.22 51.91)" text-anchor="middle" dominant-baseline="central" font-family="'Arial Black', Impact, sans-serif" font-size="12.5" font-weight="900" fill="#004b93">N</text>
+      <text x="204.83" y="55.19" transform="rotate(23.2 204.83 55.19)" text-anchor="middle" dominant-baseline="central" font-family="'Arial Black', Impact, sans-serif" font-size="12.5" font-weight="900" fill="#004b93">O</text>
+      <text x="213.15" y="59.15" transform="rotate(27.8 213.15 59.15)" text-anchor="middle" dominant-baseline="central" font-family="'Arial Black', Impact, sans-serif" font-size="12.5" font-weight="900" fill="#004b93">L</text>
+      <text x="221.12" y="63.77" transform="rotate(32.4 221.12 63.77)" text-anchor="middle" dominant-baseline="central" font-family="'Arial Black', Impact, sans-serif" font-size="12.5" font-weight="900" fill="#004b93">O</text>
+      <text x="228.69" y="69.02" transform="rotate(37.1 228.69 69.02)" text-anchor="middle" dominant-baseline="central" font-family="'Arial Black', Impact, sans-serif" font-size="12.5" font-weight="900" fill="#004b93">G</text>
+      <text x="235.81" y="74.86" transform="rotate(41.7 235.81 74.86)" text-anchor="middle" dominant-baseline="central" font-family="'Arial Black', Impact, sans-serif" font-size="12.5" font-weight="900" fill="#004b93">Y</text>
+      <text x="248.53" y="88.18" transform="rotate(50.9 248.53 88.18)" text-anchor="middle" dominant-baseline="central" font-family="'Arial Black', Impact, sans-serif" font-size="12.5" font-weight="900" fill="#004b93">&amp;</text>
+      <text x="258.94" y="103.36" transform="rotate(60.2 258.94 103.36)" text-anchor="middle" dominant-baseline="central" font-family="'Arial Black', Impact, sans-serif" font-size="12.5" font-weight="900" fill="#004b93">S</text>
+      <text x="263.19" y="111.54" transform="rotate(64.8 263.19 111.54)" text-anchor="middle" dominant-baseline="central" font-family="'Arial Black', Impact, sans-serif" font-size="12.5" font-weight="900" fill="#004b93">C</text>
+      <text x="266.76" y="120.03" transform="rotate(69.5 266.76 120.03)" text-anchor="middle" dominant-baseline="central" font-family="'Arial Black', Impact, sans-serif" font-size="12.5" font-weight="900" fill="#004b93">I</text>
+      <text x="269.64" y="128.78" transform="rotate(74.1 269.64 128.78)" text-anchor="middle" dominant-baseline="central" font-family="'Arial Black', Impact, sans-serif" font-size="12.5" font-weight="900" fill="#004b93">E</text>
+      <text x="271.80" y="137.73" transform="rotate(78.7 271.80 137.73)" text-anchor="middle" dominant-baseline="central" font-family="'Arial Black', Impact, sans-serif" font-size="12.5" font-weight="900" fill="#004b93">N</text>
+      <text x="273.24" y="146.83" transform="rotate(83.4 273.24 146.83)" text-anchor="middle" dominant-baseline="central" font-family="'Arial Black', Impact, sans-serif" font-size="12.5" font-weight="900" fill="#004b93">C</text>
+      <text x="273.93" y="156.02" transform="rotate(88.0 273.93 156.02)" text-anchor="middle" dominant-baseline="central" font-family="'Arial Black', Impact, sans-serif" font-size="12.5" font-weight="900" fill="#004b93">E</text>
+    </g>
+
+    <!-- Bottom Text along curve -->
+    <g id="bottom-letters">
+      <text x="67.77" y="227.01" transform="rotate(54.0 67.77 227.01)" text-anchor="middle" dominant-baseline="central" font-family="'Arial Black', Impact, sans-serif" font-size="12" font-weight="900" fill="#004b93">★</text>
+      <text x="82.79" y="243.87" transform="rotate(42.6 82.79 243.87)" text-anchor="middle" dominant-baseline="central" font-family="'Arial Black', Impact, sans-serif" font-size="12" font-weight="900" fill="#004b93">H</text>
+      <text x="91.48" y="251.11" transform="rotate(36.9 91.48 251.11)" text-anchor="middle" dominant-baseline="central" font-family="'Arial Black', Impact, sans-serif" font-size="12" font-weight="900" fill="#004b93">Y</text>
+      <text x="100.84" y="257.45" transform="rotate(31.3 100.84 257.45)" text-anchor="middle" dominant-baseline="central" font-family="'Arial Black', Impact, sans-serif" font-size="12" font-weight="900" fill="#004b93">D</text>
+      <text x="110.78" y="262.83" transform="rotate(25.6 110.78 262.83)" text-anchor="middle" dominant-baseline="central" font-family="'Arial Black', Impact, sans-serif" font-size="12" font-weight="900" fill="#004b93">E</text>
+      <text x="121.21" y="267.20" transform="rotate(19.9 121.21 267.20)" text-anchor="middle" dominant-baseline="central" font-family="'Arial Black', Impact, sans-serif" font-size="12" font-weight="900" fill="#004b93">R</text>
+      <text x="132.01" y="270.51" transform="rotate(14.2 132.01 270.51)" text-anchor="middle" dominant-baseline="central" font-family="'Arial Black', Impact, sans-serif" font-size="12" font-weight="900" fill="#004b93">A</text>
+      <text x="143.10" y="272.74" transform="rotate(8.5 143.10 272.74)" text-anchor="middle" dominant-baseline="central" font-family="'Arial Black', Impact, sans-serif" font-size="12" font-weight="900" fill="#004b93">B</text>
+      <text x="154.35" y="273.86" transform="rotate(2.8 154.35 273.86)" text-anchor="middle" dominant-baseline="central" font-family="'Arial Black', Impact, sans-serif" font-size="12" font-weight="900" fill="#004b93">A</text>
+      <text x="165.65" y="273.86" transform="rotate(-2.8 165.65 273.86)" text-anchor="middle" dominant-baseline="central" font-family="'Arial Black', Impact, sans-serif" font-size="12" font-weight="900" fill="#004b93">D</text>
+      <text x="187.99" y="270.51" transform="rotate(-14.2 187.99 270.51)" text-anchor="middle" dominant-baseline="central" font-family="'Arial Black', Impact, sans-serif" font-size="12" font-weight="900" fill="#004b93">C</text>
+      <text x="198.79" y="267.20" transform="rotate(-19.9 198.79 267.20)" text-anchor="middle" dominant-baseline="central" font-family="'Arial Black', Impact, sans-serif" font-size="12" font-weight="900" fill="#004b93">A</text>
+      <text x="209.22" y="262.83" transform="rotate(-25.6 209.22 262.83)" text-anchor="middle" dominant-baseline="central" font-family="'Arial Black', Impact, sans-serif" font-size="12" font-weight="900" fill="#004b93">M</text>
+      <text x="219.16" y="257.45" transform="rotate(-31.3 219.16 257.45)" text-anchor="middle" dominant-baseline="central" font-family="'Arial Black', Impact, sans-serif" font-size="12" font-weight="900" fill="#004b93">P</text>
+      <text x="228.52" y="251.11" transform="rotate(-36.9 228.52 251.11)" text-anchor="middle" dominant-baseline="central" font-family="'Arial Black', Impact, sans-serif" font-size="12" font-weight="900" fill="#004b93">U</text>
+      <text x="237.21" y="243.87" transform="rotate(-42.6 237.21 243.87)" text-anchor="middle" dominant-baseline="central" font-family="'Arial Black', Impact, sans-serif" font-size="12" font-weight="900" fill="#004b93">S</text>
+      <text x="252.23" y="227.01" transform="rotate(-54.0 252.23 227.01)" text-anchor="middle" dominant-baseline="central" font-family="'Arial Black', Impact, sans-serif" font-size="12" font-weight="900" fill="#004b93">★</text>
+    </g>
+
+    <!-- Center Atomic Rosette & Science Node Emblem -->
+    <g id="center-science-emblem">
+      <ellipse cx="160" cy="160" rx="55" ry="17" transform="rotate(0 160 160)" fill="none" stroke="#004b93" stroke-width="2.2" opacity="0.95" />
+      <ellipse cx="160" cy="160" rx="55" ry="17" transform="rotate(22.5 160 160)" fill="none" stroke="#004b93" stroke-width="2.2" opacity="0.95" />
+      <ellipse cx="160" cy="160" rx="55" ry="17" transform="rotate(45 160 160)" fill="none" stroke="#004b93" stroke-width="2.2" opacity="0.95" />
+      <ellipse cx="160" cy="160" rx="55" ry="17" transform="rotate(67.5 160 160)" fill="none" stroke="#004b93" stroke-width="2.2" opacity="0.95" />
+      <ellipse cx="160" cy="160" rx="55" ry="17" transform="rotate(90 160 160)" fill="none" stroke="#004b93" stroke-width="2.2" opacity="0.95" />
+      <ellipse cx="160" cy="160" rx="55" ry="17" transform="rotate(112.5 160 160)" fill="none" stroke="#004b93" stroke-width="2.2" opacity="0.95" />
+      <ellipse cx="160" cy="160" rx="55" ry="17" transform="rotate(135 160 160)" fill="none" stroke="#004b93" stroke-width="2.2" opacity="0.95" />
+      <ellipse cx="160" cy="160" rx="55" ry="17" transform="rotate(157.5 160 160)" fill="none" stroke="#004b93" stroke-width="2.2" opacity="0.95" />
+
+      <!-- Center Nucleus Ring -->
+      <circle cx="160" cy="160" r="15" fill="#ffffff" stroke="#004b93" stroke-width="2.5" />
+      <circle cx="160" cy="160" r="7" fill="#004b93" />
+
+      <!-- U-shaped connecting loop with terminal nodes (as in reference image) -->
+      <path d="M 116 168 Q 160 224 204 168" fill="none" stroke="#004b93" stroke-width="2.6" stroke-linecap="round" />
+      <circle cx="116" cy="168" r="4.5" fill="#ffffff" stroke="#004b93" stroke-width="2.2" />
+      <circle cx="204" cy="168" r="4.5" fill="#ffffff" stroke="#004b93" stroke-width="2.2" />
+      <circle cx="160" cy="196" r="4" fill="#004b93" />
+
+      <!-- Center Inscriptions -->
+      <text x="160" y="130" text-anchor="middle" font-family="'Segoe UI', Roboto, sans-serif" font-size="8.5" font-weight="900" fill="#004b93" letter-spacing="1.2">
+        EXAM DIVISION
+      </text>
+      <text x="160" y="236" text-anchor="middle" font-family="'Segoe UI', Roboto, sans-serif" font-size="9" font-weight="900" fill="#004b93" letter-spacing="1.5">
+        OFFICIAL SEAL
+      </text>
+    </g>
+  </g>
+</svg>
