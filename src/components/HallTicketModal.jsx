@@ -644,10 +644,10 @@ export default function HallTicketModal({ isOpen, onClose, studentData, defaultE
                   </tr>
                   <tr style={{ borderBottom: '1px solid #e2e8f0' }}>
                     <td style={{ padding: '6px 8px', backgroundColor: '#f8fafc', fontWeight: '700', color: '#334155' }}>
-                      Sponsoring Corporate:
+                      Department / Faculty:
                     </td>
-                    <td style={{ padding: '6px 8px', fontWeight: '700', color: '#059669' }}>
-                      {candidate.sponsor}
+                    <td style={{ padding: '6px 8px', fontWeight: '700', color: '#004b93' }}>
+                      Dept. of Computer Science & Information Systems (CSIS)
                     </td>
                   </tr>
                   <tr style={{ borderBottom: '1px solid #e2e8f0' }}>

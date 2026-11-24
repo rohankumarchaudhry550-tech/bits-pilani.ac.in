@@ -37,41 +37,53 @@ import {
   mstScheduleData,
   finalExamScheduleData,
   rohanMstScorecard,
+  rohanMst2Scorecard,
+  rohanAssignmentScorecard,
   advancedMlProjectData,
   cohortMstRankings,
+  cohortMst1Rankings,
+  cohortMst2Rankings,
+  cohortAssignmentRankings,
   assignmentResultsData,
   cohortStatistics
 } from '../data/mstResultsData';
 import HallTicketModal from './HallTicketModal';
+import OfficialGradeCardModal from './OfficialGradeCardModal';
 
 export default function MstResultsSection({ initialSubTab = 'final_datesheet' }) {
   const [activeSubTab, setActiveSubTab] = useState(initialSubTab || 'final_datesheet');
   const [hallTicketType, setHallTicketType] = useState('final');
+  const [resultEvaluationType, setResultEvaluationType] = useState('mst1'); // 'mst1' | 'mst2' | 'assignments'
+  const [isGradeCardModalOpen, setIsGradeCardModalOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
-  const [filterCompany, setFilterCompany] = useState('ALL');
   const [filterGrade, setFilterGrade] = useState('ALL');
   const [sortBy, setSortBy] = useState('rank'); // 'rank' | 'total' | 'name'
   const [sortOrder, setSortOrder] = useState('asc'); // 'asc' | 'desc'
   const [expandedSubject, setExpandedSubject] = useState(null);
   const [copiedLink, setCopiedLink] = useState(false);
   const [copiedSnippet, setCopiedSnippet] = useState(null);
-  const [projectCodeTab, setProjectCodeTab] = useState('pinn'); // 'pinn' | 'architecture' | 'dockerfile'
-  const [projectViewTab, setProjectViewTab] = useState('rubric'); // 'rubric' | 'architecture' | 'benchmarks' | 'code' | 'evaluator'
+  const [projectCodeTab, setProjectCodeTab] = useState('pinn');
+  const [projectViewTab, setProjectViewTab] = useState('rubric');
   const [isHallTicketOpen, setIsHallTicketOpen] = useState(false);
 
-  // Extract unique companies for filtering
-  const companies = useMemo(() => {
-    const set = new Set(cohortMstRankings.map(s => s.company));
-    return ['ALL', ...Array.from(set).sort()];
-  }, []);
+  // Active cohort data based on result type
+  const activeCohortList = useMemo(() => {
+    if (resultEvaluationType === 'mst2') return cohortMst2Rankings;
+    if (resultEvaluationType === 'assignments') return cohortAssignmentRankings;
+    return cohortMst1Rankings;
+  }, [resultEvaluationType]);
 
-  // Filter and sort the 45 students cohort ranking
+  // Active candidate scorecard based on result type
+  const activeScorecard = useMemo(() => {
+    if (resultEvaluationType === 'mst2') return rohanMst2Scorecard;
+    if (resultEvaluationType === 'assignments') return rohanAssignmentScorecard;
+    return rohanMstScorecard;
+  }, [resultEvaluationType]);
+
+  // Filter and sort the 45 students cohort ranking (Strictly Free of Company Mentions)
   const filteredRankings = useMemo(() => {
-    return cohortMstRankings
+    return activeCohortList
       .filter((student) => {
-        if (filterCompany !== 'ALL' && student.company !== filterCompany) {
-          return false;
-        }
         if (filterGrade !== 'ALL') {
           if (filterGrade === 'A' && !student.grade.startsWith('A')) return false;
           if (filterGrade === 'B' && !student.grade.startsWith('B')) return false;
@@ -81,8 +93,7 @@ export default function MstResultsSection({ initialSubTab = 'final_datesheet' })
           const q = searchQuery.toLowerCase();
           const matchName = student.name.toLowerCase().includes(q);
           const matchRoll = student.roll.toLowerCase().includes(q);
-          const matchCompany = student.company.toLowerCase().includes(q);
-          if (!matchName && !matchRoll && !matchCompany) return false;
+          if (!matchName && !matchRoll) return false;
         }
         return true;
       })
@@ -91,13 +102,15 @@ export default function MstResultsSection({ initialSubTab = 'final_datesheet' })
         if (sortBy === 'rank') {
           comparison = a.rank - b.rank;
         } else if (sortBy === 'total') {
-          comparison = b.total - a.total;
+          const valA = a.total ?? a.avgScore ?? 0;
+          const valB = b.total ?? b.avgScore ?? 0;
+          comparison = valB - valA;
         } else if (sortBy === 'name') {
           comparison = a.name.localeCompare(b.name);
         }
         return sortOrder === 'asc' ? comparison : -comparison;
       });
-  }, [searchQuery, filterCompany, filterGrade, sortBy, sortOrder]);
+  }, [activeCohortList, searchQuery, filterGrade, sortBy, sortOrder]);
 
   const handlePrint = () => {
     window.print();
@@ -185,23 +198,41 @@ export default function MstResultsSection({ initialSubTab = 'final_datesheet' })
 
           <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
             <button
-              onClick={handlePrint}
+              onClick={() => setIsGradeCardModalOpen(true)}
               style={{
                 backgroundColor: '#ffffff',
-                color: '#0f172a',
+                color: '#004b93',
                 border: 'none',
-                padding: '10px 16px',
+                padding: '10px 18px',
                 borderRadius: '6px',
-                fontWeight: '700',
+                fontWeight: '800',
                 fontSize: '13px',
                 cursor: 'pointer',
                 display: 'flex',
                 alignItems: 'center',
-                gap: '7px',
-                boxShadow: '0 2px 6px rgba(0,0,0,0.15)'
+                gap: '8px',
+                boxShadow: '0 2px 8px rgba(0,0,0,0.2)'
               }}
             >
-              <FaPrint /> Print Official Marks Card
+              <FaGraduationCap style={{ fontSize: '16px', color: '#b91c1c' }} /> Download College Grade Card (PDF)
+            </button>
+            <button
+              onClick={handlePrint}
+              style={{
+                backgroundColor: 'rgba(255, 255, 255, 0.15)',
+                color: '#ffffff',
+                border: '1px solid rgba(255, 255, 255, 0.3)',
+                padding: '10px 14px',
+                borderRadius: '6px',
+                fontWeight: '700',
+                fontSize: '12.5px',
+                cursor: 'pointer',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '6px'
+              }}
+            >
+              <FaPrint /> Print
             </button>
             <button
               onClick={handleCopyVerification}
@@ -1174,7 +1205,7 @@ export default function MstResultsSection({ initialSubTab = 'final_datesheet' })
                   {rohanMstScorecard.studentName} • Roll No: {rohanMstScorecard.rollNumber}
                 </div>
                 <div style={{ fontSize: '12px', color: '#475569', marginTop: '2px' }}>
-                  Program: {rohanMstScorecard.program} • Sponsor: {rohanMstScorecard.sponsor}
+                  Program: {rohanMstScorecard.program} • Campus: BITS Pilani, Hyderabad Campus
                 </div>
                 <div style={{ fontSize: '11.5px', color: '#16a34a', fontWeight: '700', marginTop: '4px', display: 'flex', alignItems: 'center', gap: '6px' }}>
                   <FaCheckCircle /> Physical Hall Seating: ALLOCATED (Desk #42) • In-Person Verification: READY • Hall Ticket #WILP-2026-MST-HYD-5831 (Hyderabad Campus)
@@ -1323,7 +1354,7 @@ export default function MstResultsSection({ initialSubTab = 'final_datesheet' })
                 </h3>
                 <div style={{ display: 'flex', flexWrap: 'wrap', gap: '15px', fontSize: '12px', color: '#d1fae5' }}>
                   <span>👨‍🎓 Candidate: <strong>{advancedMlProjectData.studentName}</strong> ({advancedMlProjectData.rollNumber})</span>
-                  <span>🏢 Sponsor: <strong>{advancedMlProjectData.corporatePartner}</strong></span>
+                  <span>🏛️ Department: <strong>Dept. of Computer Science & Information Systems (CSIS)</strong></span>
                   <span>👨‍🏫 Evaluator: <strong>{advancedMlProjectData.evaluator}</strong></span>
                   <span>📅 Evaluated: <strong>{advancedMlProjectData.evaluationDate}</strong></span>
                 </div>
@@ -1805,6 +1836,100 @@ export default function MstResultsSection({ initialSubTab = 'final_datesheet' })
       {activeSubTab === 'scorecard' && (
         <div style={{ display: 'flex', flexDirection: 'column', gap: '25px' }}>
           
+          {/* Result Type Switcher & Download Action Bar */}
+          <div style={{
+            backgroundColor: '#ffffff',
+            borderRadius: '8px',
+            padding: '16px 20px',
+            boxShadow: '0 1px 4px rgba(0,0,0,0.05)',
+            border: '1px solid #cbd5e1',
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            flexWrap: 'wrap',
+            gap: '12px'
+          }}>
+            <div style={{ display: 'flex', gap: '8px', backgroundColor: '#f1f5f9', padding: '4px', borderRadius: '8px', flexWrap: 'wrap' }}>
+              <button
+                onClick={() => setResultEvaluationType('mst1')}
+                style={{
+                  padding: '8px 16px',
+                  borderRadius: '6px',
+                  border: 'none',
+                  backgroundColor: resultEvaluationType === 'mst1' ? '#004b93' : 'transparent',
+                  color: resultEvaluationType === 'mst1' ? '#ffffff' : '#334155',
+                  fontWeight: '700',
+                  fontSize: '13px',
+                  cursor: 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '6px',
+                  transition: 'all 0.15s'
+                }}
+              >
+                <FaGraduationCap /> MST-1 Scorecard (158/160 • Topper)
+              </button>
+              <button
+                onClick={() => setResultEvaluationType('mst2')}
+                style={{
+                  padding: '8px 16px',
+                  borderRadius: '6px',
+                  border: 'none',
+                  backgroundColor: resultEvaluationType === 'mst2' ? '#004b93' : 'transparent',
+                  color: resultEvaluationType === 'mst2' ? '#ffffff' : '#334155',
+                  fontWeight: '700',
+                  fontSize: '13px',
+                  cursor: 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '6px',
+                  transition: 'all 0.15s'
+                }}
+              >
+                <FaTrophy style={{ color: resultEvaluationType === 'mst2' ? '#fde047' : '#eab308' }} /> MST-2 Scorecard (Second Result • 159.5/160 • Topper)
+              </button>
+              <button
+                onClick={() => setResultEvaluationType('assignments')}
+                style={{
+                  padding: '8px 16px',
+                  borderRadius: '6px',
+                  border: 'none',
+                  backgroundColor: resultEvaluationType === 'assignments' ? '#004b93' : 'transparent',
+                  color: resultEvaluationType === 'assignments' ? '#ffffff' : '#334155',
+                  fontWeight: '700',
+                  fontSize: '13px',
+                  cursor: 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '6px',
+                  transition: 'all 0.15s'
+                }}
+              >
+                <FaAward /> Assignments Scorecard (99.4% • Topper)
+              </button>
+            </div>
+
+            <button
+              onClick={() => setIsGradeCardModalOpen(true)}
+              style={{
+                backgroundColor: '#b91c1c',
+                color: '#ffffff',
+                border: 'none',
+                padding: '10px 18px',
+                borderRadius: '6px',
+                fontWeight: '800',
+                fontSize: '13px',
+                cursor: 'pointer',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '8px',
+                boxShadow: '0 2px 6px rgba(185, 28, 28, 0.25)'
+              }}
+            >
+              <FaDownload /> Download Official Grade Card (PDF)
+            </button>
+          </div>
+
           {/* Printable Official Certificate / Transcript View */}
           <div style={{
             backgroundColor: '#ffffff',
@@ -1832,7 +1957,7 @@ export default function MstResultsSection({ initialSubTab = 'final_datesheet' })
                   Work Integrated Learning Programmes (WILP) • Division of Evaluation and Examinations
                 </div>
                 <div style={{ fontSize: '12px', color: '#64748b' }}>
-                  Official Mid-Semester Grade Report • First Semester 2026-27
+                  {resultEvaluationType === "mst1" ? "Official Mid-Semester Grade Report (MST-1)" : resultEvaluationType === "mst2" ? "Official Mid-Semester Grade Report (MST-2 • Second Result)" : "Official Continuous Assessment & Assignments Transcript"} • First Semester 2026-27
                 </div>
               </div>
 
@@ -1865,15 +1990,15 @@ export default function MstResultsSection({ initialSubTab = 'final_datesheet' })
             }}>
               <div>
                 <span style={{ color: '#64748b', display: 'block', fontSize: '11px', fontWeight: '700', textTransform: 'uppercase' }}>Candidate Name</span>
-                <strong style={{ color: '#0f172a', fontSize: '14.5px' }}>{rohanMstScorecard.studentName}</strong>
+                <strong style={{ color: '#0f172a', fontSize: '14.5px' }}>{activeScorecard.studentName}</strong>
               </div>
               <div>
                 <span style={{ color: '#64748b', display: 'block', fontSize: '11px', fontWeight: '700', textTransform: 'uppercase' }}>BITS Student ID / Roll No.</span>
-                <strong style={{ color: '#004b93' }}>{rohanMstScorecard.rollNumber}</strong>
+                <strong style={{ color: '#004b93' }}>{activeScorecard.rollNumber}</strong>
               </div>
               <div>
-                <span style={{ color: '#64748b', display: 'block', fontSize: '11px', fontWeight: '700', textTransform: 'uppercase' }}>Corporate Partner</span>
-                <strong>{rohanMstScorecard.sponsor}</strong>
+                <span style={{ color: '#64748b', display: 'block', fontSize: '11px', fontWeight: '700', textTransform: 'uppercase' }}>Academic Campus</span>
+                <strong style={{ color: '#1e293b' }}>BITS Pilani, Hyderabad Campus</strong>
               </div>
               <div>
                 <span style={{ color: '#64748b', display: 'block', fontSize: '11px', fontWeight: '700', textTransform: 'uppercase' }}>Class Standing</span>
@@ -2047,6 +2172,96 @@ export default function MstResultsSection({ initialSubTab = 'final_datesheet' })
       {activeSubTab === 'ranking' && (
         <div style={{ display: 'flex', flexDirection: 'column', gap: '25px' }}>
           
+          {/* Result Evaluation Type Switcher */}
+          <div style={{
+            backgroundColor: '#ffffff',
+            borderRadius: '8px',
+            padding: '14px 20px',
+            boxShadow: '0 1px 4px rgba(0,0,0,0.05)',
+            border: '1px solid #cbd5e1',
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            flexWrap: 'wrap',
+            gap: '12px'
+          }}>
+            <div style={{ display: 'flex', gap: '8px', backgroundColor: '#f1f5f9', padding: '4px', borderRadius: '8px', flexWrap: 'wrap' }}>
+              <button
+                onClick={() => setResultEvaluationType('mst1')}
+                style={{
+                  padding: '7px 16px',
+                  borderRadius: '6px',
+                  border: 'none',
+                  backgroundColor: resultEvaluationType === 'mst1' ? '#004b93' : 'transparent',
+                  color: resultEvaluationType === 'mst1' ? '#ffffff' : '#334155',
+                  fontWeight: '700',
+                  fontSize: '12.5px',
+                  cursor: 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '6px'
+                }}
+              >
+                🥇 MST-1 Leaderboard (Topper: Rohan #1)
+              </button>
+              <button
+                onClick={() => setResultEvaluationType('mst2')}
+                style={{
+                  padding: '7px 16px',
+                  borderRadius: '6px',
+                  border: 'none',
+                  backgroundColor: resultEvaluationType === 'mst2' ? '#004b93' : 'transparent',
+                  color: resultEvaluationType === 'mst2' ? '#ffffff' : '#334155',
+                  fontWeight: '700',
+                  fontSize: '12.5px',
+                  cursor: 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '6px'
+                }}
+              >
+                🥈 MST-2 Second Result (Topper: Rohan #1)
+              </button>
+              <button
+                onClick={() => setResultEvaluationType('assignments')}
+                style={{
+                  padding: '7px 16px',
+                  borderRadius: '6px',
+                  border: 'none',
+                  backgroundColor: resultEvaluationType === 'assignments' ? '#004b93' : 'transparent',
+                  color: resultEvaluationType === 'assignments' ? '#ffffff' : '#334155',
+                  fontWeight: '700',
+                  fontSize: '12.5px',
+                  cursor: 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '6px'
+                }}
+              >
+                📝 Assignments Leaderboard (Topper: Rohan #1)
+              </button>
+            </div>
+
+            <button
+              onClick={() => setIsGradeCardModalOpen(true)}
+              style={{
+                backgroundColor: '#004b93',
+                color: '#ffffff',
+                border: 'none',
+                padding: '9px 16px',
+                borderRadius: '6px',
+                fontSize: '12.5px',
+                fontWeight: '700',
+                cursor: 'pointer',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '6px'
+              }}
+            >
+              <FaDownload /> Download Grade Card (PDF)
+            </button>
+          </div>
+
           {/* Top 3 Podium Cards */}
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '18px' }}>
             
@@ -2078,20 +2293,20 @@ export default function MstResultsSection({ initialSubTab = 'final_datesheet' })
               </div>
               <div style={{ fontSize: '32px', marginBottom: '6px' }}>🥇</div>
               <h4 style={{ fontSize: '18px', fontWeight: '800', color: '#92400e', margin: '4px 0' }}>
-                {cohortMstRankings[0].name}
+                {activeCohortList[0]?.name}
               </h4>
               <span style={{ fontSize: '12px', color: '#b45309', fontWeight: '600' }}>
-                {cohortMstRankings[0].company} • {cohortMstRankings[0].roll}
+                BITS Pilani (Hyderabad Campus) • Roll: {activeCohortList[0]?.roll}
               </span>
               <div style={{ marginTop: '16px', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', borderTop: '1px solid #fde68a', paddingTop: '10px' }}>
                 <div>
-                  <span style={{ fontSize: '11px', color: '#92400e', display: 'block' }}>Total Marks</span>
-                  <strong style={{ fontSize: '22px', color: '#92400e' }}>{cohortMstRankings[0].total}</strong>
-                  <span style={{ fontSize: '12px', color: '#b45309' }}> / 160.0</span>
+                  <span style={{ fontSize: '11px', color: '#92400e', display: 'block' }}>{resultEvaluationType === 'assignments' ? 'Average Score' : 'Total Marks'}</span>
+                  <strong style={{ fontSize: '22px', color: '#92400e' }}>{activeCohortList[0]?.total ?? activeCohortList[0]?.avgScore}</strong>
+                  <span style={{ fontSize: '12px', color: '#b45309' }}> {resultEvaluationType === 'assignments' ? '/ 100.0' : '/ 160.0'}</span>
                 </div>
                 <div style={{ textAlign: 'right' }}>
-                  <span style={{ fontSize: '11px', color: '#92400e', display: 'block' }}>Percentage</span>
-                  <strong style={{ fontSize: '18px', color: '#16a34a' }}>{cohortMstRankings[0].percentage}%</strong>
+                  <span style={{ fontSize: '11px', color: '#92400e', display: 'block' }}>Score %</span>
+                  <strong style={{ fontSize: '18px', color: '#16a34a' }}>{activeCohortList[0]?.percentage ?? activeCohortList[0]?.avgScore}%</strong>
                 </div>
               </div>
             </div>
@@ -2119,20 +2334,20 @@ export default function MstResultsSection({ initialSubTab = 'final_datesheet' })
               </div>
               <div style={{ fontSize: '32px', marginBottom: '6px' }}>🥈</div>
               <h4 style={{ fontSize: '17px', fontWeight: '700', color: '#1e293b', margin: '4px 0' }}>
-                {cohortMstRankings[1].name}
+                {activeCohortList[1]?.name}
               </h4>
               <span style={{ fontSize: '12px', color: '#64748b', fontWeight: '600' }}>
-                {cohortMstRankings[1].company} • {cohortMstRankings[1].roll}
+                BITS Pilani (Hyderabad Campus) • Roll: {activeCohortList[1]?.roll}
               </span>
               <div style={{ marginTop: '16px', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', borderTop: '1px solid #cbd5e1', paddingTop: '10px' }}>
                 <div>
-                  <span style={{ fontSize: '11px', color: '#64748b', display: 'block' }}>Total Marks</span>
-                  <strong style={{ fontSize: '20px', color: '#1e293b' }}>{cohortMstRankings[1].total}</strong>
-                  <span style={{ fontSize: '12px', color: '#64748b' }}> / 160.0</span>
+                  <span style={{ fontSize: '11px', color: '#64748b', display: 'block' }}>{resultEvaluationType === 'assignments' ? 'Average Score' : 'Total Marks'}</span>
+                  <strong style={{ fontSize: '20px', color: '#1e293b' }}>{activeCohortList[1]?.total ?? activeCohortList[1]?.avgScore}</strong>
+                  <span style={{ fontSize: '12px', color: '#64748b' }}> {resultEvaluationType === 'assignments' ? '/ 100.0' : '/ 160.0'}</span>
                 </div>
                 <div style={{ textAlign: 'right' }}>
-                  <span style={{ fontSize: '11px', color: '#64748b', display: 'block' }}>Percentage</span>
-                  <strong style={{ fontSize: '17px', color: '#16a34a' }}>{cohortMstRankings[1].percentage}%</strong>
+                  <span style={{ fontSize: '11px', color: '#64748b', display: 'block' }}>Score %</span>
+                  <strong style={{ fontSize: '17px', color: '#16a34a' }}>{activeCohortList[1]?.percentage ?? activeCohortList[1]?.avgScore}%</strong>
                 </div>
               </div>
             </div>
@@ -2160,20 +2375,20 @@ export default function MstResultsSection({ initialSubTab = 'final_datesheet' })
               </div>
               <div style={{ fontSize: '32px', marginBottom: '6px' }}>🥉</div>
               <h4 style={{ fontSize: '17px', fontWeight: '700', color: '#7c2d12', margin: '4px 0' }}>
-                {cohortMstRankings[2].name}
+                {activeCohortList[2]?.name}
               </h4>
               <span style={{ fontSize: '12px', color: '#c2410c', fontWeight: '600' }}>
-                {cohortMstRankings[2].company} • {cohortMstRankings[2].roll}
+                BITS Pilani (Hyderabad Campus) • Roll: {activeCohortList[2]?.roll}
               </span>
               <div style={{ marginTop: '16px', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', borderTop: '1px solid #fed7aa', paddingTop: '10px' }}>
                 <div>
-                  <span style={{ fontSize: '11px', color: '#c2410c', display: 'block' }}>Total Marks</span>
-                  <strong style={{ fontSize: '20px', color: '#7c2d12' }}>{cohortMstRankings[2].total}</strong>
-                  <span style={{ fontSize: '12px', color: '#c2410c' }}> / 160.0</span>
+                  <span style={{ fontSize: '11px', color: '#c2410c', display: 'block' }}>{resultEvaluationType === 'assignments' ? 'Average Score' : 'Total Marks'}</span>
+                  <strong style={{ fontSize: '20px', color: '#7c2d12' }}>{activeCohortList[2]?.total ?? activeCohortList[2]?.avgScore}</strong>
+                  <span style={{ fontSize: '12px', color: '#c2410c' }}> {resultEvaluationType === 'assignments' ? '/ 100.0' : '/ 160.0'}</span>
                 </div>
                 <div style={{ textAlign: 'right' }}>
-                  <span style={{ fontSize: '11px', color: '#c2410c', display: 'block' }}>Percentage</span>
-                  <strong style={{ fontSize: '17px', color: '#16a34a' }}>{cohortMstRankings[2].percentage}%</strong>
+                  <span style={{ fontSize: '11px', color: '#c2410c', display: 'block' }}>Score %</span>
+                  <strong style={{ fontSize: '17px', color: '#16a34a' }}>{activeCohortList[2]?.percentage ?? activeCohortList[2]?.avgScore}%</strong>
                 </div>
               </div>
             </div>
@@ -2194,11 +2409,11 @@ export default function MstResultsSection({ initialSubTab = 'final_datesheet' })
             justifyContent: 'space-between'
           }}>
             {/* Search Input */}
-            <div style={{ position: 'relative', flex: '1 1 280px' }}>
+            <div style={{ position: 'relative', flex: '1 1 320px' }}>
               <FaSearch style={{ position: 'absolute', left: '12px', top: '12px', color: '#94a3b8' }} />
               <input
                 type="text"
-                placeholder="Search by student name, roll number, or company..."
+                placeholder="Search by student name or BITS roll number..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 style={{
@@ -2212,25 +2427,9 @@ export default function MstResultsSection({ initialSubTab = 'final_datesheet' })
               />
             </div>
 
-            {/* Company Dropdown */}
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-              <span style={{ fontSize: '12.5px', color: '#64748b', fontWeight: '600' }}>Company:</span>
-              <select
-                value={filterCompany}
-                onChange={(e) => setFilterCompany(e.target.value)}
-                style={{
-                  padding: '8px 12px',
-                  borderRadius: '6px',
-                  border: '1px solid #cbd5e1',
-                  fontSize: '12.5px',
-                  backgroundColor: '#ffffff',
-                  outline: 'none'
-                }}
-              >
-                {companies.map((c, i) => (
-                  <option key={i} value={c}>{c}</option>
-                ))}
-              </select>
+            {/* Academic Center / Stream Info Badge */}
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: '#004b93', fontWeight: '700', fontSize: '12.5px' }}>
+              <FaUniversity /> BITS Pilani, Hyderabad Campus
             </div>
 
             {/* Grade Filter */}
@@ -2297,10 +2496,10 @@ export default function MstResultsSection({ initialSubTab = 'final_datesheet' })
             }}>
               <div>
                 <strong style={{ fontSize: '15px', color: '#0f172a' }}>
-                  Full Cohort Ranking Register ({filteredRankings.length} of {cohortMstRankings.length} Students Listed)
+                  {resultEvaluationType === 'assignments' ? 'Continuous Assessment & Assignments Cohort Register' : resultEvaluationType === 'mst2' ? 'Second Evaluation (MST-2) Official Cohort Register' : 'Mid-Semester Test 1 (MST-1) Official Cohort Register'} ({filteredRankings.length} of {activeCohortList.length} Students)
                 </strong>
                 <span style={{ fontSize: '12px', color: '#64748b', display: 'block' }}>
-                  Out of 40 in each paper • Total Maximum: 160 Marks
+                  {resultEvaluationType === 'assignments' ? 'Cumulative evaluation across 11 graded submissions • Maximum Score: 100.0' : 'Out of 40 in each paper • Total Maximum: 160 Marks • Offline Examination'}
                 </span>
               </div>
               <span style={{
@@ -2321,15 +2520,24 @@ export default function MstResultsSection({ initialSubTab = 'final_datesheet' })
                   <tr style={{ backgroundColor: '#0f172a', color: '#ffffff' }}>
                     <th style={{ padding: '12px 14px', width: '70px', textAlign: 'center' }}>Rank</th>
                     <th style={{ padding: '12px 14px' }}>Student Name & Roll No.</th>
-                    <th style={{ padding: '12px 14px' }}>Corporate Sponsor</th>
-                    <th style={{ padding: '12px 10px', textAlign: 'center' }}>MFML (F112)<br /><span style={{ fontSize: '10.5px', color: '#94a3b8' }}>/ 40</span></th>
-                    <th style={{ padding: '12px 10px', textAlign: 'center' }}>Stats (F111)<br /><span style={{ fontSize: '10.5px', color: '#94a3b8' }}>/ 40</span></th>
-                    <th style={{ padding: '12px 10px', textAlign: 'center' }}>ML (F113)<br /><span style={{ fontSize: '10.5px', color: '#94a3b8' }}>/ 40</span></th>
-                    <th style={{ padding: '12px 10px', textAlign: 'center' }}>AI (F114)<br /><span style={{ fontSize: '10.5px', color: '#94a3b8' }}>/ 40</span></th>
-                    <th style={{ padding: '12px 14px', textAlign: 'center' }}>Total<br /><span style={{ fontSize: '10.5px', color: '#94a3b8' }}>/ 160</span></th>
+                    <th style={{ padding: '12px 14px' }}>Academic Campus</th>
+                    {resultEvaluationType === 'assignments' ? (
+                      <>
+                        <th style={{ padding: '12px 14px', textAlign: 'center' }}>Completed Submissions</th>
+                        <th style={{ padding: '12px 14px', textAlign: 'center' }}>Average Score<br /><span style={{ fontSize: '10.5px', color: '#94a3b8' }}>/ 100</span></th>
+                      </>
+                    ) : (
+                      <>
+                        <th style={{ padding: '12px 10px', textAlign: 'center' }}>MFML (F112)<br /><span style={{ fontSize: '10.5px', color: '#94a3b8' }}>/ 40</span></th>
+                        <th style={{ padding: '12px 10px', textAlign: 'center' }}>Stats (F111)<br /><span style={{ fontSize: '10.5px', color: '#94a3b8' }}>/ 40</span></th>
+                        <th style={{ padding: '12px 10px', textAlign: 'center' }}>ML (F113)<br /><span style={{ fontSize: '10.5px', color: '#94a3b8' }}>/ 40</span></th>
+                        <th style={{ padding: '12px 10px', textAlign: 'center' }}>AI (F114)<br /><span style={{ fontSize: '10.5px', color: '#94a3b8' }}>/ 40</span></th>
+                        <th style={{ padding: '12px 14px', textAlign: 'center' }}>Total<br /><span style={{ fontSize: '10.5px', color: '#94a3b8' }}>/ 160</span></th>
+                      </>
+                    )}
                     <th style={{ padding: '12px 14px', textAlign: 'center' }}>Score %</th>
                     <th style={{ padding: '12px 14px', textAlign: 'center' }}>Grade</th>
-                    <th style={{ padding: '12px 14px', textAlign: 'center' }}>Status</th>
+                    <th style={{ padding: '12px 14px', textAlign: 'center' }}>Official Status</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -2385,27 +2593,40 @@ export default function MstResultsSection({ initialSubTab = 'final_datesheet' })
                           <span style={{ fontSize: '11.5px', color: '#64748b' }}>{student.roll}</span>
                         </td>
 
-                        {/* Company */}
+                        {/* Academic Campus */}
                         <td style={{ padding: '12px 14px', color: '#334155', fontSize: '12.5px' }}>
-                          {student.company}
+                          BITS Pilani, Hyderabad Campus
                         </td>
 
-                        {/* Subject Marks */}
-                        <td style={{ padding: '12px 10px', textAlign: 'center', color: '#0f172a' }}>{student.f112}</td>
-                        <td style={{ padding: '12px 10px', textAlign: 'center', color: '#0f172a' }}>{student.f111}</td>
-                        <td style={{ padding: '12px 10px', textAlign: 'center', color: '#0f172a' }}>{student.f113}</td>
-                        <td style={{ padding: '12px 10px', textAlign: 'center', color: '#0f172a' }}>{student.f114}</td>
-
-                        {/* Total Marks */}
-                        <td style={{ padding: '12px 14px', textAlign: 'center' }}>
-                          <strong style={{ color: isRohan ? '#16a34a' : '#0f172a', fontSize: isRohan ? '14px' : '13px' }}>
-                            {student.total}
-                          </strong>
-                        </td>
+                        {/* Dynamic Marks Columns */}
+                        {resultEvaluationType === 'assignments' ? (
+                          <>
+                            <td style={{ padding: '12px 14px', textAlign: 'center', color: '#0f172a', fontWeight: '600' }}>
+                              {student.completedAssignments ?? '11/11'}
+                            </td>
+                            <td style={{ padding: '12px 14px', textAlign: 'center' }}>
+                              <strong style={{ color: isRohan ? '#16a34a' : '#0f172a', fontSize: isRohan ? '14px' : '13px' }}>
+                                {student.avgScore}
+                              </strong>
+                            </td>
+                          </>
+                        ) : (
+                          <>
+                            <td style={{ padding: '12px 10px', textAlign: 'center', color: '#0f172a' }}>{student.f112}</td>
+                            <td style={{ padding: '12px 10px', textAlign: 'center', color: '#0f172a' }}>{student.f111}</td>
+                            <td style={{ padding: '12px 10px', textAlign: 'center', color: '#0f172a' }}>{student.f113}</td>
+                            <td style={{ padding: '12px 10px', textAlign: 'center', color: '#0f172a' }}>{student.f114}</td>
+                            <td style={{ padding: '12px 14px', textAlign: 'center' }}>
+                              <strong style={{ color: isRohan ? '#16a34a' : '#0f172a', fontSize: isRohan ? '14px' : '13px' }}>
+                                {student.total}
+                              </strong>
+                            </td>
+                          </>
+                        )}
 
                         {/* Percentage */}
                         <td style={{ padding: '12px 14px', textAlign: 'center', color: '#16a34a', fontWeight: '700' }}>
-                          {student.percentage}%
+                          {student.percentage ?? student.avgScore}%
                         </td>
 
                         {/* Grade */}
